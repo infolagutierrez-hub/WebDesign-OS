@@ -2161,9 +2161,17 @@
           stack: `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="2.5" y="2.5" width="11" height="2.6"/><rect x="2.5" y="6.7" width="11" height="2.6"/><rect x="2.5" y="10.9" width="11" height="2.6"/></svg>`,
         };
 
-        /* Escenas de 120×56 para las tarjetas de territorio */
+        /* Escenas de 120×56 para las tarjetas. Todas comparten fondo beige,
+           un único acento rojo y el mismo peso de trazo: lo que distingue a
+           cada territorio es la forma, no el color. */
+        const CO = {
+          bg: "#f9eed9",
+          ink: "#231f20",
+          red: "#8c2936",
+          soft: "#d8b3aa",
+        };
         const SC = (inner) =>
-          `<svg class="bmk-card-vis" viewBox="0 0 120 56" preserveAspectRatio="none" aria-hidden="true">${inner}</svg>`;
+          `<svg class="bmk-card-vis" viewBox="0 0 120 56" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="120" height="56" fill="${CO.bg}"/>${inner}</svg>`;
 
         /* Vocabulario compartido: 8 pares opuestos. Lo que eliges como
            palabra clave deja de estar disponible como anti-palabra. */
@@ -2201,42 +2209,42 @@
                 id: "warm-craft",
                 label: { es: "Cálido y artesanal", en: "Warm and crafted" },
                 hint: { es: "Materiales naturales y la mano visible en el acabado.", en: "Natural materials and the hand visible in the finish." },
-                visual: SC(`<rect width="120" height="56" fill="#efe2cf"/><circle cx="38" cy="28" r="14" fill="#b4764a"/><path d="M62 18h44M62 26h40M62 34h44M62 42h34" stroke="#8a6a52" stroke-width="2"/>`),
+                visual: SC(`<path d="M30 12c10-1 17 5 17 15s-7 17-17 16-16-7-15-17S20 13 30 12z" fill="${CO.red}"/><path d="M60 17h44M60 25h38M60 33h44M60 41h31" stroke="${CO.ink}" stroke-width="2" stroke-linecap="round"/>`),
                 md: { es: "Un mundo cálido y artesanal: materiales naturales, tonos tierra y la mano visible en el acabado.", en: "A warm, crafted world: natural materials, earth tones and the hand visible in the finish." },
               },
               {
                 id: "clean-minimal",
                 label: { es: "Limpio y minimalista", en: "Clean and minimal" },
                 hint: { es: "Pocos elementos, mucho aire y contrastes bajos.", en: "Few elements, a lot of air and low contrast." },
-                visual: SC(`<rect width="120" height="56" fill="#f7f6f3"/><rect x="20" y="24" width="18" height="8" fill="#2c2c2c"/><path d="M20 40h80" stroke="#d6d4cf" stroke-width="1.5"/>`),
+                visual: SC(`<rect x="22" y="22" width="9" height="9" fill="${CO.red}"/><path d="M22 39h76" stroke="${CO.soft}" stroke-width="1.6"/>`),
                 md: { es: "Un mundo limpio y minimalista: pocos elementos, mucho espacio vacío y contrastes bajos.", en: "A clean, minimal world: few elements, a lot of empty space and low contrast." },
               },
               {
                 id: "editorial",
                 label: { es: "Editorial y elegante", en: "Editorial and elegant" },
                 hint: { es: "Tipografía con carácter y ritmo de revista.", en: "Typography with character and the rhythm of a magazine." },
-                visual: SC(`<rect width="120" height="56" fill="#faf7f1"/><text x="14" y="38" font-family="Georgia,serif" font-size="30" fill="#23201e">Aa</text><path d="M66 16h42M66 24h42M66 32h42M66 40h30" stroke="#b9b2a6" stroke-width="1.6"/>`),
+                visual: SC(`<text x="16" y="38" font-family="Georgia, serif" font-size="27" fill="${CO.ink}">Aa</text><path d="M63 16h41M63 24h41M63 32h41" stroke="${CO.soft}" stroke-width="1.8"/><path d="M63 40h24" stroke="${CO.red}" stroke-width="1.8"/>`),
                 md: { es: "Un mundo editorial: tipografía con carácter, columnas claras y ritmo de revista.", en: "An editorial world: typography with character, clear columns and the rhythm of a magazine." },
               },
               {
                 id: "bold-energy",
                 label: { es: "Audaz y con energía", en: "Bold and energetic" },
                 hint: { es: "Contrastes fuertes, escala grande y movimiento.", en: "Strong contrast, large scale and movement." },
-                visual: SC(`<rect width="120" height="56" fill="#141414"/><path d="M8 56L40 0h22L30 56z" fill="#e8402a"/><path d="M52 56L84 0h22L74 56z" fill="#f5c400"/>`),
+                visual: SC(`<path d="M2 56L28 0h17L19 56z" fill="${CO.ink}"/><path d="M40 56L66 0h17L57 56z" fill="${CO.red}"/><path d="M78 56L104 0h17L95 56z" fill="${CO.ink}"/>`),
                 md: { es: "Un mundo audaz: contrastes fuertes, escalas grandes y movimiento.", en: "A bold world: strong contrast, large scale and movement." },
               },
               {
                 id: "natural-organic",
                 label: { es: "Natural y orgánico", en: "Natural and organic" },
                 hint: { es: "Formas orgánicas y acabados sin pulir.", en: "Organic shapes and unpolished finishes." },
-                visual: SC(`<rect width="120" height="56" fill="#eaeee0"/><path d="M14 44c10-26 34-34 52-30 14 3 20 14 12 22-10 10-38 2-64 8z" fill="#7d9463"/><path d="M26 46c14-14 30-20 46-22" stroke="#4f6440" stroke-width="1.6" fill="none"/>`),
+                visual: SC(`<path d="M16 42c6-20 26-30 44-26 12 3 15 13 7 19-11 8-32 4-51 7z" fill="${CO.red}"/><path d="M24 45c13-12 29-19 46-21" stroke="${CO.ink}" stroke-width="2" fill="none" stroke-linecap="round"/>`),
                 md: { es: "Un mundo natural: formas orgánicas, materia viva y acabados sin pulir.", en: "A natural world: organic shapes, living matter and unpolished finishes." },
               },
               {
                 id: "precise-tech",
                 label: { es: "Preciso y tecnológico", en: "Precise and technical" },
                 hint: { es: "Rejilla estricta y acabado de laboratorio.", en: "Strict grid and a lab-like finish." },
-                visual: SC(`<rect width="120" height="56" fill="#0f1720"/><path d="M0 14h120M0 28h120M0 42h120M24 0v56M48 0v56M72 0v56M96 0v56" stroke="#24313f" stroke-width="1"/><circle cx="72" cy="28" r="7" fill="none" stroke="#31c6d4" stroke-width="2"/><path d="M60 28h24M72 16v24" stroke="#31c6d4" stroke-width="1.2"/>`),
+                visual: SC(`<path d="M0 14h120M0 28h120M0 42h120M24 0v56M48 0v56M72 0v56M96 0v56" stroke="${CO.soft}" stroke-width="1"/><circle cx="60" cy="28" r="9" fill="none" stroke="${CO.red}" stroke-width="2"/><path d="M45 28h30M60 13v30" stroke="${CO.ink}" stroke-width="1.4"/>`),
                 md: { es: "Un mundo preciso: rejilla estricta, superficies limpias y acabado técnico.", en: "A precise world: strict grid, clean surfaces and a technical finish." },
               },
             ],
