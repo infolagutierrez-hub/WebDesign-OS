@@ -1848,60 +1848,6 @@
      Tipos de campo: text · textarea · list · tags · pair · fixed
      ============================================================ */
         const BASE = [
-          { doc: "concept", time: 4, fields: [
-              { id: "brand", type: "textarea", rows: 2 },
-              { id: "purpose", type: "textarea", rows: 2 },
-              { id: "promise", type: "textarea", rows: 2 },
-              { id: "valueProp", type: "textarea", rows: 2 },
-          ] },
-          { doc: "concept", time: 5, fields: [
-              { id: "category", type: "textarea", rows: 2 },
-              { id: "audience", type: "textarea", rows: 2 },
-              { id: "market", type: "textarea", rows: 2 },
-              { id: "differentiation", type: "textarea", rows: 2 },
-              { id: "territory", type: "textarea", rows: 2 },
-          ] },
-          { doc: "concept", time: 4, fields: [
-              { id: "traits", type: "tags", min: 3, max: 4 },
-              { id: "perception", type: "textarea", rows: 2 },
-              { id: "tension", type: "pair" },
-          ] },
-          { doc: "concept", time: 4, fields: [
-              { id: "values", type: "list", n: 3, min: 3, bullet: true },
-              { id: "valueMeaning", type: "list", n: 3, min: 3, pairWith: "values" },
-          ] },
-          { doc: "concept", time: 5, fields: [
-              { id: "concept", type: "textarea", rows: 2 },
-              { id: "keyIdeas", type: "list", n: 3, min: 3, bullet: true },
-              { id: "metaphors", type: "textarea", rows: 3 },
-              { id: "references", type: "refs", min: 2 },
-          ] },
-          { doc: "concept", time: 5, fields: [
-              { id: "voice", type: "tags", min: 3, max: 3 },
-              { id: "tone", type: "list", n: 3, min: 3 },
-              { id: "expressionsUse", type: "list", n: 2, min: 2, bullet: true },
-              { id: "expressionsAvoid", type: "list", n: 2, min: 2, bullet: true },
-          ] },
-          { doc: "concept", time: 4, fields: [
-              { id: "coreMessage", type: "textarea", rows: 2 },
-              { id: "keyClaims", type: "list", n: 3, min: 3, bullet: true },
-              { id: "narrativePillars", type: "list", n: 3, min: 3, bullet: true },
-          ] },
-          { doc: "concept", time: 3, fields: [
-              { id: "conceptualCodes", type: "textarea", rows: 3 },
-              { id: "recurringIdeas", type: "list", n: 2, min: 2, bullet: true },
-          ] },
-          { doc: "concept", time: 3, fields: [
-              { id: "neverCommunicate", type: "textarea", rows: 2 },
-              { id: "avoidConcepts", type: "list", n: 2, min: 2, bullet: true },
-              { id: "avoidPerceptions", type: "textarea", rows: 2 },
-          ] },
-          { doc: "concept", time: 4, fields: [
-              { id: "campaignPrinciples", type: "list", n: 2, min: 2, bullet: true },
-              { id: "contentPrinciples", type: "list", n: 2, min: 2, bullet: true },
-              { id: "storytellingPrinciples", type: "list", n: 2, min: 2, bullet: true },
-          ] },
-          /* ---------- Direccion visual (documento 2) ---------- */
           { doc: "visual", time: 4, fields: [
               { id: "visualTerritory", type: "textarea", rows: 2 },
               { id: "visualTension", type: "pair" },
@@ -1954,225 +1900,6 @@
           es: {
             pending: "[Pendiente]",
             sections: [
-              {
-                title: "Brand Essence",
-                desc: "Define the *core idea* behind the brand and why it *matters*.",
-                tip: "If you cannot explain it *in one sentence*, the brand is still too blurry.",
-                fields: {
-                  brand: {
-                    label: "Core idea",
-                    hint: "What is the brand, *what does it do* and *for whom*?",
-                  },
-                  purpose: {
-                    label: "Purpose",
-                    hint: "What is the brand trying to *improve* or *change* in the world?",
-                  },
-                  promise: {
-                    label: "Promise",
-                    hint: "What meaningful value does the brand make real for people?",
-                  },
-                  valueProp: {
-                    label: "Value proposition",
-                    hint: "What is the *clear benefit* the brand provides in the market?",
-                  },
-                },
-              },
-              {
-                title: "Positioning",
-                desc: "Clarify the category, target and lines of differentiation.",
-                tip: "Positioning is not a slogan; it is the *precise place* the brand owns.",
-                fields: {
-                  category: {
-                    label: "Category",
-                    hint: "In which category or territory should the brand be recognized?",
-                  },
-                  audience: {
-                    label: "Audience",
-                    hint: "Who is the brand actually *for* and why?",
-                  },
-                  market: {
-                    label: "Market context",
-                    hint: "What is happening in the market that shapes this opportunity?",
-                  },
-                  differentiation: {
-                    label: "Differentiation",
-                    hint: "What makes the brand meaningfully *different* from competitors?",
-                  },
-                  territory: {
-                    label: "Competitive territory",
-                    hint: "What space is the brand trying to *own* with less friction?",
-                  },
-                },
-              },
-              {
-                title: "Brand Personality",
-                derive: [
-                  "Emotional territory",
-                ],
-                desc: "Capture the human traits and emotional tone of the brand.",
-                tip: "The tension between two qualities makes the personality memorable.",
-                fields: {
-                  traits: {
-                    label: "Personality traits",
-                    hint: "Choose *3–4 words* that describe the brand's character.",
-                  },
-                  perception: {
-                    label: "Desired perception",
-                    hint: "How should people *see* the brand after interacting with it?",
-                  },
-                  tension: {
-                    label: "Tensions / contrasts",
-                    hint: "Which qualities create a memorable contrast? Example: *warm + sharp*.",
-                  },
-                },
-              },
-              {
-                title: "Brand Values",
-                desc: "Define the beliefs that guide behavior and decisions.",
-                tip: "Values are not abstract; they should shape brand behavior, language and choices.",
-                fields: {
-                  values: {
-                    label: "Core values",
-                    hint: "Name *3 key values* that define the brand.",
-                  },
-                  valueMeaning: {
-                    label: "What each value means (and does not)",
-                    hint: "*One line per value*: what it means, then what it never means.",
-                    rowLabels: ["Value 1", "Value 2", "Value 3"],
-                  },
-                },
-              },
-              {
-                title: "Conceptual Territory",
-                derive: [
-                  "Associations",
-                ],
-                desc: "Define the conceptual world behind the brand.",
-                tip: "The concept should feel like a *world people can enter*, not just a moodboard.",
-                fields: {
-                  concept: {
-                    label: "Central concept",
-                    hint: "What is the main idea or narrative the brand is built around?",
-                  },
-                  keyIdeas: {
-                    label: "Key ideas",
-                    hint: "List the *3 concepts* that support the central idea.",
-                  },
-                  metaphors: {
-                    label: "Metaphors",
-                    hint: "Name *1–2 metaphors* or images that naturally describe the brand.",
-                  },
-                  references: {
-                    label: "Cultural references",
-                    hint: "Add *2 references* that help define the world of the brand.",
-                  },
-                },
-              },
-              {
-                title: "Voice & Tone",
-                derive: [
-                  "Vocabulary",
-                ],
-                desc: "Set the way the brand speaks and how it adapts across contexts.",
-                tip: "A strong voice is recognizable even without a logo.",
-                fields: {
-                  voice: {
-                    label: "Voice characteristics",
-                    hint: "Describe the brand's voice in *3 words*.",
-                  },
-                  tone: {
-                    label: "Tone by situation",
-                    hint: "*One line per situation*: how should the brand sound in each?",
-                    rowLabels: ["Everyday", "High-stakes", "Intimate"],
-                  },
-                  expressionsUse: {
-                    label: "Expressions to use",
-                    hint: "Name *2 phrases* or structures that are aligned with the brand.",
-                  },
-                  expressionsAvoid: {
-                    label: "Expressions to avoid",
-                    hint: "Name *2 words or expressions* the brand should avoid.",
-                  },
-                },
-              },
-              {
-                title: "Messaging",
-                derive: [
-                  "Supporting messages",
-                ],
-                desc: "Translate the brand into clear messages and narrative pillars.",
-                tip: "Messaging should connect strategy with emotional clarity.",
-                fields: {
-                  coreMessage: {
-                    label: "Core message",
-                    hint: "What is the *single message* the brand should consistently communicate?",
-                  },
-                  keyClaims: {
-                    label: "Key claims",
-                    hint: "List the *3 strongest claims* the brand can own.",
-                  },
-                  narrativePillars: {
-                    label: "Narrative pillars",
-                    hint: "Name the *3 story themes* that consistently drive the brand's communication.",
-                  },
-                },
-              },
-              {
-                title: "Distinctive Codes",
-                derive: [
-                  "Recognizable brand behaviors",
-                ],
-                desc: "Identify the recurring ideas and behaviors that make the brand recognizable.",
-                tip: "Distinctive codes are the details that make the brand instantly recognizable.",
-                fields: {
-                  conceptualCodes: {
-                    label: "Conceptual codes",
-                    hint: "What recurring concepts should always appear in the brand's language or visuals?",
-                  },
-                  recurringIdeas: {
-                    label: "Recurring ideas",
-                    hint: "Name the *2 ideas* that give the brand a recognizable rhythm.",
-                  },
-                },
-              },
-              {
-                title: "Boundaries",
-                desc: "Define what the brand should never say or imply.",
-                tip: "Boundaries protect the brand from dilution and strategic drift.",
-                fields: {
-                  neverCommunicate: {
-                    label: "What the brand should never communicate",
-                    hint: "What should the brand never claim, promise or imply?",
-                  },
-                  avoidConcepts: {
-                    label: "Concepts to avoid",
-                    hint: "Name *2 ideas or themes* that do not belong to the brand.",
-                  },
-                  avoidPerceptions: {
-                    label: "Perceptions to avoid",
-                    hint: "What negative or unintended perception should the brand prevent?",
-                  },
-                },
-              },
-              {
-                title: "Creative Principles",
-                desc: "Translate the brand into creative decisions for campaigns, content and storytelling.",
-                tip: "Principles make it easier to decide what fits and what does not.",
-                fields: {
-                  campaignPrinciples: {
-                    label: "Principles for campaigns",
-                    hint: "Name *2 rules* every campaign must respect.",
-                  },
-                  contentPrinciples: {
-                    label: "Principles for content",
-                    hint: "Name *2 rules* that keep content consistent across formats.",
-                  },
-                  storytellingPrinciples: {
-                    label: "Principles for storytelling",
-                    hint: "Name *2 rules* for narratives that feel on-brand.",
-                  },
-                },
-              },
               {
                 title: "Visual Foundation",
                 derive: [
@@ -2447,30 +2174,13 @@
               },
             ],
             docs: {
-              concept: {
-                title: "Brand Concept",
-                sub: "Quién es la marca y qué defiende",
-                meta: "Bloques 01–10 · Concepto",
-                companion: "Este documento define el concepto. La dirección visual va en `visual-direction.md`; usa los dos juntos.",
-              },
               visual: {
                 title: "Visual Direction",
                 sub: "Cómo se ve y se comporta la marca",
-                meta: "Bloques 11–20 · Visual",
-                companion: "Este documento define lo visual. El concepto va en `brand-concept.md`; usa los dos juntos.",
+                meta: "10 bloques · Dirección visual",
               },
             },
             mdTitles: [
-              "01. Brand Essence",
-              "02. Positioning",
-              "03. Brand Personality",
-              "04. Brand Values",
-              "05. Conceptual Territory",
-              "06. Voice & Tone",
-              "07. Messaging",
-              "08. Distinctive Codes",
-              "09. Boundaries",
-              "10. Creative Principles",
               "01. Visual Foundation",
               "02. Identity System",
               "03. Color System",
@@ -2483,39 +2193,6 @@
               "10. AI Visual Direction",
             ],
             mdLabels: {
-              brand: "Core idea",
-              purpose: "Purpose",
-              promise: "Promise",
-              valueProp: "Value proposition",
-              category: "Category",
-              audience: "Audience",
-              market: "Market context",
-              differentiation: "Differentiation",
-              territory: "Competitive territory",
-              traits: "Personality traits",
-              perception: "Desired perception",
-              tension: "Tensions / contrasts",
-              values: "Core values",
-              valueMeaning: "What each value means (and does not)",
-              concept: "Central concept",
-              keyIdeas: "Key ideas",
-              metaphors: "Metaphors",
-              references: "Cultural references",
-              voice: "Voice characteristics",
-              tone: "Tone by situation",
-              expressionsUse: "Expressions to use",
-              expressionsAvoid: "Expressions to avoid",
-              coreMessage: "Core message",
-              keyClaims: "Key claims",
-              narrativePillars: "Narrative pillars",
-              conceptualCodes: "Conceptual codes",
-              recurringIdeas: "Recurring ideas",
-              neverCommunicate: "What the brand should never communicate",
-              avoidConcepts: "Concepts to avoid",
-              avoidPerceptions: "Perceptions to avoid",
-              campaignPrinciples: "Principles for campaigns",
-              contentPrinciples: "Principles for content",
-              storytellingPrinciples: "Principles for storytelling",
               visualTerritory: "Visual territory",
               visualTension: "Visual tension",
               visualKeywords: "Keywords",
@@ -2545,50 +2222,6 @@
 
             },
             examples: {
-              brand: "A premium neighborhood coffee brand that turns everyday rituals into a slower, more intentional way of living.",
-              purpose: "To help people reclaim meaningful moments in a rushed culture.",
-              promise: "A calmer, more elevated everyday experience without pretension.",
-              valueProp: "Beautiful design, well-made essentials, and a warm community feeling in one brand.",
-              category: "Premium specialty coffee and lifestyle rituals.",
-              audience: "Urban professionals and creatives aged 25–45 who care about taste and ritual.",
-              market: "A crowded coffee market with strong lifestyle branding and growing demand for more intentional consumption.",
-              differentiation: "Crafted for emotional depth and ritual, not just caffeine intensity.",
-              territory: "The intersection between hospitality, design and everyday wellbeing.",
-              traits: "calm · premium · warm · thoughtful",
-              perception: "High-quality, grounded, and emotionally intelligent.",
-              tension: "minimal + expressive",
-              values: ["calm", "craft", "community"],
-              valueMeaning: [
-                "Intentional, never empty",
-                "Human, never industrial",
-                "Welcoming, never curated",
-              ],
-              concept: "The morning ritual as a private ceremony.",
-              keyIdeas: ["slow rituals", "material care", "quiet confidence"],
-              metaphors: "A well-made ritual, like a gentle reset for the day.",
-              references: "Scandinavian hospitality design · independent coffee culture · minimalist editorial photography",
-              voice: "warm · precise · understated",
-              tone: [
-                "Warm and close, never familiar",
-                "Direct and clear, never alarmed",
-                "Quiet, unhurried, almost private",
-              ],
-              expressionsUse: ["made to be lived with", "slow by design"],
-              expressionsAvoid: ["ultra", "hype"],
-              coreMessage: "Slow down, drink better, and make the everyday feel intentional.",
-              keyClaims: ["Thoughtful craft", "Everyday ritual", "Warm premium experience"],
-              narrativePillars: ["The ritual of the morning", "The crafted detail", "The feeling of belonging"],
-              conceptualCodes: "Warm neutrals, natural materials, quiet contrast, everyday rituals.",
-              recurringIdeas: ["ritual", "quiet confidence"],
-              neverCommunicate: "Never promise status, never market speed as virtue, never use generic hype language.",
-              avoidConcepts: ["trend-chasing", "over-polished luxury"],
-              avoidPerceptions: "Not cold, not performative, not generic or disposable.",
-              campaignPrinciples: ["Grounded before impressive", "One idea per campaign"],
-              contentPrinciples: ["Useful before clever", "Keep a calm visual rhythm"],
-              storytellingPrinciples: [
-                "Lead with the ritual, not the product",
-                "End on a feeling, not a claim",
-              ],
               visualTerritory: "A quiet interior at first light: warm neutrals, raw ceramic, one shaft of daylight.",
               visualTension: "raw + precise",
               visualKeywords: ["warm", "tactile", "unhurried"],
@@ -2758,7 +2391,6 @@
               copyFail: "No se pudo copiar",
               copiedFiles: "Copiado ✓ Tus archivos van en la descarga .zip",
               downloadZip: "Descargar todo .zip",
-              downloadBoth: "Descargar los dos .md",
               zipFail: "No se pudo crear el .zip; se descargó solo el .md",
               storageFull:
                 "No queda espacio en este navegador para guardar más vistas previas",
@@ -2800,15 +2432,15 @@
               guide: [
                 {
                   t: "Guárdalo",
-                  p: "Descarga los dos documentos: el concepto y la dirección visual. Juntos son tu brandbook.",
+                  p: "Descarga el documento o cópialo. Es tu dirección visual, escrita con las respuestas de todos los bloques.",
                 },
                 {
                   t: "Dáselo a tu IA",
-                  p: "Súbelos como contexto para que los tenga presentes en todo lo que cree para tu marca:",
+                  p: "Súbelo como contexto para que lo tenga presente en todo lo que cree para tu marca:",
                   list: [
-                    "<b>Claude:</b> crea un Proyecto y sube los dos .md en “Conocimiento del proyecto”.",
-                    "<b>ChatGPT:</b> crea un Proyecto o un GPT personalizado y súbelos como archivos.",
-                    "<b>Cualquier IA:</b> pega los dos documentos al inicio de la conversación.",
+                    "<b>Claude:</b> crea un Proyecto y sube el .md en “Conocimiento del proyecto”.",
+                    "<b>ChatGPT:</b> crea un Proyecto o un GPT personalizado y súbelo como archivo.",
+                    "<b>Cualquier IA:</b> pega el documento al inicio de la conversación.",
                   ],
                   files:
                     "Como adjuntaste referencias, sube también las imágenes de la carpeta <b>referencias</b>.",
@@ -2819,9 +2451,9 @@
                 },
               ],
               prompts: [
-                "Usando mi Brandbook OS, escribe 3 posts de lanzamiento para Instagram.",
-                "Revisa este texto con mi Brandbook OS y dime qué no suena a mi marca.",
                 "Con mi Visual Direction, escribe el prompt de imagen para este post.",
+                "Revisa esta pieza con mi Visual Direction y dime qué no encaja.",
+                "Con mi Visual Direction, propón 3 layouts para este formato.",
               ],
               refsMax: "Máximo 6 archivos",
               refsType: "Solo imágenes o PDF",
@@ -2853,225 +2485,6 @@
           en: {
             pending: "[Pending]",
             sections: [
-              {
-                title: "Brand Essence",
-                desc: "Define the *core idea* behind the brand and why it *matters*.",
-                tip: "If you cannot explain it *in one sentence*, the brand is still too blurry.",
-                fields: {
-                  brand: {
-                    label: "Core idea",
-                    hint: "What is the brand, *what does it do* and *for whom*?",
-                  },
-                  purpose: {
-                    label: "Purpose",
-                    hint: "What is the brand trying to *improve* or *change* in the world?",
-                  },
-                  promise: {
-                    label: "Promise",
-                    hint: "What meaningful value does the brand make real for people?",
-                  },
-                  valueProp: {
-                    label: "Value proposition",
-                    hint: "What is the *clear benefit* the brand provides in the market?",
-                  },
-                },
-              },
-              {
-                title: "Positioning",
-                desc: "Clarify the category, target and lines of differentiation.",
-                tip: "Positioning is not a slogan; it is the *precise place* the brand owns.",
-                fields: {
-                  category: {
-                    label: "Category",
-                    hint: "In which category or territory should the brand be recognized?",
-                  },
-                  audience: {
-                    label: "Audience",
-                    hint: "Who is the brand actually *for* and why?",
-                  },
-                  market: {
-                    label: "Market context",
-                    hint: "What is happening in the market that shapes this opportunity?",
-                  },
-                  differentiation: {
-                    label: "Differentiation",
-                    hint: "What makes the brand meaningfully *different* from competitors?",
-                  },
-                  territory: {
-                    label: "Competitive territory",
-                    hint: "What space is the brand trying to *own* with less friction?",
-                  },
-                },
-              },
-              {
-                title: "Brand Personality",
-                derive: [
-                  "Emotional territory",
-                ],
-                desc: "Capture the human traits and emotional tone of the brand.",
-                tip: "The tension between two qualities makes the personality memorable.",
-                fields: {
-                  traits: {
-                    label: "Personality traits",
-                    hint: "Choose *3–4 words* that describe the brand's character.",
-                  },
-                  perception: {
-                    label: "Desired perception",
-                    hint: "How should people *see* the brand after interacting with it?",
-                  },
-                  tension: {
-                    label: "Tensions / contrasts",
-                    hint: "Which qualities create a memorable contrast? Example: *warm + sharp*.",
-                  },
-                },
-              },
-              {
-                title: "Brand Values",
-                desc: "Define the beliefs that guide behavior and decisions.",
-                tip: "Values are not abstract; they should shape brand behavior, language and choices.",
-                fields: {
-                  values: {
-                    label: "Core values",
-                    hint: "Name *3 key values* that define the brand.",
-                  },
-                  valueMeaning: {
-                    label: "What each value means (and does not)",
-                    hint: "*One line per value*: what it means, then what it never means.",
-                    rowLabels: ["Value 1", "Value 2", "Value 3"],
-                  },
-                },
-              },
-              {
-                title: "Conceptual Territory",
-                derive: [
-                  "Associations",
-                ],
-                desc: "Define the conceptual world behind the brand.",
-                tip: "The concept should feel like a *world people can enter*, not just a moodboard.",
-                fields: {
-                  concept: {
-                    label: "Central concept",
-                    hint: "What is the main idea or narrative the brand is built around?",
-                  },
-                  keyIdeas: {
-                    label: "Key ideas",
-                    hint: "List the *3 concepts* that support the central idea.",
-                  },
-                  metaphors: {
-                    label: "Metaphors",
-                    hint: "Name *1–2 metaphors* or images that naturally describe the brand.",
-                  },
-                  references: {
-                    label: "Cultural references",
-                    hint: "Add *2 references* that help define the world of the brand.",
-                  },
-                },
-              },
-              {
-                title: "Voice & Tone",
-                derive: [
-                  "Vocabulary",
-                ],
-                desc: "Set the way the brand speaks and how it adapts across contexts.",
-                tip: "A strong voice is recognizable even without a logo.",
-                fields: {
-                  voice: {
-                    label: "Voice characteristics",
-                    hint: "Describe the brand's voice in *3 words*.",
-                  },
-                  tone: {
-                    label: "Tone by situation",
-                    hint: "*One line per situation*: how should the brand sound in each?",
-                    rowLabels: ["Everyday", "High-stakes", "Intimate"],
-                  },
-                  expressionsUse: {
-                    label: "Expressions to use",
-                    hint: "Name *2 phrases* or structures that are aligned with the brand.",
-                  },
-                  expressionsAvoid: {
-                    label: "Expressions to avoid",
-                    hint: "Name *2 words or expressions* the brand should avoid.",
-                  },
-                },
-              },
-              {
-                title: "Messaging",
-                derive: [
-                  "Supporting messages",
-                ],
-                desc: "Translate the brand into clear messages and narrative pillars.",
-                tip: "Messaging should connect strategy with emotional clarity.",
-                fields: {
-                  coreMessage: {
-                    label: "Core message",
-                    hint: "What is the *single message* the brand should consistently communicate?",
-                  },
-                  keyClaims: {
-                    label: "Key claims",
-                    hint: "List the *3 strongest claims* the brand can own.",
-                  },
-                  narrativePillars: {
-                    label: "Narrative pillars",
-                    hint: "Name the *3 story themes* that consistently drive the brand's communication.",
-                  },
-                },
-              },
-              {
-                title: "Distinctive Codes",
-                derive: [
-                  "Recognizable brand behaviors",
-                ],
-                desc: "Identify the recurring ideas and behaviors that make the brand recognizable.",
-                tip: "Distinctive codes are the details that make the brand instantly recognizable.",
-                fields: {
-                  conceptualCodes: {
-                    label: "Conceptual codes",
-                    hint: "What recurring concepts should always appear in the brand's language or visuals?",
-                  },
-                  recurringIdeas: {
-                    label: "Recurring ideas",
-                    hint: "Name the *2 ideas* that give the brand a recognizable rhythm.",
-                  },
-                },
-              },
-              {
-                title: "Boundaries",
-                desc: "Define what the brand should never say or imply.",
-                tip: "Boundaries protect the brand from dilution and strategic drift.",
-                fields: {
-                  neverCommunicate: {
-                    label: "What the brand should never communicate",
-                    hint: "What should the brand never claim, promise or imply?",
-                  },
-                  avoidConcepts: {
-                    label: "Concepts to avoid",
-                    hint: "Name *2 ideas or themes* that do not belong to the brand.",
-                  },
-                  avoidPerceptions: {
-                    label: "Perceptions to avoid",
-                    hint: "What negative or unintended perception should the brand prevent?",
-                  },
-                },
-              },
-              {
-                title: "Creative Principles",
-                desc: "Translate the brand into creative decisions for campaigns, content and storytelling.",
-                tip: "Principles make it easier to decide what fits and what does not.",
-                fields: {
-                  campaignPrinciples: {
-                    label: "Principles for campaigns",
-                    hint: "Name *2 rules* every campaign must respect.",
-                  },
-                  contentPrinciples: {
-                    label: "Principles for content",
-                    hint: "Name *2 rules* that keep content consistent across formats.",
-                  },
-                  storytellingPrinciples: {
-                    label: "Principles for storytelling",
-                    hint: "Name *2 rules* for narratives that feel on-brand.",
-                  },
-                },
-              },
               {
                 title: "Visual Foundation",
                 derive: [
@@ -3346,30 +2759,13 @@
               },
             ],
             docs: {
-              concept: {
-                title: "Brand Concept",
-                sub: "Who the brand is and what it stands for",
-                meta: "Blocks 01–10 · Concept",
-                companion: "This document defines the concept. The visual direction lives in `visual-direction.md`; use both together.",
-              },
               visual: {
                 title: "Visual Direction",
                 sub: "How the brand looks and behaves",
-                meta: "Blocks 11–20 · Visual",
-                companion: "This document defines the visual system. The concept lives in `brand-concept.md`; use both together.",
+                meta: "10 blocks · Visual direction",
               },
             },
             mdTitles: [
-              "01. Brand Essence",
-              "02. Positioning",
-              "03. Brand Personality",
-              "04. Brand Values",
-              "05. Conceptual Territory",
-              "06. Voice & Tone",
-              "07. Messaging",
-              "08. Distinctive Codes",
-              "09. Boundaries",
-              "10. Creative Principles",
               "01. Visual Foundation",
               "02. Identity System",
               "03. Color System",
@@ -3382,39 +2778,6 @@
               "10. AI Visual Direction",
             ],
             mdLabels: {
-              brand: "Core idea",
-              purpose: "Purpose",
-              promise: "Promise",
-              valueProp: "Value proposition",
-              category: "Category",
-              audience: "Audience",
-              market: "Market context",
-              differentiation: "Differentiation",
-              territory: "Competitive territory",
-              traits: "Personality traits",
-              perception: "Desired perception",
-              tension: "Tensions / contrasts",
-              values: "Core values",
-              valueMeaning: "What each value means (and does not)",
-              concept: "Central concept",
-              keyIdeas: "Key ideas",
-              metaphors: "Metaphors",
-              references: "Cultural references",
-              voice: "Voice characteristics",
-              tone: "Tone by situation",
-              expressionsUse: "Expressions to use",
-              expressionsAvoid: "Expressions to avoid",
-              coreMessage: "Core message",
-              keyClaims: "Key claims",
-              narrativePillars: "Narrative pillars",
-              conceptualCodes: "Conceptual codes",
-              recurringIdeas: "Recurring ideas",
-              neverCommunicate: "What the brand should never communicate",
-              avoidConcepts: "Concepts to avoid",
-              avoidPerceptions: "Perceptions to avoid",
-              campaignPrinciples: "Principles for campaigns",
-              contentPrinciples: "Principles for content",
-              storytellingPrinciples: "Principles for storytelling",
               visualTerritory: "Visual territory",
               visualTension: "Visual tension",
               visualKeywords: "Keywords",
@@ -3444,50 +2807,6 @@
 
             },
             examples: {
-              brand: "A premium neighborhood coffee brand that turns everyday rituals into a slower, more intentional way of living.",
-              purpose: "To help people reclaim meaningful moments in a rushed culture.",
-              promise: "A calmer, more elevated everyday experience without pretension.",
-              valueProp: "Beautiful design, well-made essentials, and a warm community feeling in one brand.",
-              category: "Premium specialty coffee and lifestyle rituals.",
-              audience: "Urban professionals and creatives aged 25–45 who care about taste and ritual.",
-              market: "A crowded coffee market with strong lifestyle branding and growing demand for more intentional consumption.",
-              differentiation: "Crafted for emotional depth and ritual, not just caffeine intensity.",
-              territory: "The intersection between hospitality, design and everyday wellbeing.",
-              traits: "calm · premium · warm · thoughtful",
-              perception: "High-quality, grounded, and emotionally intelligent.",
-              tension: "minimal + expressive",
-              values: ["calm", "craft", "community"],
-              valueMeaning: [
-                "Intentional, never empty",
-                "Human, never industrial",
-                "Welcoming, never curated",
-              ],
-              concept: "The morning ritual as a private ceremony.",
-              keyIdeas: ["slow rituals", "material care", "quiet confidence"],
-              metaphors: "A well-made ritual, like a gentle reset for the day.",
-              references: "Scandinavian hospitality design · independent coffee culture · minimalist editorial photography",
-              voice: "warm · precise · understated",
-              tone: [
-                "Warm and close, never familiar",
-                "Direct and clear, never alarmed",
-                "Quiet, unhurried, almost private",
-              ],
-              expressionsUse: ["made to be lived with", "slow by design"],
-              expressionsAvoid: ["ultra", "hype"],
-              coreMessage: "Slow down, drink better, and make the everyday feel intentional.",
-              keyClaims: ["Thoughtful craft", "Everyday ritual", "Warm premium experience"],
-              narrativePillars: ["The ritual of the morning", "The crafted detail", "The feeling of belonging"],
-              conceptualCodes: "Warm neutrals, natural materials, quiet contrast, everyday rituals.",
-              recurringIdeas: ["ritual", "quiet confidence"],
-              neverCommunicate: "Never promise status, never market speed as virtue, never use generic hype language.",
-              avoidConcepts: ["trend-chasing", "over-polished luxury"],
-              avoidPerceptions: "Not cold, not performative, not generic or disposable.",
-              campaignPrinciples: ["Grounded before impressive", "One idea per campaign"],
-              contentPrinciples: ["Useful before clever", "Keep a calm visual rhythm"],
-              storytellingPrinciples: [
-                "Lead with the ritual, not the product",
-                "End on a feeling, not a claim",
-              ],
               visualTerritory: "A quiet interior at first light: warm neutrals, raw ceramic, one shaft of daylight.",
               visualTension: "raw + precise",
               visualKeywords: ["warm", "tactile", "unhurried"],
@@ -3656,7 +2975,6 @@
               copyFail: "Couldn't copy",
               copiedFiles: "Copied ✓ Your files are in the .zip download",
               downloadZip: "Download all .zip",
-              downloadBoth: "Download both .md",
               zipFail: "Couldn't build the .zip; downloaded the .md only",
               storageFull: "Not enough browser storage to keep more previews",
               refsDrop:
@@ -3697,15 +3015,15 @@
               guide: [
                 {
                   t: "Save it",
-                  p: "Download both documents: the concept and the visual direction. Together they are your brandbook.",
+                  p: "Download the document or copy it. It's your visual direction, written from your answers across every block.",
                 },
                 {
                   t: "Give it to your AI",
-                  p: "Upload them as context so they stay in mind in everything it creates for your brand:",
+                  p: "Upload it as context so it stays in mind in everything it creates for your brand:",
                   list: [
-                    "<b>Claude:</b> create a Project and upload both .md files to “Project knowledge”.",
-                    "<b>ChatGPT:</b> create a Project or a custom GPT and upload them as files.",
-                    "<b>Any AI:</b> paste both documents at the start of the conversation.",
+                    "<b>Claude:</b> create a Project and upload the .md to “Project knowledge”.",
+                    "<b>ChatGPT:</b> create a Project or a custom GPT and upload it as a file.",
+                    "<b>Any AI:</b> paste the document at the start of the conversation.",
                   ],
                   files:
                     "Since you attached references, also upload the images in the <b>references</b> folder.",
@@ -3716,9 +3034,9 @@
                 },
               ],
               prompts: [
-                "Using my Brandbook OS, write 3 launch posts for Instagram.",
-                "Check this copy against my Brandbook OS and tell me what doesn't sound like my brand.",
                 "Using my Visual Direction, write the image prompt for this post.",
+                "Check this piece against my Visual Direction and tell me what doesn't fit.",
+                "Using my Visual Direction, suggest 3 layouts for this format.",
               ],
               refsMax: "Maximum 6 files",
               refsType: "Images or PDFs only",
@@ -4379,11 +3697,7 @@
             SECTIONS.map((s, i) => {
               const st = status(i),
                 locked = !canOpen(i);
-              const head =
-                i > 0 && s.doc !== SECTIONS[i - 1].doc
-                  ? `<p class="bmk-rail-track ${line(3 + i)}">${esc(T.docs[s.doc].title)}</p>`
-                  : "";
-              return `${head}<button class="bmk-rail-step is-${st} ${i === nx ? "is-next" : ""} ${locked ? "is-locked" : ""} ${line(3 + i)}" data-act="open" data-i="${i}" aria-disabled="${locked}" ${locked ? `title="${esc(T.ui.lockedTitle)}"` : ""} aria-label="${pad(i + 1)} ${esc(plain(s.title))}">
+              return `<button class="bmk-rail-step is-${st} ${i === nx ? "is-next" : ""} ${locked ? "is-locked" : ""} ${line(3 + i)}" data-act="open" data-i="${i}" aria-disabled="${locked}" ${locked ? `title="${esc(T.ui.lockedTitle)}"` : ""} aria-label="${pad(i + 1)} ${esc(plain(s.title))}">
         <span class="bmk-node">${st === "done" ? "✓" : pad(i + 1)}</span><span class="bmk-rail-label">${rich(s.title)}</span></button>`;
             }).join("") +
             `<button class="bmk-rail-step is-final ${canResult() ? "" : "is-locked"} ${line(3 + SECTIONS.length)}" data-act="result" aria-disabled="${!canResult()}" ${canResult() ? "" : `title="${esc(T.ui.lockedTitle)}"`} aria-label="${esc(T.ui.result)}"><span class="bmk-node">✦</span><span class="bmk-rail-label"><em>Brandbook OS</em></span></button>`;
@@ -4606,8 +3920,6 @@
         }
 
         function resultView(keepTop) {
-          const hasFiles = refsVal().files.length > 0;
-          const dlLabel = hasFiles ? T.ui.downloadZip : T.ui.downloadBoth;
           const g = T.ui.guide;
           return `${topBar("result", keepTop)}
       <div class="bmk-result-head">
@@ -4616,18 +3928,15 @@
         <p class="${line(3)}">${esc(noDot(T.ui.resultSub))}</p>
       </div>
       ${DOCS.map((d, k) => docCard(d.key, k)).join("")}
-      <div class="bmk-doc-all ${line(6)}">
-        <button class="bmk-btn bmk-btn--dark" data-act="downloadall">${ICON_DOWN}<span class="bmk-btn-t">${esc(dlLabel)}</span></button>
-      </div>
       <section class="bmk-guide-wrap">
         <h3 class="${line(5)}">${T.ui.guideTitle}</h3>
         <ol class="bmk-guide">
           <li class="${line(6)}"><span class="bmk-guide-n">1</span><h4>${esc(g[0].t)}</h4><p>${esc(noDot(g[0].p))}</p>
             <div class="bmk-guide-actions">
-              <button class="bmk-btn bmk-btn--ghost" data-act="downloadall">${ICON_DOWN}<span class="bmk-btn-t">${esc(dlLabel)}</span></button>
+              <button class="bmk-btn bmk-btn--ghost" data-act="download">${ICON_DOWN}<span class="bmk-btn-t">${esc(T.ui.download)}</span></button>
             </div></li>
           <li class="${line(7)}"><span class="bmk-guide-n">2</span><h4>${esc(g[1].t)}</h4><p>${esc(noDot(g[1].p))}</p>
-            <ul>${g[1].list.map((x) => `<li>${noDot(x)}</li>`).join("")}${hasFiles ? `<li>${noDot(g[1].files)}</li>` : ""}</ul></li>
+            <ul>${g[1].list.map((x) => `<li>${noDot(x)}</li>`).join("")}</ul></li>
           <li class="${line(8)}"><span class="bmk-guide-n">3</span><h4>${esc(g[2].t)}</h4><p>${esc(noDot(g[2].p))}</p>
             <div class="bmk-prompt">${T.ui.prompts.map((x, k) => `<button data-act="copyprompt" data-k="${k}"><i>“${esc(x)}”</i><span class="bmk-btn-t">${esc(T.ui.copyBtn)}</span></button>`).join("")}</div></li>
         </ol>
@@ -4715,10 +4024,7 @@
         }
 
         /* Los bloques se reparten en dos entregables independientes */
-        const DOCS = [
-          { key: "concept", slug: "brand-concept" },
-          { key: "visual", slug: "visual-direction" },
-        ];
+        const DOCS = [{ key: "visual", slug: "visual-direction" }];
         const docSections = (doc) => SECTIONS.filter((s) => s.doc === doc);
 
         /* Documento Markdown construido solo con lo respondido */
@@ -4770,8 +4076,6 @@
             `## ${T.md.ruleTitle}`,
             "",
             ruleMD(T.rule),
-            "",
-            `_${D.companion}_`,
           );
           return out.join("\n") + "\n";
         }
@@ -4885,26 +4189,6 @@
             }),
             docFile(doc),
           );
-        }
-
-        /* Los dos documentos y las referencias en un solo .zip */
-        async function downloadAll() {
-          const base = `brandbook-os-${lang}`,
-            files = refsVal().files;
-          try {
-            const JSZip = await loadZip(),
-              zip = new JSZip();
-            DOCS.forEach((d) => zip.file(docFile(d.key), buildText(d.key)));
-            files.forEach((fl, i) => {
-              const e = refEntry(fl, i);
-              if (e.path)
-                zip.file(e.path, e.data, e.base64 ? { base64: true } : {});
-            });
-            saveBlob(await zip.generateAsync({ type: "blob" }), `${base}.zip`);
-          } catch (e) {
-            DOCS.forEach((d) => downloadDoc(d.key));
-            toast(T.ui.zipFail);
-          }
         }
 
         /* ---------- UI helpers ---------- */
@@ -5333,8 +4617,6 @@
               const doc = b.dataset.doc || "concept";
               if (await copyText(buildText(doc))) {
                 flash(b, T.ui.copiedBtn);
-                if (doc === "concept" && refsVal().files.length)
-                  toast(T.ui.copiedFiles);
               } else {
                 selectNode(root.querySelector(`.bmk-pre[data-doc="${doc}"]`));
                 toast(T.ui.manualCopy);
@@ -5352,10 +4634,6 @@
             }
             case "download":
               downloadDoc(b.dataset.doc || "concept");
-              flash(b, T.ui.downloadedBtn);
-              break;
-            case "downloadall":
-              await downloadAll();
               flash(b, T.ui.downloadedBtn);
               break;
             case "reset":
