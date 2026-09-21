@@ -4223,12 +4223,21 @@
           return p.done === p.total ? "done" : p.done > 0 ? "partial" : "todo";
         }
 
+        /* Navegación libre. Con true se entra a cualquier bloque y se ve el
+           resultado sin haber completado los anteriores: útil para recorrer el
+           cuestionario mientras se prueba. Ponlo en false para volver al
+           recorrido guiado, que obliga a ir en orden. */
+        const FREE_NAV = true;
+
         /* Pasos en orden: un bloque se abre si todos los anteriores están completos */
         const canOpen = (i) => {
+          if (FREE_NAV) return true;
           const nx = nextIndex();
           return nx === -1 || i <= nx;
         };
-        const canResult = () => nextIndex() === -1;
+        const canResult = () => FREE_NAV || nextIndex() === -1;
+        /* El botón de avanzar al final de cada bloque sigue la misma regla */
+        const nextLocked = (p) => !FREE_NAV && p.done < p.total;
         function nextText(i, locked) {
           if (locked) return T.ui.finishBlock;
           return i === SECTIONS.length - 1
@@ -4452,7 +4461,7 @@
           <div class="bmk-form">${s.fields.map((f, k) => fieldHTML(f, k)).join("")}</div>
           <div class="bmk-nav ${line(Math.min(s.fields.length + 2, 11))}">
             ${i > 0 ? `<button class="bmk-btn bmk-btn--ghost" data-act="open" data-i="${i - 1}">← ${pad(i)} ${esc(plain(SECTIONS[i - 1].title))}</button>` : `<button class="bmk-btn bmk-btn--ghost" data-act="map">${esc(T.ui.backMap)}</button>`}
-            <button class="bmk-btn ${p.done < p.total ? "is-locked" : ""}" data-next ${last ? 'data-act="result"' : `data-act="open" data-i="${i + 1}"`} aria-disabled="${p.done < p.total}">${esc(nextText(i, p.done < p.total))}</button>
+            <button class="bmk-btn ${nextLocked(p) ? "is-locked" : ""}" data-next ${last ? 'data-act="result"' : `data-act="open" data-i="${i + 1}"`} aria-disabled="${nextLocked(p)}">${esc(nextText(i, nextLocked(p)))}</button>
           </div>
         </div>
       </div>`;
@@ -5068,7 +5077,7 @@
           }
           const nb = root.querySelector("[data-next]");
           if (nb) {
-            const locked = p.done < p.total;
+            const locked = nextLocked(p);
             if (nb.classList.contains("is-locked") !== locked) {
               nb.classList.toggle("is-locked", locked);
               nb.setAttribute("aria-disabled", String(locked));
