@@ -1163,22 +1163,87 @@
         gap: 14px;
         align-items: center;
       }
-      .bmk-opt-link {
-        background: none;
-        border: 0;
-        padding: 2px 0;
+      .bmk-optbtn {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 8px 13px;
+        border: 1px solid var(--line-strong);
+        border-radius: 999px;
+        background: var(--blanco);
+        color: var(--ink);
+        font-size: 12.5px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+      }
+      .bmk-optbtn:hover {
+        border-color: var(--rojo);
+        background: var(--beige);
+      }
+      .bmk-optbtn svg {
+        width: 14px;
+        height: 14px;
+        flex: none;
         color: var(--rojo);
+      }
+      .bmk-optbtn--sug {
+        background: var(--accent-soft);
+        border-color: var(--accent-soft);
+      }
+      .bmk-optbtn--sug:hover {
+        border-color: var(--rojo);
+        background: var(--accent-soft);
+      }
+      /* filas con control segmentado propio */
+      .bmk-rows {
+        display: grid;
+        gap: 12px;
+      }
+      .bmk-row-h {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--rojo);
+      }
+      .bmk-seg svg {
+        width: 100%;
+        height: 26px;
+        display: block;
+      }
+      .bmk-auto {
+        white-space: pre-wrap;
+        padding: 12px 14px;
+        background: var(--blanco);
+        border: 1px solid var(--line);
+        border-left: 3px solid var(--rojo);
+        border-radius: var(--radius);
+        font-size: 13.5px;
+        line-height: 1.6;
+        color: var(--ink);
+      }
+      .bmk-tech {
+        margin-top: 4px;
+        border-top: 1px solid var(--line);
+        padding-top: 10px;
+      }
+      .bmk-tech summary {
         font-size: 12.5px;
         font-style: italic;
-        text-decoration: underline;
-        text-underline-offset: 2px;
+        color: var(--rojo);
         cursor: pointer;
+        margin-bottom: 10px;
       }
       .bmk-sugg {
         font-size: 12px;
         font-style: italic;
         color: var(--muted);
       }
+      .bmk-optbtn:focus-visible,
       .bmk-card:focus-visible,
       .bmk-pairopt:focus-visible,
       .bmk-chip:focus-visible,
@@ -2095,7 +2160,7 @@
           { doc: "visual", time: 6, fields: [
               { id: "logoPrimary", type: "textarea", rows: 2 },
               { id: "logoSystem", type: "list", n: 3, min: 3 },
-              { id: "logoMisuse", type: "list", n: 2, min: 2, bullet: true },
+              { id: "logoMisuse", type: "list", n: 3, min: 3, bullet: true },
               { id: "typePrimary", type: "textarea", rows: 2 },
               { id: "typeSecondary", type: "textarea", rows: 2 },
               { id: "typeSettings", type: "list", n: 3, min: 3 },
@@ -2306,6 +2371,1130 @@
             def: ["cool", "technical", "dense"],
             excludeFrom: "visualKeywords",
             items: VOCAB,
+          },
+
+          logoPrimary: {
+            ui: "CardPicker",
+            def: "symbol-name",
+            items: [
+              {
+                id: "name-only",
+                label: { es: "Solo el nombre", en: "Name only" },
+                hint: { es: "El nombre escrito con carácter, sin símbolo.", en: "The name set with character, no symbol." },
+                visual: `<svg class="bmk-card-vis" viewBox="0 0 120 56" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="120" height="56" fill="${CO.bg}"/><text x="60" y="35" text-anchor="middle" font-family="Georgia, serif" font-size="19" fill="${CO.ink}">Nombre</text></svg>`,
+                md: { es: "Logotipo de solo texto: el nombre escrito con carácter propio, sin símbolo que lo acompañe.", en: "A wordmark: the name set with its own character, with no accompanying symbol." },
+              },
+              {
+                id: "symbol-name",
+                label: { es: "Símbolo + nombre", en: "Symbol + name" },
+                hint: { es: "Una marca gráfica junto al nombre.", en: "A graphic mark next to the name." },
+                visual: `<svg class="bmk-card-vis" viewBox="0 0 120 56" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="120" height="56" fill="${CO.bg}"/><circle cx="30" cy="28" r="11" fill="${CO.red}"/><text x="50" y="34" font-family="Georgia, serif" font-size="16" fill="${CO.ink}">Nombre</text></svg>`,
+                md: { es: "Lockup de símbolo y nombre: la marca gráfica acompaña siempre al nombre en la versión principal.", en: "A symbol-and-name lockup: the graphic mark always sits beside the name in the primary version." },
+              },
+              {
+                id: "symbol-only",
+                label: { es: "Solo el símbolo", en: "Symbol only" },
+                hint: { es: "Una marca gráfica que funciona sola.", en: "A graphic mark that stands alone." },
+                visual: `<svg class="bmk-card-vis" viewBox="0 0 120 56" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="120" height="56" fill="${CO.bg}"/><circle cx="60" cy="28" r="15" fill="none" stroke="${CO.red}" stroke-width="3"/><circle cx="60" cy="28" r="5" fill="${CO.ink}"/></svg>`,
+                md: { es: "Isotipo: una marca gráfica que funciona sola, sin necesidad del nombre.", en: "An isotype: a graphic mark that works on its own, without the name." },
+              },
+            ],
+          },
+          logoSystem: {
+            ui: "SegmentedSlider",
+            rows: [
+              {
+                label: { es: "Versiones secundarias", en: "Secondary versions" },
+                def: "stacked",
+                items: [
+                  {
+                    id: "stacked",
+                    label: { es: "Apilada", en: "Stacked" },
+                    hint: { es: "El nombre debajo del símbolo.", en: "The name below the symbol." },
+                    md: { es: "Versión apilada con el nombre bajo el símbolo, para formatos cuadrados.", en: "A stacked version with the name below the symbol, for square formats." },
+                  },
+                  {
+                    id: "inline",
+                    label: { es: "En línea", en: "Inline" },
+                    hint: { es: "Todo en una sola línea.", en: "Everything on one line." },
+                    md: { es: "Versión en una sola línea para pies de página y espacios estrechos.", en: "A single-line version for footers and narrow spaces." },
+                  },
+                  {
+                    id: "both",
+                    label: { es: "Las dos", en: "Both" },
+                    hint: { es: "Apilada y en línea, según el espacio.", en: "Stacked and inline, depending on space." },
+                    md: { es: "Dos versiones secundarias, apilada y en línea, según el espacio disponible.", en: "Two secondary versions, stacked and inline, depending on the space available." },
+                  },
+                ],
+              },
+              {
+                label: { es: "Símbolo suelto", en: "Isotype" },
+                def: "after-wordmark",
+                items: [
+                  {
+                    id: "after-wordmark",
+                    label: { es: "Solo si ya se vio el nombre", en: "Only after the name" },
+                    hint: { es: "Nunca abre una pieza.", en: "It never opens a piece." },
+                    md: { es: "El símbolo aparece solo una vez que el nombre completo ya se ha visto en la pieza.", en: "The symbol appears alone only once the full name has already been seen in the piece." },
+                  },
+                  {
+                    id: "free",
+                    label: { es: "Libre", en: "Free" },
+                    hint: { es: "Puede ir solo en cualquier sitio.", en: "It can stand alone anywhere." },
+                    md: { es: "El símbolo puede aparecer solo en cualquier soporte, sin el nombre.", en: "The symbol may appear on its own in any medium, without the name." },
+                  },
+                  {
+                    id: "never",
+                    label: { es: "Nunca suelto", en: "Never alone" },
+                    hint: { es: "Siempre acompañado del nombre.", en: "Always with the name." },
+                    md: { es: "El símbolo nunca aparece solo: siempre acompañado del nombre.", en: "The symbol never appears alone: it always comes with the name." },
+                  },
+                ],
+              },
+              {
+                label: { es: "Fondos", en: "Backgrounds" },
+                def: "brand",
+                items: [
+                  {
+                    id: "brand",
+                    label: { es: "Solo colores de marca", en: "Brand colours only" },
+                    hint: { es: "Nunca sobre fotografía.", en: "Never over photography." },
+                    md: { es: "Solo sobre los colores de la marca; nunca sobre fotografía ni fondos con textura.", en: "Only over brand colours; never over photography or textured backgrounds." },
+                  },
+                  {
+                    id: "plain",
+                    label: { es: "Cualquier fondo plano", en: "Any plain background" },
+                    hint: { es: "Plano y con contraste suficiente.", en: "Flat, with enough contrast." },
+                    md: { es: "Sobre cualquier fondo plano que mantenga contraste suficiente.", en: "Over any flat background that keeps enough contrast." },
+                  },
+                  {
+                    id: "any",
+                    label: { es: "También sobre foto", en: "Photography too" },
+                    hint: { es: "Con zona tranquila debajo.", en: "With a calm area beneath." },
+                    md: { es: "También sobre fotografía, siempre que haya una zona tranquila bajo el logotipo.", en: "Over photography too, as long as there is a calm area beneath the logo." },
+                  },
+                ],
+              },
+            ],
+          },
+          logoMisuse: {
+            ui: "ToggleList",
+            pick: 3,
+            def: ["stretch", "recolour", "busy-bg"],
+            items: [
+              {
+                id: "stretch",
+                label: { es: "Deformarlo", en: "Stretch it" },
+                hint: { es: "Cambiar su proporción al escalar.", en: "Changing its proportion when scaling." },
+                md: { es: "Nunca deformarlo ni cambiar su proporción al escalar.", en: "Never stretch it or change its proportion when scaling." },
+              },
+              {
+                id: "recolour",
+                label: { es: "Cambiarle los colores", en: "Recolour it" },
+                hint: { es: "Usar tonos fuera de la paleta.", en: "Using tones outside the palette." },
+                md: { es: "Nunca recolorearlo fuera de la paleta definida.", en: "Never recolour it outside the defined palette." },
+              },
+              {
+                id: "busy-bg",
+                label: { es: "Ponerlo sobre fondos recargados", en: "Place it on busy backgrounds" },
+                hint: { es: "Encima de imágenes con ruido.", en: "Over noisy images." },
+                md: { es: "Nunca colocarlo sobre fondos recargados o con mucho detalle.", en: "Never place it over busy or highly detailed backgrounds." },
+              },
+              {
+                id: "shadow",
+                label: { es: "Añadirle sombras o efectos", en: "Add shadows or effects" },
+                hint: { es: "Relieve, brillo o degradado.", en: "Emboss, glow or gradient." },
+                md: { es: "Nunca añadirle sombras, relieves ni degradados.", en: "Never add shadows, embossing or gradients." },
+              },
+              {
+                id: "rotate",
+                label: { es: "Rotarlo", en: "Rotate it" },
+                hint: { es: "Inclinarlo en cualquier ángulo.", en: "Tilting it at any angle." },
+                md: { es: "Nunca rotarlo ni inclinarlo.", en: "Never rotate or tilt it." },
+              },
+              {
+                id: "tiny",
+                label: { es: "Hacerlo muy pequeño", en: "Shrink it too far" },
+                hint: { es: "Por debajo del tamaño mínimo.", en: "Below the minimum size." },
+                md: { es: "Nunca reducirlo por debajo del tamaño mínimo legible.", en: "Never shrink it below the minimum legible size." },
+              },
+            ],
+          },
+          typePrimary: {
+            ui: "CardPicker",
+            def: "serif",
+            items: [
+              {
+                id: "serif",
+                label: { es: "Serif elegante", en: "Elegant serif" },
+                hint: { es: "Con remates; editorial y con autoridad.", en: "With serifs; editorial and authoritative." },
+                visual: `<svg class="bmk-card-vis" viewBox="0 0 120 56" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="120" height="56" fill="${CO.bg}"/><text x="60" y="40" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="30" fill="${CO.ink}">Aa</text></svg>`,
+                md: { es: "Una serif elegante como tipografía principal: remates finos, aire editorial y autoridad tranquila.", en: "An elegant serif as the primary typeface: fine serifs, an editorial air and quiet authority." },
+              },
+              {
+                id: "sans",
+                label: { es: "Sans neutra", en: "Neutral sans" },
+                hint: { es: "Sin remates; clara y sin ruido.", en: "No serifs; clear and quiet." },
+                visual: `<svg class="bmk-card-vis" viewBox="0 0 120 56" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="120" height="56" fill="${CO.bg}"/><text x="60" y="40" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="30" fill="${CO.ink}">Aa</text></svg>`,
+                md: { es: "Una sans neutra como tipografía principal: sin remates, clara y sin llamar la atención.", en: "A neutral sans as the primary typeface: no serifs, clear and never calling attention to itself." },
+              },
+              {
+                id: "rounded",
+                label: { es: "Redondeada amable", en: "Friendly rounded" },
+                hint: { es: "Terminaciones blandas; cercana.", en: "Soft terminals; approachable." },
+                visual: `<svg class="bmk-card-vis" viewBox="0 0 120 56" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="120" height="56" fill="${CO.bg}"/><text x="60" y="40" text-anchor="middle" font-family="'Trebuchet MS', Verdana, sans-serif" font-size="30" fill="${CO.ink}">Aa</text></svg>`,
+                md: { es: "Una sans redondeada como tipografía principal: terminaciones blandas y tono cercano.", en: "A rounded sans as the primary typeface: soft terminals and an approachable tone." },
+              },
+              {
+                id: "mono",
+                label: { es: "Mono técnica", en: "Technical mono" },
+                hint: { es: "Ancho fijo; precisa y de sistema.", en: "Fixed width; precise and systemic." },
+                visual: `<svg class="bmk-card-vis" viewBox="0 0 120 56" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="120" height="56" fill="${CO.bg}"/><text x="60" y="40" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="30" fill="${CO.ink}">Aa</text></svg>`,
+                md: { es: "Una monoespaciada como tipografía principal: ancho fijo, precisión y carácter de sistema.", en: "A monospaced face as the primary typeface: fixed width, precision and a systemic character." },
+              },
+            ],
+          },
+          typeSecondary: {
+            ui: "CardPicker",
+            def: "sans",
+            items: [
+              {
+                id: "serif",
+                label: { es: "Serif elegante", en: "Elegant serif" },
+                hint: { es: "Con remates; editorial y con autoridad.", en: "With serifs; editorial and authoritative." },
+                visual: `<svg class="bmk-card-vis" viewBox="0 0 120 56" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="120" height="56" fill="${CO.bg}"/><text x="60" y="40" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="30" fill="${CO.ink}">Aa</text></svg>`,
+                md: { es: "Una serif elegante como tipografía secundaria: remates finos, aire editorial y autoridad tranquila.", en: "An elegant serif as the secondary typeface: fine serifs, an editorial air and quiet authority." },
+              },
+              {
+                id: "sans",
+                label: { es: "Sans neutra", en: "Neutral sans" },
+                hint: { es: "Sin remates; clara y sin ruido.", en: "No serifs; clear and quiet." },
+                visual: `<svg class="bmk-card-vis" viewBox="0 0 120 56" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="120" height="56" fill="${CO.bg}"/><text x="60" y="40" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="30" fill="${CO.ink}">Aa</text></svg>`,
+                md: { es: "Una sans neutra como tipografía secundaria: sin remates, clara y sin llamar la atención.", en: "A neutral sans as the secondary typeface: no serifs, clear and never calling attention to itself." },
+              },
+              {
+                id: "rounded",
+                label: { es: "Redondeada amable", en: "Friendly rounded" },
+                hint: { es: "Terminaciones blandas; cercana.", en: "Soft terminals; approachable." },
+                visual: `<svg class="bmk-card-vis" viewBox="0 0 120 56" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="120" height="56" fill="${CO.bg}"/><text x="60" y="40" text-anchor="middle" font-family="'Trebuchet MS', Verdana, sans-serif" font-size="30" fill="${CO.ink}">Aa</text></svg>`,
+                md: { es: "Una sans redondeada como tipografía secundaria: terminaciones blandas y tono cercano.", en: "A rounded sans as the secondary typeface: soft terminals and an approachable tone." },
+              },
+              {
+                id: "mono",
+                label: { es: "Mono técnica", en: "Technical mono" },
+                hint: { es: "Ancho fijo; precisa y de sistema.", en: "Fixed width; precise and systemic." },
+                visual: `<svg class="bmk-card-vis" viewBox="0 0 120 56" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="120" height="56" fill="${CO.bg}"/><text x="60" y="40" text-anchor="middle" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="30" fill="${CO.ink}">Aa</text></svg>`,
+                md: { es: "Una monoespaciada como tipografía secundaria: ancho fijo, precisión y carácter de sistema.", en: "A monospaced face as the secondary typeface: fixed width, precision and a systemic character." },
+              },
+            ],
+          },
+          typeSettings: {
+            ui: "SegmentedSlider",
+            rows: [
+              {
+                label: { es: "Mayúsculas", en: "Case" },
+                def: "sentence",
+                items: [
+                  {
+                    id: "sentence",
+                    label: { es: "Como una frase", en: "Sentence case" },
+                    hint: { es: "Solo la primera letra en mayúscula.", en: "Only the first letter capitalised." },
+                    md: { es: "Como una frase en todos los niveles; nunca titulares en mayúsculas.", en: "Sentence case at every level; never all-caps headlines." },
+                  },
+                  {
+                    id: "caps-titles",
+                    label: { es: "Mayúsculas en títulos", en: "Caps for titles" },
+                    hint: { es: "Titulares en caja alta.", en: "Headlines in all caps." },
+                    md: { es: "Mayúsculas reservadas a los titulares; el resto como una frase.", en: "All caps reserved for headlines; everything else in sentence case." },
+                  },
+                ],
+              },
+              {
+                label: { es: "Grosor", en: "Weight" },
+                def: "normal",
+                items: [
+                  {
+                    id: "light",
+                    label: { es: "Finos", en: "Light" },
+                    hint: { es: "Trazo delgado y ligero.", en: "Thin, light strokes." },
+                    md: { es: "Pesos finos y ligeros; nunca negritas.", en: "Light weights only; never bold." },
+                  },
+                  {
+                    id: "normal",
+                    label: { es: "Normales", en: "Regular" },
+                    hint: { es: "Ni finos ni gruesos.", en: "Neither thin nor heavy." },
+                    md: { es: "Pesos regular y medium; sin negritas.", en: "Regular and medium weights; no bold." },
+                  },
+                  {
+                    id: "bold",
+                    label: { es: "Gruesos", en: "Bold" },
+                    hint: { es: "Trazo con peso y presencia.", en: "Heavy strokes with presence." },
+                    md: { es: "Pesos gruesos para dar presencia; el cuerpo de texto en regular.", en: "Heavy weights for presence; body copy stays regular." },
+                  },
+                ],
+              },
+              {
+                label: { es: "Niveles", en: "Hierarchy" },
+                def: "three",
+                items: [
+                  {
+                    id: "two",
+                    label: { es: "2 niveles", en: "2 levels" },
+                    hint: { es: "Título y texto.", en: "Title and body." },
+                    md: { es: "Dos niveles por maqueta: título y texto.", en: "Two levels per layout: title and body." },
+                  },
+                  {
+                    id: "three",
+                    label: { es: "3 niveles", en: "3 levels" },
+                    hint: { es: "Título, subtítulo y texto.", en: "Title, subtitle and body." },
+                    md: { es: "Tres niveles por maqueta: título, subtítulo y texto.", en: "Three levels per layout: title, subtitle and body." },
+                  },
+                  {
+                    id: "four",
+                    label: { es: "4 niveles", en: "4 levels" },
+                    hint: { es: "Añade un pie o etiqueta.", en: "Adds a caption or label." },
+                    md: { es: "Cuatro niveles por maqueta: título, subtítulo, texto y pie.", en: "Four levels per layout: title, subtitle, body and caption." },
+                  },
+                ],
+              },
+            ],
+          },
+          compositionGrid: {
+            ui: "SegmentedSlider",
+            rows: [
+              {
+                label: { es: "Rejilla", en: "Grid" },
+                def: "twelve",
+                items: [
+                  {
+                    id: "six",
+                    label: { es: "6 columnas", en: "6 columns" },
+                    hint: { es: "Pocas divisiones, bloques anchos.", en: "Few divisions, wide blocks." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="4" y="4" width="7" height="18" fill="currentColor" opacity="1"/><rect x="13" y="4" width="7" height="18" fill="currentColor" opacity="1"/><rect x="22" y="4" width="7" height="18" fill="currentColor" opacity="1"/><rect x="31" y="4" width="7" height="18" fill="currentColor" opacity="1"/><rect x="40" y="4" width="7" height="18" fill="currentColor" opacity="1"/><rect x="49" y="4" width="7" height="18" fill="currentColor" opacity="1"/></svg>`,
+                    md: { es: "Rejilla de 6 columnas: pocas divisiones y bloques anchos.", en: "A 6-column grid: few divisions and wide blocks." },
+                  },
+                  {
+                    id: "twelve",
+                    label: { es: "12 columnas", en: "12 columns" },
+                    hint: { es: "Muchas divisiones, más juego.", en: "Many divisions, more play." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="4.0" y="4" width="3" height="18" fill="currentColor" opacity="1"/><rect x="8.7" y="4" width="3" height="18" fill="currentColor" opacity="1"/><rect x="13.4" y="4" width="3" height="18" fill="currentColor" opacity="1"/><rect x="18.1" y="4" width="3" height="18" fill="currentColor" opacity="1"/><rect x="22.8" y="4" width="3" height="18" fill="currentColor" opacity="1"/><rect x="27.5" y="4" width="3" height="18" fill="currentColor" opacity="1"/><rect x="32.2" y="4" width="3" height="18" fill="currentColor" opacity="1"/><rect x="36.9" y="4" width="3" height="18" fill="currentColor" opacity="1"/><rect x="41.6" y="4" width="3" height="18" fill="currentColor" opacity="1"/><rect x="46.300000000000004" y="4" width="3" height="18" fill="currentColor" opacity="1"/><rect x="51.0" y="4" width="3" height="18" fill="currentColor" opacity="1"/><rect x="55.7" y="4" width="3" height="18" fill="currentColor" opacity="1"/></svg>`,
+                    md: { es: "Rejilla de 12 columnas: divisiones finas que permiten más combinaciones.", en: "A 12-column grid: fine divisions that allow more combinations." },
+                  },
+                  {
+                    id: "free",
+                    label: { es: "Sin rejilla", en: "No grid" },
+                    hint: { es: "Cada pieza se compone a ojo.", en: "Each piece is composed by eye." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="6" y="5" width="18" height="9" fill="currentColor" opacity="1"/><rect x="30" y="9" width="22" height="13" fill="currentColor" opacity="1"/><rect x="8" y="17" width="14" height="5" fill="currentColor" opacity="1"/></svg>`,
+                    md: { es: "Sin rejilla fija: cada pieza se compone a ojo buscando equilibrio.", en: "No fixed grid: each piece is composed by eye, seeking balance." },
+                  },
+                ],
+              },
+              {
+                label: { es: "Alineación", en: "Alignment" },
+                def: "left",
+                items: [
+                  {
+                    id: "left",
+                    label: { es: "A la izquierda", en: "Left" },
+                    hint: { es: "Todo arranca del mismo borde.", en: "Everything starts at the same edge." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="6" y="5" width="34" height="4" fill="currentColor" opacity="1"/><rect x="6" y="12" width="44" height="4" fill="currentColor" opacity="1"/><rect x="6" y="19" width="24" height="4" fill="currentColor" opacity="1"/></svg>`,
+                    md: { es: "Alineación a la izquierda por defecto; centrar es una excepción deliberada.", en: "Left-aligned by default; centring is a deliberate exception." },
+                  },
+                  {
+                    id: "centered",
+                    label: { es: "Centrada", en: "Centred" },
+                    hint: { es: "Simétrica respecto al eje.", en: "Symmetrical about the axis." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="13" y="5" width="34" height="4" fill="currentColor" opacity="1"/><rect x="8" y="12" width="44" height="4" fill="currentColor" opacity="1"/><rect x="18" y="19" width="24" height="4" fill="currentColor" opacity="1"/></svg>`,
+                    md: { es: "Alineación centrada: todo se organiza respecto a un eje vertical.", en: "Centred alignment: everything organises around a vertical axis." },
+                  },
+                  {
+                    id: "justified",
+                    label: { es: "Justificada", en: "Justified" },
+                    hint: { es: "Bordes rectos a ambos lados.", en: "Straight edges on both sides." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="6" y="5" width="48" height="4" fill="currentColor" opacity="1"/><rect x="6" y="12" width="48" height="4" fill="currentColor" opacity="1"/><rect x="6" y="19" width="48" height="4" fill="currentColor" opacity="1"/></svg>`,
+                    md: { es: "Texto justificado: bordes rectos a ambos lados del bloque.", en: "Justified text: straight edges on both sides of the block." },
+                  },
+                ],
+              },
+              {
+                label: { es: "Simetría", en: "Symmetry / asymmetry" },
+                def: "asym",
+                items: [
+                  {
+                    id: "sym",
+                    label: { es: "Simétrica", en: "Symmetrical" },
+                    hint: { es: "Equilibrio a ambos lados.", en: "Balance on both sides." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="21" y="4" width="18" height="18" fill="currentColor" opacity="1"/></svg>`,
+                    md: { es: "Composición simétrica: peso repartido por igual a ambos lados.", en: "A symmetrical composition: weight spread evenly on both sides." },
+                  },
+                  {
+                    id: "asym",
+                    label: { es: "Asimétrica", en: "Asymmetrical" },
+                    hint: { es: "Peso cargado a un lado.", en: "Weight loaded to one side." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="5" y="4" width="26" height="18" fill="currentColor" opacity="1"/><rect x="36" y="14" width="12" height="8" fill="currentColor" opacity="0.45"/></svg>`,
+                    md: { es: "Composición asimétrica, con el peso cargado a un lado.", en: "An asymmetrical composition, with the weight loaded to one side." },
+                  },
+                ],
+              },
+              {
+                label: { es: "Densidad", en: "Density" },
+                def: "low",
+                items: [
+                  {
+                    id: "low",
+                    label: { es: "Poca", en: "Low" },
+                    hint: { es: "Una idea por pantalla.", en: "One idea per screen." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="20" y="10" width="20" height="6" fill="currentColor" opacity="1"/></svg>`,
+                    md: { es: "Densidad baja: una sola idea por pantalla o por página.", en: "Low density: a single idea per screen or page." },
+                  },
+                  {
+                    id: "medium",
+                    label: { es: "Media", en: "Medium" },
+                    hint: { es: "Dos o tres bloques.", en: "Two or three blocks." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="6" y="5" width="22" height="7" fill="currentColor" opacity="1"/><rect x="32" y="5" width="22" height="7" fill="currentColor" opacity="1"/><rect x="6" y="15" width="48" height="6" fill="currentColor" opacity="1"/></svg>`,
+                    md: { es: "Densidad media: dos o tres bloques por pieza, con aire entre ellos.", en: "Medium density: two or three blocks per piece, with air between them." },
+                  },
+                  {
+                    id: "high",
+                    label: { es: "Mucha", en: "High" },
+                    hint: { es: "Información compacta y ordenada.", en: "Compact, ordered information." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="5" y="4" width="11" height="5" fill="currentColor" opacity="1"/><rect x="18" y="4" width="11" height="5" fill="currentColor" opacity="1"/><rect x="31" y="4" width="11" height="5" fill="currentColor" opacity="1"/><rect x="44" y="4" width="11" height="5" fill="currentColor" opacity="1"/><rect x="5" y="11" width="11" height="5" fill="currentColor" opacity="1"/><rect x="18" y="11" width="11" height="5" fill="currentColor" opacity="1"/><rect x="31" y="11" width="11" height="5" fill="currentColor" opacity="1"/><rect x="44" y="11" width="11" height="5" fill="currentColor" opacity="1"/><rect x="5" y="18" width="11" height="5" fill="currentColor" opacity="1"/><rect x="18" y="18" width="11" height="5" fill="currentColor" opacity="1"/><rect x="31" y="18" width="11" height="5" fill="currentColor" opacity="1"/><rect x="44" y="18" width="11" height="5" fill="currentColor" opacity="1"/></svg>`,
+                    md: { es: "Densidad alta: mucha información junta, siempre bien ordenada.", en: "High density: a lot of information together, always well ordered." },
+                  },
+                ],
+              },
+              {
+                label: { es: "Aire", en: "White space" },
+                def: "generous",
+                items: [
+                  {
+                    id: "tight",
+                    label: { es: "Justo", en: "Tight" },
+                    hint: { es: "Márgenes estrechos.", en: "Narrow margins." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="2" y="2" width="56" height="22" fill="currentColor" opacity="1"/></svg>`,
+                    md: { es: "Aire justo: márgenes estrechos y elementos cercanos entre sí.", en: "Tight air: narrow margins and elements close together." },
+                  },
+                  {
+                    id: "generous",
+                    label: { es: "Generoso", en: "Generous" },
+                    hint: { es: "Al menos un tercio vacío.", en: "At least a third left empty." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="14" y="7" width="32" height="12" fill="currentColor" opacity="1"/></svg>`,
+                    md: { es: "Aire generoso: al menos un tercio de cada maqueta queda vacío.", en: "Generous air: at least a third of every layout is left empty." },
+                  },
+                  {
+                    id: "extreme",
+                    label: { es: "Mucho", en: "A lot" },
+                    hint: { es: "El vacío es el protagonista.", en: "Emptiness is the main element." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="24" y="10" width="12" height="6" fill="currentColor" opacity="1"/></svg>`,
+                    md: { es: "El vacío es el elemento protagonista: más de la mitad de la maqueta respira.", en: "Emptiness is the main element: more than half the layout breathes." },
+                  },
+                ],
+              },
+            ],
+          },
+          photography: {
+            ui: "SegmentedSlider",
+            rows: [
+              {
+                label: { es: "Sujeto", en: "Subject matter" },
+                def: "hands",
+                items: [
+                  {
+                    id: "hands",
+                    label: { es: "Manos y gestos", en: "Hands and gestures" },
+                    hint: { es: "El producto en uso.", en: "The product in use." },
+                    md: { es: "Manos y gestos: el producto o el servicio en uso, no posando.", en: "Hands and gestures: the product or service in use, not posing." },
+                  },
+                  {
+                    id: "people",
+                    label: { es: "Personas", en: "People" },
+                    hint: { es: "Retratos y situaciones.", en: "Portraits and situations." },
+                    md: { es: "Personas en situaciones reales, más cerca del retrato que del posado.", en: "People in real situations, closer to portraiture than to posing." },
+                  },
+                  {
+                    id: "objects",
+                    label: { es: "Objetos y materia", en: "Objects and material" },
+                    hint: { es: "Bodegones y superficies.", en: "Still lifes and surfaces." },
+                    md: { es: "Objetos y materia: bodegones, superficies y detalle de acabado.", en: "Objects and material: still lifes, surfaces and finish detail." },
+                  },
+                  {
+                    id: "spaces",
+                    label: { es: "Espacios", en: "Spaces" },
+                    hint: { es: "Lugares e interiores.", en: "Places and interiors." },
+                    md: { es: "Espacios y lugares habitados, con el objeto integrado en el entorno.", en: "Lived-in spaces and places, with the object set into its environment." },
+                  },
+                ],
+              },
+              {
+                label: { es: "Encuadre", en: "Framing" },
+                def: "offcentre",
+                items: [
+                  {
+                    id: "centred",
+                    label: { es: "Centrado", en: "Centred" },
+                    hint: { es: "El sujeto en el medio.", en: "The subject in the middle." },
+                    md: { es: "Encuadre centrado, con el sujeto en el eje de la imagen.", en: "Centred framing, with the subject on the axis of the image." },
+                  },
+                  {
+                    id: "offcentre",
+                    label: { es: "Descentrado", en: "Off-centre" },
+                    hint: { es: "Con espacio libre a un lado.", en: "With free space to one side." },
+                    md: { es: "Encuadre descentrado, dejando espacio libre a un lado o encima.", en: "Off-centre framing, leaving free space to one side or above." },
+                  },
+                  {
+                    id: "close",
+                    label: { es: "Muy cerca", en: "Very close" },
+                    hint: { es: "Detalle que llena el cuadro.", en: "Detail filling the frame." },
+                    md: { es: "Encuadre muy cercano: el detalle llena el cuadro.", en: "Very close framing: the detail fills the frame." },
+                  },
+                ],
+              },
+              {
+                label: { es: "Luz", en: "Lighting" },
+                def: "soft",
+                items: [
+                  {
+                    id: "soft",
+                    label: { es: "Suave y lateral", en: "Soft and side-on" },
+                    hint: { es: "Como luz de ventana.", en: "Like window light." },
+                    md: { es: "Una sola fuente suave y lateral, como luz de ventana, con sombras largas.", en: "A single soft side light, like window light, with long shadows." },
+                  },
+                  {
+                    id: "bright",
+                    label: { es: "Clara y pareja", en: "Bright and even" },
+                    hint: { es: "Sin sombras marcadas.", en: "No strong shadows." },
+                    md: { es: "Luz clara y pareja, sin sombras marcadas.", en: "Bright, even light with no strong shadows." },
+                  },
+                  {
+                    id: "hard",
+                    label: { es: "Dura y marcada", en: "Hard and defined" },
+                    hint: { es: "Contrastes fuertes.", en: "Strong contrast." },
+                    md: { es: "Luz dura y direccional, con sombras de borde marcado.", en: "Hard, directional light with sharp-edged shadows." },
+                  },
+                ],
+              },
+              {
+                label: { es: "Color de la imagen", en: "Color treatment" },
+                def: "warm-muted",
+                items: [
+                  {
+                    id: "warm-muted",
+                    label: { es: "Cálido y apagado", en: "Warm and muted" },
+                    hint: { es: "Tonos tierra, algo desaturado.", en: "Earth tones, slightly desaturated." },
+                    md: { es: "Tratamiento cálido y ligeramente desaturado, con grano visible.", en: "A warm, slightly desaturated treatment with visible grain." },
+                  },
+                  {
+                    id: "natural",
+                    label: { es: "Natural", en: "Natural" },
+                    hint: { es: "Color fiel, sin tratar.", en: "True colour, untreated." },
+                    md: { es: "Color natural y fiel, sin tratamiento aparente.", en: "Natural, faithful colour with no apparent treatment." },
+                  },
+                  {
+                    id: "contrast",
+                    label: { es: "Saturado", en: "Saturated" },
+                    hint: { es: "Color vivo y contrastado.", en: "Vivid, contrasted colour." },
+                    md: { es: "Color saturado y contrastado, con negros profundos.", en: "Saturated, contrasted colour with deep blacks." },
+                  },
+                  {
+                    id: "bw",
+                    label: { es: "Blanco y negro", en: "Black and white" },
+                    hint: { es: "Sin color.", en: "No colour." },
+                    md: { es: "Blanco y negro, apoyado en la textura y el contraste.", en: "Black and white, leaning on texture and contrast." },
+                  },
+                ],
+              },
+              {
+                label: { es: "Presencia humana", en: "Human presence" },
+                def: "anonymous",
+                items: [
+                  {
+                    id: "anonymous",
+                    label: { es: "Anónima", en: "Anonymous" },
+                    hint: { es: "Manos y hombros, rara vez caras.", en: "Hands and shoulders, rarely faces." },
+                    md: { es: "Presencia humana anónima: manos y hombros, rara vez caras completas.", en: "Anonymous human presence: hands and shoulders, rarely full faces." },
+                  },
+                  {
+                    id: "faces",
+                    label: { es: "Con caras", en: "With faces" },
+                    hint: { es: "Personas reconocibles.", en: "Recognisable people." },
+                    md: { es: "Personas reconocibles y presentes, mirando o no a cámara.", en: "Recognisable people, present in frame, looking at camera or not." },
+                  },
+                  {
+                    id: "none",
+                    label: { es: "Sin personas", en: "No people" },
+                    hint: { es: "Solo objeto y espacio.", en: "Object and space only." },
+                    md: { es: "Sin presencia humana: solo objeto, materia y espacio.", en: "No human presence: only object, material and space." },
+                  },
+                ],
+              },
+            ],
+          },
+          illustration: {
+            ui: "CardPicker",
+            def: "line",
+            items: [
+              {
+                id: "none",
+                label: { es: "Ninguna", en: "None" },
+                hint: { es: "Solo fotografía.", en: "Photography only." },
+                visual: `<svg class="bmk-card-vis" viewBox="0 0 120 56" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="120" height="56" fill="${CO.bg}"/><path d="M28 18l14 20M42 18L28 38" stroke="${CO.soft}" stroke-width="3" stroke-linecap="round"/><text x="62" y="34" font-family="Georgia, serif" font-size="13" fill="${CO.soft}">—</text></svg>`,
+                md: { es: ["Sin ilustración: el sistema se apoya solo en fotografía.", "—", "—"], en: ["No illustration: the system relies on photography alone.", "—", "—"] },
+              },
+              {
+                id: "line",
+                label: { es: "De línea", en: "Line" },
+                hint: { es: "Dibujo a trazo, sin relleno.", en: "Stroke drawing, no fill." },
+                visual: `<svg class="bmk-card-vis" viewBox="0 0 120 56" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="120" height="56" fill="${CO.bg}"/><circle cx="42" cy="28" r="13" fill="none" stroke="${CO.ink}" stroke-width="2"/><path d="M64 20h30M64 28h24M64 36h30" stroke="${CO.red}" stroke-width="2" stroke-linecap="round"/></svg>`,
+                md: { es: ["Dibujo de línea, usado solo donde una fotografía no llega.", "Trazo de grosor único, ligeramente irregular.", "Sugerente; sin sombreado ni volumen."], en: ["Line drawing, used only where a photograph cannot go.", "A single stroke weight, slightly irregular.", "Suggestive; no shading or volume."] },
+              },
+              {
+                id: "flat",
+                label: { es: "Plana", en: "Flat" },
+                hint: { es: "Formas de color sin contorno.", en: "Colour shapes, no outline." },
+                visual: `<svg class="bmk-card-vis" viewBox="0 0 120 56" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="120" height="56" fill="${CO.bg}"/><circle cx="40" cy="28" r="13" fill="${CO.red}"/><rect x="62" y="16" width="30" height="24" fill="${CO.ink}"/></svg>`,
+                md: { es: ["Ilustración plana de formas de color, sin contorno.", "Sin línea: la forma define el dibujo.", "Formas simples; poco detalle interno."], en: ["Flat illustration built from colour shapes, with no outline.", "No line: the shape defines the drawing.", "Simple shapes; little internal detail."] },
+              },
+              {
+                id: "hand",
+                label: { es: "Dibujada a mano", en: "Hand-drawn" },
+                hint: { es: "Trazo suelto e irregular.", en: "Loose, irregular stroke." },
+                visual: `<svg class="bmk-card-vis" viewBox="0 0 120 56" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="120" height="56" fill="${CO.bg}"/><path d="M26 34c4-14 13-19 21-14 7 5 4 16-3 17-6 1-9-5-5-9" fill="none" stroke="${CO.ink}" stroke-width="2.2" stroke-linecap="round"/><path d="M62 22c10-3 20-1 30 3" stroke="${CO.red}" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>`,
+                md: { es: ["Ilustración dibujada a mano, con trazo suelto y visible.", "Trazo irregular, con presión variable.", "Detalle medio; se permite la imperfección."], en: ["Hand-drawn illustration, with a loose and visible stroke.", "An irregular stroke with varying pressure.", "Medium detail; imperfection is welcome."] },
+              },
+            ],
+          },
+          materiality: {
+            ui: "CardPicker",
+            def: "matte",
+            items: [
+              {
+                id: "matte",
+                label: { es: "Mate", en: "Matte" },
+                hint: { es: "Sin brillo, tacto seco.", en: "No shine, dry to the touch." },
+                visual: `<svg class="bmk-card-vis" viewBox="0 0 120 56" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="120" height="56" fill="${CO.bg}"/><rect x="22" y="14" width="76" height="28" fill="${CO.soft}"/></svg>`,
+                md: { es: ["Papel sin estucar, tono cálido.", "Acabado mate en todo; sin barnices ni plastificados."], en: ["Uncoated paper, warm in tone.", "A matte finish throughout; no varnish or lamination."] },
+              },
+              {
+                id: "gloss",
+                label: { es: "Brillo", en: "Gloss" },
+                hint: { es: "Superficie que refleja.", en: "A surface that reflects." },
+                visual: `<svg class="bmk-card-vis" viewBox="0 0 120 56" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="120" height="56" fill="${CO.bg}"/><rect x="22" y="14" width="76" height="28" fill="${CO.ink}"/><path d="M30 42L52 14h12L42 42z" fill="${CO.bg}" opacity="0.35"/></svg>`,
+                md: { es: ["Papel estucado brillante.", "Acabado con brillo y reflejo controlado."], en: ["Glossy coated paper.", "A finish with controlled shine and reflection."] },
+              },
+              {
+                id: "textured",
+                label: { es: "Texturado", en: "Textured" },
+                hint: { es: "Se nota el relieve.", en: "You can feel the relief." },
+                visual: `<svg class="bmk-card-vis" viewBox="0 0 120 56" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="120" height="56" fill="${CO.bg}"/><rect x="22" y="14" width="76" height="28" fill="${CO.soft}"/><path d="M26 20h68M26 26h68M26 32h68M26 38h68" stroke="${CO.bg}" stroke-width="1.6"/></svg>`,
+                md: { es: ["Papel con grano visible y cuerpo.", "Textura perceptible al tacto; relieve y materia."], en: ["Paper with visible grain and body.", "Texture you can feel; relief and material."] },
+              },
+            ],
+          },
+          graphicForms: {
+            ui: "SegmentedSlider",
+            rows: [
+              {
+                label: { es: "Formas", en: "Shapes" },
+                def: "rounded",
+                items: [
+                  {
+                    id: "rounded",
+                    label: { es: "Redondeadas", en: "Rounded" },
+                    hint: { es: "Esquinas blandas.", en: "Soft corners." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="10" y="5" width="18" height="16" rx="7" fill="currentColor"/><circle cx="44" cy="13" r="8" fill="currentColor"/></svg>`,
+                    md: { es: "Formas de esquinas redondeadas y transiciones blandas.", en: "Shapes with rounded corners and soft transitions." },
+                  },
+                  {
+                    id: "straight",
+                    label: { es: "Rectas", en: "Straight" },
+                    hint: { es: "Ángulos limpios.", en: "Clean angles." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="10" y="5" width="18" height="16" fill="currentColor"/><rect x="36" y="5" width="16" height="16" fill="currentColor"/></svg>`,
+                    md: { es: "Formas rectas de ángulos limpios, sin redondeos.", en: "Straight shapes with clean angles and no rounding." },
+                  },
+                  {
+                    id: "organic",
+                    label: { es: "Orgánicas", en: "Organic" },
+                    hint: { es: "Contornos irregulares.", en: "Irregular contours." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M10 14c0-8 10-11 17-7s6 14-2 15-15-2-15-8z" fill="currentColor"/><path d="M36 12c3-7 14-6 16 1s-9 12-14 8-4-6-2-9z" fill="currentColor" opacity="0.5"/></svg>`,
+                    md: { es: "Formas orgánicas de contorno irregular, nunca geométricas.", en: "Organic shapes with irregular contours, never geometric." },
+                  },
+                ],
+              },
+              {
+                label: { es: "Patrones", en: "Patterns" },
+                def: "none",
+                items: [
+                  {
+                    id: "none",
+                    label: { es: "Sin patrones", en: "No patterns" },
+                    hint: { es: "La textura hace el trabajo.", en: "Texture does the work." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="10" y="5" width="40" height="16" fill="currentColor" opacity="0.15"/></svg>`,
+                    md: { es: "Sin patrones: la textura del material hace ese trabajo.", en: "No patterns: the texture of the material does that work." },
+                  },
+                  {
+                    id: "subtle",
+                    label: { es: "Sutiles", en: "Subtle" },
+                    hint: { es: "Apenas perceptibles.", en: "Barely perceptible." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><circle cx="12" cy="8" r="1.4" fill="currentColor"/><circle cx="18" cy="8" r="1.4" fill="currentColor"/><circle cx="24" cy="8" r="1.4" fill="currentColor"/><circle cx="30" cy="8" r="1.4" fill="currentColor"/><circle cx="36" cy="8" r="1.4" fill="currentColor"/><circle cx="42" cy="8" r="1.4" fill="currentColor"/><circle cx="48" cy="8" r="1.4" fill="currentColor"/><circle cx="12" cy="15" r="1.4" fill="currentColor"/><circle cx="18" cy="15" r="1.4" fill="currentColor"/><circle cx="24" cy="15" r="1.4" fill="currentColor"/><circle cx="30" cy="15" r="1.4" fill="currentColor"/><circle cx="36" cy="15" r="1.4" fill="currentColor"/><circle cx="42" cy="15" r="1.4" fill="currentColor"/><circle cx="48" cy="15" r="1.4" fill="currentColor"/></svg>`,
+                    md: { es: "Patrones sutiles, apenas perceptibles, como fondo de segundo plano.", en: "Subtle patterns, barely perceptible, as a background layer." },
+                  },
+                  {
+                    id: "strong",
+                    label: { es: "Protagonistas", en: "Leading" },
+                    hint: { es: "El patrón es la pieza.", en: "The pattern is the piece." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="10" y="4" width="4" height="18" fill="currentColor"/><rect x="18" y="4" width="4" height="18" fill="currentColor"/><rect x="26" y="4" width="4" height="18" fill="currentColor"/><rect x="34" y="4" width="4" height="18" fill="currentColor"/><rect x="42" y="4" width="4" height="18" fill="currentColor"/><rect x="50" y="4" width="4" height="18" fill="currentColor"/></svg>`,
+                    md: { es: "Patrones protagonistas: el patrón puede ser la pieza entera.", en: "Leading patterns: the pattern can be the whole piece." },
+                  },
+                ],
+              },
+              {
+                label: { es: "Iconos", en: "Icons" },
+                def: "line",
+                items: [
+                  {
+                    id: "line",
+                    label: { es: "De línea", en: "Line" },
+                    hint: { es: "Trazo del mismo grosor.", en: "A single stroke weight." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><circle cx="18" cy="13" r="7" fill="none" stroke="currentColor" stroke-width="2"/><rect x="34" y="6" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"/></svg>`,
+                    md: { es: "Iconos de línea con un único grosor, acordes al cuerpo de texto.", en: "Line icons at a single weight, matched to the body text." },
+                  },
+                  {
+                    id: "filled",
+                    label: { es: "Rellenos", en: "Filled" },
+                    hint: { es: "Sólidos, sin contorno.", en: "Solid, no outline." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><circle cx="18" cy="13" r="7" fill="currentColor"/><rect x="34" y="6" width="14" height="14" fill="currentColor"/></svg>`,
+                    md: { es: "Iconos rellenos y sólidos, sin contorno.", en: "Solid, filled icons with no outline." },
+                  },
+                  {
+                    id: "noicons",
+                    label: { es: "Ninguno", en: "None" },
+                    hint: { es: "Solo palabras.", en: "Words only." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><text x="30" y="18" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="currentColor">abc</text></svg>`,
+                    md: { es: "Sin iconos: la información se resuelve con palabras.", en: "No icons: information is resolved with words." },
+                  },
+                ],
+              },
+              {
+                label: { es: "Separadores", en: "Separators" },
+                def: "hairline",
+                items: [
+                  {
+                    id: "hairline",
+                    label: { es: "Línea fina", en: "Hairline" },
+                    hint: { es: "Una regla discreta.", en: "A discreet rule." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M8 13h44" stroke="currentColor" stroke-width="1"/></svg>`,
+                    md: { es: "Separadores de línea fina, en tono neutro y con aire alrededor.", en: "Hairline separators in a neutral tone, with air around them." },
+                  },
+                  {
+                    id: "space",
+                    label: { es: "Solo espacio", en: "Space only" },
+                    hint: { es: "El vacío separa.", en: "Emptiness separates." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="8" y="4" width="44" height="6" fill="currentColor" opacity="0.3"/><rect x="8" y="16" width="44" height="6" fill="currentColor" opacity="0.3"/></svg>`,
+                    md: { es: "Sin líneas: el espacio vacío es el único separador.", en: "No lines: empty space is the only separator." },
+                  },
+                  {
+                    id: "block",
+                    label: { es: "Bloques de color", en: "Colour blocks" },
+                    hint: { es: "Cambia el fondo.", en: "The background changes." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="4" y="4" width="26" height="18" fill="currentColor"/><rect x="32" y="4" width="24" height="18" fill="currentColor" opacity="0.35"/></svg>`,
+                    md: { es: "Los bloques de color separan secciones, sin necesidad de líneas.", en: "Colour blocks separate sections, with no need for lines." },
+                  },
+                ],
+              },
+            ],
+          },
+          colorFunction: {
+            ui: "CardPicker",
+            def: "60-30-10",
+            items: [
+              {
+                id: "60-30-10",
+                label: { es: "60 / 30 / 10", en: "60 / 30 / 10" },
+                hint: { es: "Un neutro manda, el principal acompaña, un acento remata.", en: "A neutral leads, the primary supports, one accent finishes." },
+                md: { es: ["Ancla la marca y aparece en cada pieza — 30%", "Fondo por defecto de los textos largos — 60%", "Marca un único momento por pieza — 10%", "Solo packaging y trabajo de temporada — muy puntual", "Solo datos, estados y detalle fino — muy puntual"], en: ["Anchors the brand and appears in every piece — 30%", "The default ground for long text — 60%", "Marks a single moment per piece — 10%", "Packaging and seasonal work only — very occasional", "Data, states and fine detail only — very occasional"] },
+              },
+              {
+                id: "primary-led",
+                label: { es: "El principal manda", en: "Primary-led" },
+                hint: { es: "El color de marca ocupa la mayor parte.", en: "The brand colour takes most of the space." },
+                md: { es: ["Ancla la marca y ocupa la mayor parte de la pieza — 60%", "Da respiro y sostiene los textos — 30%", "Marca un único momento por pieza — 10%", "Solo packaging y trabajo de temporada — muy puntual", "Solo datos, estados y detalle fino — muy puntual"], en: ["Anchors the brand and takes most of the piece — 60%", "Gives relief and carries the text — 30%", "Marks a single moment per piece — 10%", "Packaging and seasonal work only — very occasional", "Data, states and fine detail only — very occasional"] },
+              },
+              {
+                id: "quiet",
+                label: { es: "Casi todo neutro", en: "Almost all neutral" },
+                hint: { es: "El color aparece muy poco y por eso pesa.", en: "Colour appears rarely, which is why it lands." },
+                md: { es: ["Aparece en momentos contados y por eso pesa — 15%", "Domina casi toda la pieza — 80%", "Un solo golpe de color por pieza — 5%", "Solo packaging y trabajo de temporada — muy puntual", "Solo datos, estados y detalle fino — muy puntual"], en: ["Appears in counted moments, which is why it lands — 15%", "Dominates almost the whole piece — 80%", "A single hit of colour per piece — 5%", "Packaging and seasonal work only — very occasional", "Data, states and fine detail only — very occasional"] },
+              },
+              {
+                id: "balanced",
+                label: { es: "Equilibrado", en: "Balanced" },
+                hint: { es: "Principal y neutro se reparten el espacio.", en: "Primary and neutral share the space." },
+                md: { es: ["Comparte el espacio a partes iguales con el neutro — 45%", "Comparte el espacio a partes iguales con el principal — 45%", "Marca un único momento por pieza — 10%", "Solo packaging y trabajo de temporada — muy puntual", "Solo datos, estados y detalle fino — muy puntual"], en: ["Shares the space evenly with the neutral — 45%", "Shares the space evenly with the primary — 45%", "Marks a single moment per piece — 10%", "Packaging and seasonal work only — very occasional", "Data, states and fine detail only — very occasional"] },
+              },
+            ],
+          },
+          colorRules: {
+            ui: "SegmentedSlider",
+            rows: [
+              {
+                label: { es: "Combinación dominante", en: "Dominant combinations" },
+                def: "primary-on-neutral",
+                items: [
+                  {
+                    id: "primary-on-neutral",
+                    label: { es: "Principal sobre neutro", en: "Primary on neutral" },
+                    hint: { es: "Lo más habitual y seguro.", en: "The most common and safest." },
+                    md: { es: "El color principal sobre el neutro, con un solo acento.", en: "The primary colour on the neutral, with a single accent." },
+                  },
+                  {
+                    id: "neutral-on-primary",
+                    label: { es: "Neutro sobre principal", en: "Neutral on primary" },
+                    hint: { es: "Se invierte: el color manda.", en: "Inverted: colour leads." },
+                    md: { es: "El neutro sobre el color principal, que pasa a ser el fondo.", en: "The neutral on the primary colour, which becomes the ground." },
+                  },
+                  {
+                    id: "accent-lead",
+                    label: { es: "El acento manda", en: "Accent leads" },
+                    hint: { es: "Arriesgado, para piezas sueltas.", en: "Riskier, for one-off pieces." },
+                    md: { es: "El acento como protagonista, reservado a piezas puntuales.", en: "The accent as protagonist, reserved for occasional pieces." },
+                  },
+                ],
+              },
+              {
+                label: { es: "Contraste", en: "Contrast rules" },
+                def: "high",
+                items: [
+                  {
+                    id: "high",
+                    label: { es: "Alto siempre", en: "Always high" },
+                    hint: { es: "El texto siempre se lee fácil.", en: "Text is always easy to read." },
+                    md: { es: "Texto siempre en contraste alto contra su fondo, nunca por debajo de 4.5:1.", en: "Text always at high contrast against its ground, never below 4.5:1." },
+                  },
+                  {
+                    id: "soft",
+                    label: { es: "Suave, salvo en texto", en: "Soft, except for text" },
+                    hint: { es: "Contrastes bajos, texto a salvo.", en: "Low contrast, text protected." },
+                    md: { es: "Contrastes suaves entre superficies, pero el texto nunca baja de 4.5:1.", en: "Soft contrast between surfaces, but text never drops below 4.5:1." },
+                  },
+                ],
+              },
+              {
+                label: { es: "Lo que no se hace", en: "Combinations to avoid" },
+                def: "two-accents",
+                items: [
+                  {
+                    id: "two-accents",
+                    label: { es: "Dos acentos juntos", en: "Two accents together" },
+                    hint: { es: "Compiten y se anulan.", en: "They compete and cancel out." },
+                    md: { es: "Nunca dos acentos en la misma maqueta, ni acento sobre acento.", en: "Never two accents in the same layout, nor accent on accent." },
+                  },
+                  {
+                    id: "colour-on-photo",
+                    label: { es: "Color sobre foto", en: "Colour over photo" },
+                    hint: { es: "El texto deja de leerse.", en: "Text stops being readable." },
+                    md: { es: "Nunca bloques de color sobre fotografía sin una zona tranquila debajo.", en: "Never colour blocks over photography without a calm area beneath." },
+                  },
+                  {
+                    id: "pure-black",
+                    label: { es: "Negro puro", en: "Pure black" },
+                    hint: { es: "Resulta duro junto al beige.", en: "It reads harsh next to warm tones." },
+                    md: { es: "Nunca negro puro: siempre el neutro oscuro de la paleta.", en: "Never pure black: always the dark neutral from the palette." },
+                  },
+                ],
+              },
+            ],
+          },
+          visualAvoid: {
+            ui: "SegmentedSlider",
+            rows: [
+              {
+                label: { es: "Estilos", en: "Styles to avoid" },
+                def: "corporate",
+                items: [
+                  {
+                    id: "corporate",
+                    label: { es: "Vector corporativo", en: "Corporate vector" },
+                    hint: { es: "Degradados, 3D, iconos genéricos.", en: "Gradients, 3D, generic icons." },
+                    md: { es: "Vector corporativo plano, degradados, renders 3D y brillos.", en: "Flat corporate vector, gradients, 3D renders and glows." },
+                  },
+                  {
+                    id: "retro",
+                    label: { es: "Nostalgia retro", en: "Retro nostalgia" },
+                    hint: { es: "Guiños vintage de catálogo.", en: "Off-the-shelf vintage nods." },
+                    md: { es: "Nostalgia retro de catálogo y guiños vintage prestados.", en: "Off-the-shelf retro nostalgia and borrowed vintage nods." },
+                  },
+                  {
+                    id: "maximal",
+                    label: { es: "Maximalismo", en: "Maximalism" },
+                    hint: { es: "Todo lleno, sin jerarquía.", en: "Everything full, no hierarchy." },
+                    md: { es: "Maximalismo sin jerarquía: todo lleno y nada que mande.", en: "Maximalism with no hierarchy: everything full and nothing leading." },
+                  },
+                ],
+              },
+              {
+                label: { es: "Colores", en: "Colors to avoid" },
+                def: "neon",
+                items: [
+                  {
+                    id: "neon",
+                    label: { es: "Neón y flúor", en: "Neon and fluorescent" },
+                    hint: { es: "Saturación que grita.", en: "Saturation that shouts." },
+                    md: { es: "Neones, flúor y saturaciones que gritan.", en: "Neons, fluorescents and saturations that shout." },
+                  },
+                  {
+                    id: "cold",
+                    label: { es: "Azules fríos", en: "Cold blues" },
+                    hint: { es: "Tecnológico y distante.", en: "Technological and distant." },
+                    md: { es: "Azules fríos de tecnología y grises sin temperatura.", en: "Cold technology blues and greys with no temperature." },
+                  },
+                  {
+                    id: "pastel",
+                    label: { es: "Pasteles", en: "Pastels" },
+                    hint: { es: "Suaves hasta desaparecer.", en: "Soft to the point of vanishing." },
+                    md: { es: "Pasteles lavados que restan carácter.", en: "Washed-out pastels that drain character." },
+                  },
+                ],
+              },
+              {
+                label: { es: "Tipografía", en: "Typography to avoid" },
+                def: "display",
+                items: [
+                  {
+                    id: "display",
+                    label: { es: "Display decorativa", en: "Decorative display" },
+                    hint: { es: "Letras con disfraz.", en: "Letters in costume." },
+                    md: { es: "Tipografías display decorativas, script y todo lo que lleve disfraz.", en: "Decorative display faces, scripts and anything wearing a costume." },
+                  },
+                  {
+                    id: "allcaps",
+                    label: { es: "Titulares en mayúsculas", en: "All-caps headlines" },
+                    hint: { es: "Suena a que se grita.", en: "It reads as shouting." },
+                    md: { es: "Titulares en mayúsculas y tracking exagerado.", en: "All-caps headlines and exaggerated tracking." },
+                  },
+                  {
+                    id: "many",
+                    label: { es: "Demasiadas familias", en: "Too many families" },
+                    hint: { es: "Más de dos por pieza.", en: "More than two per piece." },
+                    md: { es: "Más de dos familias tipográficas en una misma pieza.", en: "More than two typefaces in the same piece." },
+                  },
+                ],
+              },
+              {
+                label: { es: "Composición", en: "Composition to avoid" },
+                def: "cards",
+                items: [
+                  {
+                    id: "cards",
+                    label: { es: "Tarjetas apiladas", en: "Stacked cards" },
+                    hint: { es: "Con sombra y borde redondeado.", en: "With shadow and rounded border." },
+                    md: { es: "Tarjetas apiladas con sombra, la retícula por defecto de cualquier plantilla.", en: "Stacked cards with drop shadows, the default grid of any template." },
+                  },
+                  {
+                    id: "centered",
+                    label: { es: "Todo centrado", en: "Everything centred" },
+                    hint: { es: "Simetría por inercia.", en: "Symmetry out of habit." },
+                    md: { es: "Simetría centrada por inercia, sin una razón detrás.", en: "Centred symmetry out of habit, with no reason behind it." },
+                  },
+                  {
+                    id: "crowded",
+                    label: { es: "Sin márgenes", en: "No margins" },
+                    hint: { es: "Los elementos se tocan.", en: "Elements touching each other." },
+                    md: { es: "Composiciones sin margen, con los elementos tocándose.", en: "Layouts with no margin, elements touching one another." },
+                  },
+                ],
+              },
+              {
+                label: { es: "Fotografía", en: "Photography to avoid" },
+                def: "studio",
+                items: [
+                  {
+                    id: "studio",
+                    label: { es: "Fondo blanco de estudio", en: "White studio background" },
+                    hint: { es: "Producto flotando en la nada.", en: "Product floating in nothing." },
+                    md: { es: "Producto sobre fondo blanco de estudio, flotando en la nada.", en: "Product on a white studio background, floating in nothing." },
+                  },
+                  {
+                    id: "posed",
+                    label: { es: "Sonrisas posadas", en: "Posed smiles" },
+                    hint: { es: "Gente actuando naturalidad.", en: "People performing naturalness." },
+                    md: { es: "Sonrisas posadas y gente actuando naturalidad.", en: "Posed smiles and people performing naturalness." },
+                  },
+                  {
+                    id: "flash",
+                    label: { es: "Flash directo", en: "Direct flash" },
+                    hint: { es: "Sombras duras y piel plana.", en: "Hard shadows, flat skin." },
+                    md: { es: "Flash directo, sombras duras y piel plana.", en: "Direct flash, hard shadows and flat skin." },
+                  },
+                ],
+              },
+              {
+                label: { es: "Estética genérica", en: "Generic / stock aesthetics to avoid" },
+                def: "stock",
+                items: [
+                  {
+                    id: "stock",
+                    label: { es: "Cualquier cosa de banco", en: "Anything from a stock library" },
+                    hint: { es: "Si parece stock, no sirve.", en: "If it looks like stock, it is out." },
+                    md: { es: "Cualquier cosa que se reconozca como imagen de banco.", en: "Anything recognisable as a stock library image." },
+                  },
+                  {
+                    id: "ai-look",
+                    label: { es: "Estética de IA genérica", en: "Generic AI look" },
+                    hint: { es: "Brillo plástico y simetría rara.", en: "Plastic sheen and odd symmetry." },
+                    md: { es: "La estética de IA por defecto: brillo plástico, simetría rara y detalle sin sentido.", en: "The default AI look: plastic sheen, odd symmetry and meaningless detail." },
+                  },
+                ],
+              },
+            ],
+          },
+          appPriority: {
+            ui: "ChipPicker",
+            pick: 4,
+            def: ["instagram", "web", "packaging"],
+            items: [
+              {
+                id: "instagram",
+                label: { es: "Instagram", en: "Instagram" },
+                hint: { es: "Feed y stories.", en: "Feed and stories." },
+                visual: `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><rect x="2.5" y="2.5" width="11" height="11" rx="3"/><circle cx="8" cy="8" r="3"/><circle cx="11.4" cy="4.6" r=".8" fill="currentColor"/></svg>`,
+                md: { es: "Instagram: feed y stories", en: "Instagram: feed and stories" },
+              },
+              {
+                id: "web",
+                label: { es: "Web", en: "Website" },
+                hint: { es: "La página del sitio.", en: "The site itself." },
+                visual: `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><rect x="2" y="3" width="12" height="10" rx="1"/><path d="M2 6h12"/></svg>`,
+                md: { es: "Web: la página del sitio", en: "Website: the site itself" },
+              },
+              {
+                id: "packaging",
+                label: { es: "Packaging", en: "Packaging" },
+                hint: { es: "Cajas y etiquetas.", en: "Boxes and labels." },
+                visual: `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M8 2l6 3v6l-6 3-6-3V5l6-3z"/><path d="M2 5l6 3 6-3M8 8v6"/></svg>`,
+                md: { es: "Packaging: cajas y etiquetas", en: "Packaging: boxes and labels" },
+              },
+              {
+                id: "deck",
+                label: { es: "Presentación", en: "Presentation" },
+                hint: { es: "Diapositivas.", en: "Slides." },
+                visual: `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><rect x="2" y="3" width="12" height="8" rx="1"/><path d="M8 11v3M5.5 14h5"/></svg>`,
+                md: { es: "Presentación: diapositivas", en: "Presentation: slides" },
+              },
+              {
+                id: "email",
+                label: { es: "Email", en: "Email" },
+                hint: { es: "Boletines y avisos.", en: "Newsletters and notices." },
+                visual: `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><rect x="2" y="4" width="12" height="8" rx="1"/><path d="M2.5 5l5.5 4 5.5-4"/></svg>`,
+                md: { es: "Email: boletines y avisos", en: "Email: newsletters and notices" },
+              },
+              {
+                id: "print",
+                label: { es: "Impresos", en: "Print" },
+                hint: { es: "Folletos y papelería.", en: "Leaflets and stationery." },
+                visual: `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M4 6V2.5h8V6"/><rect x="2" y="6" width="12" height="5" rx="1"/><path d="M4 11h8v3H4z"/></svg>`,
+                md: { es: "Impresos: folletos y papelería", en: "Print: leaflets and stationery" },
+              },
+              {
+                id: "signage",
+                label: { es: "Cartelería", en: "Signage" },
+                hint: { es: "Carteles y rótulos.", en: "Posters and signs." },
+                visual: `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><rect x="2.5" y="2.5" width="11" height="8"/><path d="M8 10.5V14M5.5 14h5"/></svg>`,
+                md: { es: "Cartelería: carteles y rótulos", en: "Signage: posters and signs" },
+              },
+              {
+                id: "merch",
+                label: { es: "Merchandising", en: "Merchandise" },
+                hint: { es: "Camisetas, bolsas, tazas.", en: "Shirts, bags, mugs." },
+                visual: `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M5 3l3 1.5L11 3l3 2-2 2v6H4V7L2 5l3-2z"/></svg>`,
+                md: { es: "Merchandising: camisetas, bolsas y tazas", en: "Merchandise: shirts, bags and mugs" },
+              },
+              {
+                id: "video",
+                label: { es: "Vídeo", en: "Video" },
+                hint: { es: "Piezas en movimiento.", en: "Moving pieces." },
+                visual: `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><rect x="2" y="4" width="12" height="8" rx="1"/><path d="M6.8 6.5l3.4 1.5-3.4 1.5z" fill="currentColor"/></svg>`,
+                md: { es: "Vídeo: piezas en movimiento", en: "Video: moving pieces" },
+              },
+              {
+                id: "interior",
+                label: { es: "Espacio físico", en: "Physical space" },
+                hint: { es: "Tienda, oficina, stand.", en: "Shop, office, stand." },
+                visual: `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M2 7l6-4.5L14 7"/><path d="M3.5 7v6h9V7"/></svg>`,
+                md: { es: "Espacio físico: tienda, oficina o stand", en: "Physical space: shop, office or stand" },
+              },
+            ],
+          },
+
+          colors: {
+            ui: "ColorPicker",
+            def: "warm-earth",
+            items: [
+              {
+                id: "warm-earth",
+                label: { es: "Tierra cálida", en: "Warm earth" },
+                hint: { es: "Terracota, arena y marrón hondo.", en: "Terracotta, sand and deep brown." },
+                hexes: ["#A9431E", "#E6DCC6", "#2D2926", "#C98A5E", "#7A9B8E"],
+                visual: `<svg class="bmk-card-vis" viewBox="0 0 120 56" preserveAspectRatio="none" aria-hidden="true"><rect x="0" y="0" width="24" height="56" fill="#A9431E"/><rect x="24" y="0" width="24" height="56" fill="#E6DCC6"/><rect x="48" y="0" width="24" height="56" fill="#2D2926"/><rect x="72" y="0" width="24" height="56" fill="#C98A5E"/><rect x="96" y="0" width="24" height="56" fill="#7A9B8E"/></svg>`,
+              },
+              {
+                id: "ink-cream",
+                label: { es: "Tinta y crema", en: "Ink and cream" },
+                hint: { es: "Casi todo neutro, un rojo hondo.", en: "Almost all neutral, one deep red." },
+                hexes: ["#8C2936", "#F4EFE6", "#1F1D1B", "#B08968", "#5E6B62"],
+                visual: `<svg class="bmk-card-vis" viewBox="0 0 120 56" preserveAspectRatio="none" aria-hidden="true"><rect x="0" y="0" width="24" height="56" fill="#8C2936"/><rect x="24" y="0" width="24" height="56" fill="#F4EFE6"/><rect x="48" y="0" width="24" height="56" fill="#1F1D1B"/><rect x="72" y="0" width="24" height="56" fill="#B08968"/><rect x="96" y="0" width="24" height="56" fill="#5E6B62"/></svg>`,
+              },
+              {
+                id: "forest",
+                label: { es: "Bosque", en: "Forest" },
+                hint: { es: "Verdes profundos y madera.", en: "Deep greens and wood." },
+                hexes: ["#2F4F3E", "#EDE8DA", "#1C1A17", "#A8763E", "#C2CBB4"],
+                visual: `<svg class="bmk-card-vis" viewBox="0 0 120 56" preserveAspectRatio="none" aria-hidden="true"><rect x="0" y="0" width="24" height="56" fill="#2F4F3E"/><rect x="24" y="0" width="24" height="56" fill="#EDE8DA"/><rect x="48" y="0" width="24" height="56" fill="#1C1A17"/><rect x="72" y="0" width="24" height="56" fill="#A8763E"/><rect x="96" y="0" width="24" height="56" fill="#C2CBB4"/></svg>`,
+              },
+              {
+                id: "sea",
+                label: { es: "Costa", en: "Coast" },
+                hint: { es: "Azul hondo, arena y sal.", en: "Deep blue, sand and salt." },
+                hexes: ["#1F4E6B", "#F0EBE1", "#17212A", "#D9A441", "#8FB8C9"],
+                visual: `<svg class="bmk-card-vis" viewBox="0 0 120 56" preserveAspectRatio="none" aria-hidden="true"><rect x="0" y="0" width="24" height="56" fill="#1F4E6B"/><rect x="24" y="0" width="24" height="56" fill="#F0EBE1"/><rect x="48" y="0" width="24" height="56" fill="#17212A"/><rect x="72" y="0" width="24" height="56" fill="#D9A441"/><rect x="96" y="0" width="24" height="56" fill="#8FB8C9"/></svg>`,
+              },
+              {
+                id: "mono",
+                label: { es: "Monocromo", en: "Monochrome" },
+                hint: { es: "Solo grises y un acento.", en: "Greys only, with one accent." },
+                hexes: ["#2B2B2B", "#F2F2F0", "#0E0E0E", "#8A8A88", "#C4453A"],
+                visual: `<svg class="bmk-card-vis" viewBox="0 0 120 56" preserveAspectRatio="none" aria-hidden="true"><rect x="0" y="0" width="24" height="56" fill="#2B2B2B"/><rect x="24" y="0" width="24" height="56" fill="#F2F2F0"/><rect x="48" y="0" width="24" height="56" fill="#0E0E0E"/><rect x="72" y="0" width="24" height="56" fill="#8A8A88"/><rect x="96" y="0" width="24" height="56" fill="#C4453A"/></svg>`,
+              },
+              {
+                id: "bright",
+                label: { es: "Vivo", en: "Bright" },
+                hint: { es: "Color saturado sobre blanco.", en: "Saturated colour on white." },
+                hexes: ["#E2452F", "#FBF7F2", "#161616", "#F2B705", "#2B6CB0"],
+                visual: `<svg class="bmk-card-vis" viewBox="0 0 120 56" preserveAspectRatio="none" aria-hidden="true"><rect x="0" y="0" width="24" height="56" fill="#E2452F"/><rect x="24" y="0" width="24" height="56" fill="#FBF7F2"/><rect x="48" y="0" width="24" height="56" fill="#161616"/><rect x="72" y="0" width="24" height="56" fill="#F2B705"/><rect x="96" y="0" width="24" height="56" fill="#2B6CB0"/></svg>`,
+              },
+            ],
+          },
+          visualSignatures: {
+            ui: "ToggleList",
+            pick: 3,
+            /* No se pregunta en blanco: se proponen a partir de los bloques
+               04 a 06 y la persona confirma o descarta. */
+            gen: () => {
+              const row = (id, i) => (Array.isArray(state[id]) ? state[id][i] : "") || "";
+              const c = (i) => row("compositionGrid", i),
+                ph = (i) => row("photography", i),
+                gf = (i) => row("graphicForms", i);
+              const mk = (id, es, en) => ({
+                id,
+                label: { es, en },
+                hint: { es: "Sale de lo que ya has elegido; puedes quitarlo.", en: "It comes from what you already chose; you can drop it." },
+                md: { es, en },
+              });
+              return [
+                mk("sig-comp", `Composición: ${c(2)} ${c(4)}`.trim(), `Composition: ${c(2)} ${c(4)}`.trim()),
+                mk("sig-photo", `Imagen: ${ph(1)} ${ph(2)}`.trim(), `Image: ${ph(1)} ${ph(2)}`.trim()),
+                mk("sig-graphic", `Gráfico: ${gf(0)} ${gf(3)}`.trim(), `Graphic: ${gf(0)} ${gf(3)}`.trim()),
+              ];
+            },
           },
         };
 
@@ -2746,6 +3935,15 @@
               empty:
                 "_Todavía no hay respuestas. Completa los bloques para construir tu Brandbook OS._",
             },
+            auto: {
+              noText: "Sin texto, sin logotipo, sin marca de agua, sin estética de banco de imágenes.",
+              ratio: "Proporción: 4:5, 9:16 o 16:9 según el formato",
+              light: "Momento de luz dentro de la hora elegida",
+              subject: "Sujeto concreto de cada pieza",
+              formats: "Formatos previstos:",
+              check: "¿Se cumple?",
+              checkStock: "¿Podría confundirse con una imagen de banco?",
+            },
             rule: {
               intro: [
                 "Usa esta información como el contexto creativo de la marca.",
@@ -2868,8 +4066,12 @@
                 "Revisa esta pieza con mi Visual Direction y dime qué no encaja.",
                 "Con mi Visual Direction, propón 3 layouts para este formato.",
               ],
+              autoNote: "Generado con tus respuestas",
+              autoEdit: "Ajustar",
+              autoBack: "Volver a lo generado",
+              techDetails: "Detalles técnicos (HEX, RGB, CMYK)",
               optOther: "Otro (lo escribo yo)",
-              optBack: "← Volver a las opciones",
+              optBack: "Volver a las opciones",
               optSuggest: "No lo sé, sugiéreme",
               optSuggested: "sugerida",
               optSuggestedToast: "Sugerencia aplicada · puedes cambiarla",
@@ -3336,6 +4538,15 @@
               empty:
                 "_No answers yet. Complete the blocks to build your Brandbook OS._",
             },
+            auto: {
+              noText: "No text, no logo, no watermark, no stock-library look.",
+              ratio: "Aspect ratio: 4:5, 9:16 or 16:9 depending on the format",
+              light: "Moment of light within the chosen hour",
+              subject: "The specific subject of each piece",
+              formats: "Intended formats:",
+              check: "Does it hold?",
+              checkStock: "Could this be mistaken for a stock image?",
+            },
             rule: {
               intro: [
                 "Use this information as the brand's creative context.",
@@ -3456,8 +4667,12 @@
                 "Check this piece against my Visual Direction and tell me what doesn't fit.",
                 "Using my Visual Direction, suggest 3 layouts for this format.",
               ],
+              autoNote: "Generated from your answers",
+              autoEdit: "Adjust",
+              autoBack: "Back to the generated text",
+              techDetails: "Technical details (HEX, RGB, CMYK)",
               optOther: "Other (I'll write it)",
-              optBack: "← Back to the options",
+              optBack: "Back to the options",
               optSuggest: "I don't know, suggest one",
               optSuggested: "suggested",
               optSuggestedToast: "Suggestion applied · you can change it",
@@ -3487,6 +4702,7 @@
               ],
             },
           },
+
         };
 
         const STORAGE_KEY = "ai-brand-os-v1";
@@ -3894,6 +5110,7 @@
 
         /* ---------- Progress ---------- */
         function isFilled(f) {
+          if (AUTO[f.id] && pickOf(f.id).id !== OTHER) return true;
           const v = state[f.id];
           switch (f.type) {
             case "text":
@@ -4012,6 +5229,7 @@
         }
 
         function render(keepTop) {
+          refreshAuto();
           const stage = root.querySelector(".bmk-stage");
           stage.className = "bmk-stage";
           root.classList.toggle("is-map", view.name === "map");
@@ -4212,15 +5430,43 @@
         const OTHER = "__other"; // respuesta escrita a mano
         const picks = () => (state.picks = state.picks || {});
         const pickOf = (id) => picks()[id] || {};
-        const optItem = (O, id) => O.items.find((x) => x.id === id);
+        const optsOf = (O) => (O.gen ? O.gen() : O.items);
+        const optItem = (O, id) => optsOf(O).find((x) => x.id === id);
         const tx = (o) => (o && (o[lang] ?? o.en)) || "";
 
         /* Escribe la opción elegida en el campo, con la forma que espera su tipo */
+        /* Una paleta de partida escribe los cinco tonos, no un texto */
+        function applyPreset(fid, oid) {
+          const it = optItem(OPTIONS[fid], oid);
+          if (!it || !it.hexes) return;
+          const o = {};
+          PALETTE_KEYS.forEach((k, i) => {
+            o[k] = { ...((state.colors || {})[k] || {}), hex: it.hexes[i] };
+          });
+          state.colors = o;
+          picks()[fid] = { id: oid };
+        }
         function writeOption(f, O, id) {
           const it = optItem(O, id);
-          if (!it) return;
+          if (!it || !it.md) return;
           const v = it.md[lang] ?? it.md.en;
-          state[f.id] = f.type === "pair" ? (Array.isArray(v) ? v.slice() : String(v).split(" + ")) : v;
+          /* Un array llena todas las filas (pares y listas etiquetadas);
+             un texto suelto llena el campo entero. */
+          if (Array.isArray(v)) state[f.id] = v.slice();
+          else if (f.type === "pair") state[f.id] = String(v).split(" + ");
+          else state[f.id] = v;
+        }
+        /* Campos de varias filas donde cada fila tiene su propio juego de
+           opciones: un control segmentado por fila. */
+        function writeRow(f, O, ri, oid) {
+          const row = O.rows[ri],
+            it = row.items.find((x) => x.id === oid);
+          if (!it) return;
+          const a = Array.isArray(state[f.id]) ? state[f.id].slice() : [];
+          a[ri] = it.md[lang] ?? it.md.en;
+          state[f.id] = a;
+          const p = pickOf(f.id);
+          picks()[f.id] = { ...p, rows: { ...(p.rows || {}), [ri]: oid } };
         }
         function writeChips(f, O, ids) {
           state[f.id] = ids
@@ -4235,7 +5481,10 @@
               p = pickOf(fid),
               f = findField(fid);
             if (!O || !f || p.id === OTHER) return;
-            if (O.ui === "ChipPicker") p.ids && writeChips(f, O, p.ids);
+            if (O.rows)
+              Object.keys(p.rows || {}).forEach((ri) => writeRow(f, O, +ri, p.rows[ri]));
+            else if (O.ui === "ChipPicker" || O.ui === "ToggleList")
+              p.ids && writeChips(f, O, p.ids);
             else if (p.id) writeOption(f, O, p.id);
           });
         }
@@ -4259,19 +5508,24 @@
           });
         }
 
+        const IC_PEN = `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 2.5l2 2L6 12l-3 1 1-3 7.5-7.5z"/></svg>`;
+        const IC_BACK = `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M13 8H3M6.5 4.5L3 8l3.5 3.5"/></svg>`;
+        const IC_WAND = `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3L4 13"/><path d="M11.5 1.5v2M13.8 4.2h-2M12.4 7.6l1 1M14.5 2.2l-1.4 1.4"/></svg>`;
+
         function optActions(f, O) {
           const p = pickOf(f.id),
             isOther = p.id === OTHER;
           return `<div class="bmk-opt-actions">
-        <button type="button" class="bmk-opt-link" data-act="${isOther ? "unother" : "other"}" data-f="${f.id}">${esc(isOther ? T.ui.optBack : T.ui.optOther)}</button>
-        <button type="button" class="bmk-opt-link" data-act="suggest" data-f="${f.id}">${esc(T.ui.optSuggest)}</button>
+        <button type="button" class="bmk-optbtn" data-act="${isOther ? "unother" : "other"}" data-f="${f.id}">${isOther ? IC_BACK : IC_PEN}<span>${esc(isOther ? T.ui.optBack : T.ui.optOther)}</span></button>
+        <button type="button" class="bmk-optbtn bmk-optbtn--sug" data-act="suggest" data-f="${f.id}">${IC_WAND}<span>${esc(T.ui.optSuggest)}</span></button>
         ${p.suggested ? `<span class="bmk-sugg">${esc(T.ui.optSuggested)}</span>` : ""}
       </div>`;
         }
 
         function CardPicker(f, O) {
-          const sel = pickOf(f.id).id;
-          return `<div class="bmk-cards" role="radiogroup" aria-label="${esc(f.label)}">${O.items
+          const sel = pickOf(f.id).id,
+            ITEMS = optsOf(O);
+          return `<div class="bmk-cards" role="radiogroup" aria-label="${esc(f.label)}">${ITEMS
             .map(
               (it) => `<button type="button" class="bmk-card ${sel === it.id ? "is-on" : ""}" role="radio" aria-checked="${sel === it.id}" data-act="pick" data-f="${f.id}" data-o="${it.id}">
           ${it.visual || ""}
@@ -4296,10 +5550,11 @@
         }
 
         function ChipPicker(f, O) {
+          const ITEMS = optsOf(O);
           const ids = pickOf(f.id).ids || [],
             taken = takenBy(O),
             full = ids.length >= O.pick;
-          return `<div class="bmk-chips" role="group" aria-label="${esc(f.label)}">${O.items
+          return `<div class="bmk-chips" role="group" aria-label="${esc(f.label)}">${ITEMS
             .map((it) => {
               const on = ids.includes(it.id),
                 off = taken.includes(it.id) || (full && !on);
@@ -4310,8 +5565,9 @@
         }
 
         function ToggleList(f, O) {
+          const ITEMS = optsOf(O);
           const ids = pickOf(f.id).ids || [];
-          return `<div class="bmk-toggles" role="group" aria-label="${esc(f.label)}">${O.items
+          return `<div class="bmk-toggles" role="group" aria-label="${esc(f.label)}">${ITEMS
             .map((it) => {
               const on = ids.includes(it.id);
               return `<button type="button" class="bmk-toggle ${on ? "is-on" : ""}" aria-pressed="${on}" data-act="chip" data-f="${f.id}" data-o="${it.id}">
@@ -4322,17 +5578,46 @@
             .join("")}</div>${O.pick ? `<div class="bmk-count">${T.ui.of(ids.length, O.pick)}</div>` : ""}`;
         }
 
-        function SegmentedSlider(f, O) {
-          const sel = pickOf(f.id).id || O.def;
-          return `<div class="bmk-seg" role="radiogroup" aria-label="${esc(f.label)}">${O.items
+        function segRow(f, items, sel, ri) {
+          return `<div class="bmk-seg" role="radiogroup" aria-label="${esc(f.label)}">${items
             .map(
-              (it) => `<button type="button" class="${sel === it.id ? "is-on" : ""}" role="radio" aria-checked="${sel === it.id}" title="${esc(tx(it.hint))}" data-act="pick" data-f="${f.id}" data-o="${it.id}">${it.visual || ""}<span>${esc(tx(it.label))}</span></button>`,
+              (it) => `<button type="button" class="${sel === it.id ? "is-on" : ""}" role="radio" aria-checked="${sel === it.id}" title="${esc(tx(it.hint))}" data-act="${ri === undefined ? "pick" : "row"}" data-f="${f.id}" ${ri === undefined ? "" : `data-r="${ri}"`} data-o="${it.id}">${it.visual || ""}<span>${esc(tx(it.label))}</span></button>`,
             )
             .join("")}</div>`;
         }
-        /* ColorPicker: el selector actual, ya implementado en el caso "palette" */
+        function SegmentedSlider(f, O) {
+          if (!O.rows) return segRow(f, O.items, pickOf(f.id).id || O.def);
+          const rw = pickOf(f.id).rows || {},
+            caps = rowLabelsOf(f) || [];
+          return `<div class="bmk-rows">${O.rows
+            .map(
+              (r, ri) => `<div><span class="bmk-row-h">${esc(tx(r.label) || caps[ri] || "")}</span>${segRow(f, r.items, rw[ri] ?? r.def, ri)}</div>`,
+            )
+            .join("")}</div>`;
+        }
+        function ColorPicker(f, O, native) {
+          const sel = pickOf(f.id).id;
+          const cards = optsOf(O)
+            .map(
+              (it) => `<button type="button" class="bmk-card ${sel === it.id ? "is-on" : ""}" role="radio" aria-checked="${sel === it.id}" data-act="palpreset" data-f="${f.id}" data-o="${it.id}">
+          ${it.visual || ""}
+          <span class="bmk-card-t">${esc(tx(it.label))}</span>
+          <span class="bmk-card-h">${esc(tx(it.hint))}</span>
+        </button>`,
+            )
+            .join("");
+          return `<div class="bmk-cards" role="radiogroup" aria-label="${esc(f.label)}">${cards}</div>
+      <details class="bmk-tech"><summary>${esc(T.ui.techDetails)}</summary>${native}</details>`;
+        }
 
-        const PICKERS = { CardPicker, PairPicker, ChipPicker, ToggleList, SegmentedSlider };
+        const PICKERS = {
+          CardPicker,
+          PairPicker,
+          ChipPicker,
+          ToggleList,
+          SegmentedSlider,
+          ColorPicker,
+        };
 
         /* Un campo con entrada en OPTIONS se dibuja con su componente; si la
            persona elige "Otro", vuelve el control original de siempre. */
@@ -4341,7 +5626,69 @@
             return `<div class="bmk-opts">${native}${optActions(f, O)}</div>`;
           const render = PICKERS[O.ui];
           if (!render) return native;
-          return `<div class="bmk-opts">${render(f, O)}${optActions(f, O)}</div>`;
+          return `<div class="bmk-opts">${render(f, O, native)}${optActions(f, O)}</div>`;
+        }
+
+        /* ============================================================
+           Bloque 10: no se pregunta. Se compone con lo respondido en los
+           bloques 01 a 09. La persona puede ajustarlo con "Otro".
+           ============================================================ */
+        const AUTO = {
+          aiBasePrompt: () => {
+            const R = (id, i) => (Array.isArray(state[id]) ? state[id][i] : "") || "";
+            return [
+              state.visualTerritory,
+              R("photography", 0),
+              R("photography", 2),
+              R("photography", 3),
+              R("compositionGrid", 3),
+              R("compositionGrid", 4),
+              clean(state.visualKeywords).join(", "),
+            ]
+              .filter(Boolean)
+              .join(" ");
+          },
+          aiNegativePrompt: () => {
+            const R = (i) => (Array.isArray(state.visualAvoid) ? state.visualAvoid[i] : "") || "";
+            return [
+              clean(state.visualAntiKeywords).join(", "),
+              R(0),
+              R(1),
+              R(3),
+              R(4),
+              R(5),
+              T.auto.noText,
+            ]
+              .filter(Boolean)
+              .join(" ");
+          },
+          aiParameters: () => {
+            const apps = clean(state.appPriority);
+            return [T.auto.ratio, T.auto.light, T.auto.subject].concat(
+              apps.length ? [`${T.auto.formats} ${apps.join(", ")}`] : [],
+            );
+          },
+          aiRules: () => {
+            const R = (id, i) => (Array.isArray(state[id]) ? state[id][i] : "") || "";
+            return [R("photography", 2), R("compositionGrid", 4), R("photography", 4)].filter(Boolean);
+          },
+          aiChecklist: () => {
+            const R = (id, i) => (Array.isArray(state[id]) ? state[id][i] : "") || "";
+            return [
+              `${T.auto.check} ${R("photography", 2)}`,
+              `${T.auto.check} ${R("compositionGrid", 3)}`,
+              T.auto.checkStock,
+            ].filter(Boolean);
+          },
+        };
+        /* Recalcula los campos automáticos, salvo los que se hayan ajustado a mano */
+        function refreshAuto() {
+          Object.keys(AUTO).forEach((id) => {
+            if (pickOf(id).id === OTHER) return;
+            const v = AUTO[id]();
+            state[id] = v;
+            picks()[id] = { ...pickOf(id), auto: true };
+          });
         }
 
         function fieldHTML(f, k) {
@@ -4452,6 +5799,14 @@
           }
           const O = OPTIONS[f.id];
           if (O) c = pickerHTML(f, O, c);
+          else if (AUTO[f.id]) {
+            const edited = pickOf(f.id).id === OTHER,
+              val = state[f.id];
+            c = edited
+              ? `<div class="bmk-opts">${c}<div class="bmk-opt-actions"><button type="button" class="bmk-optbtn" data-act="unother" data-f="${f.id}">${IC_BACK}<span>${esc(T.ui.autoBack)}</span></button></div></div>`
+              : `<div class="bmk-opts"><div class="bmk-auto">${esc(Array.isArray(val) ? val.filter(Boolean).map((x) => "· " + x).join("\n") : val || "")}</div>
+        <div class="bmk-opt-actions"><span class="bmk-sugg">${esc(T.ui.autoNote)}</span><button type="button" class="bmk-optbtn" data-act="other" data-f="${f.id}">${IC_PEN}<span>${esc(T.ui.autoEdit)}</span></button></div></div>`;
+          }
           const sec = SECTIONS.find((s) => s.fields.includes(f)),
             qs = sec ? countable(sec) : [],
             pos = qs.indexOf(f);
@@ -5187,6 +6542,17 @@
               refresh();
               break;
             }
+            case "row": {
+              const fid = b.dataset.f,
+                f = findField(fid),
+                O = OPTIONS[fid];
+              writeRow(f, O, +b.dataset.r, b.dataset.o);
+              save();
+              rerenderField(fid);
+              syncDeps(fid);
+              refresh();
+              break;
+            }
             case "chip": {
               const fid = b.dataset.f,
                 f = findField(fid),
@@ -5208,8 +6574,18 @@
               const fid = b.dataset.f,
                 f = findField(fid),
                 O = OPTIONS[fid];
-              if (O.ui === "ChipPicker" || O.ui === "ToggleList") {
-                const ids = (O.def || []).filter((x) => !takenBy(O).includes(x));
+              if (O.ui === "ColorPicker") {
+                applyPreset(fid, O.def);
+                picks()[fid] = { ...pickOf(fid), suggested: true };
+              } else if (O.rows) {
+                O.rows.forEach((r, ri) => writeRow(f, O, ri, r.def));
+                picks()[fid] = { ...pickOf(fid), suggested: true };
+              } else if (O.ui === "ChipPicker" || O.ui === "ToggleList") {
+                /* Sin lista por defecto (opciones generadas) se aceptan todas */
+                const base = O.def || optsOf(O).map((x) => x.id);
+                const ids = base
+                  .filter((x) => !takenBy(O).includes(x))
+                  .slice(0, O.pick || base.length);
                 picks()[fid] = { ids, suggested: true };
                 writeChips(f, O, ids);
               } else {
@@ -5240,6 +6616,14 @@
               save();
               rerenderField(fid);
               syncDeps(fid);
+              refresh();
+              break;
+            }
+            case "palpreset": {
+              const fid = b.dataset.f;
+              applyPreset(fid, b.dataset.o);
+              save();
+              rerenderField(fid);
               refresh();
               break;
             }
