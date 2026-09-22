@@ -2794,14 +2794,14 @@
                     label: { es: "12 columnas", en: "12 columns" },
                     hint: { es: "Muchas divisiones, más juego.", en: "Many divisions, more play." },
                     visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="4.0" y="4" width="3" height="18" fill="currentColor" opacity="1"/><rect x="8.7" y="4" width="3" height="18" fill="currentColor" opacity="1"/><rect x="13.4" y="4" width="3" height="18" fill="currentColor" opacity="1"/><rect x="18.1" y="4" width="3" height="18" fill="currentColor" opacity="1"/><rect x="22.8" y="4" width="3" height="18" fill="currentColor" opacity="1"/><rect x="27.5" y="4" width="3" height="18" fill="currentColor" opacity="1"/><rect x="32.2" y="4" width="3" height="18" fill="currentColor" opacity="1"/><rect x="36.9" y="4" width="3" height="18" fill="currentColor" opacity="1"/><rect x="41.6" y="4" width="3" height="18" fill="currentColor" opacity="1"/><rect x="46.300000000000004" y="4" width="3" height="18" fill="currentColor" opacity="1"/><rect x="51.0" y="4" width="3" height="18" fill="currentColor" opacity="1"/><rect x="55.7" y="4" width="3" height="18" fill="currentColor" opacity="1"/></svg>`,
-                    md: { es: "Rejilla de 12 columnas: divisiones finas que permiten más combinaciones.", en: "A 12-column grid: fine divisions that allow more combinations." },
+                    md: { es: "Rejilla de 12 columnas; los bloques ocupan 2, 3, 4 o 6.", en: "A 12-column grid; content blocks span 2, 3, 4 or 6 columns." },
                   },
                   {
                     id: "free",
                     label: { es: "Sin rejilla", en: "No grid" },
                     hint: { es: "Cada pieza se compone a ojo.", en: "Each piece is composed by eye." },
                     visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="6" y="5" width="18" height="9" fill="currentColor" opacity="1"/><rect x="30" y="9" width="22" height="13" fill="currentColor" opacity="1"/><rect x="8" y="17" width="14" height="5" fill="currentColor" opacity="1"/></svg>`,
-                    md: { es: "Sin rejilla fija: cada pieza se compone a ojo buscando equilibrio.", en: "No fixed grid: each piece is composed by eye, seeking balance." },
+                    md: { es: "Composición libre sin módulo fijo, pero cada borde sigue cayendo sobre una base de 12 columnas.", en: "A free composition with no fixed module, but every edge still lands on a 12-column base." },
                   },
                 ],
               },
@@ -2821,14 +2821,14 @@
                     label: { es: "Centrada", en: "Centred" },
                     hint: { es: "Simétrica respecto al eje.", en: "Symmetrical about the axis." },
                     visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="13" y="5" width="34" height="4" fill="currentColor" opacity="1"/><rect x="8" y="12" width="44" height="4" fill="currentColor" opacity="1"/><rect x="18" y="19" width="24" height="4" fill="currentColor" opacity="1"/></svg>`,
-                    md: { es: "Alineación centrada: todo se organiza respecto a un eje vertical.", en: "Centred alignment: everything organises around a vertical axis." },
+                    md: { es: "Alineación centrada solo en elementos de display; el cuerpo de texto siempre a la izquierda.", en: "Centred alignment for display elements only; body copy always stays left-aligned." },
                   },
                   {
                     id: "justified",
                     label: { es: "Justificada", en: "Justified" },
                     hint: { es: "Bordes rectos a ambos lados.", en: "Straight edges on both sides." },
                     visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="6" y="5" width="48" height="4" fill="currentColor" opacity="1"/><rect x="6" y="12" width="48" height="4" fill="currentColor" opacity="1"/><rect x="6" y="19" width="48" height="4" fill="currentColor" opacity="1"/></svg>`,
-                    md: { es: "Texto justificado: bordes rectos a ambos lados del bloque.", en: "Justified text: straight edges on both sides of the block." },
+                    md: { es: "Texto justificado solo en bloques cortos; nunca en texto largo, donde el navegador abre ríos.", en: "Justified text in short blocks only; never for long copy, where the browser opens rivers." },
                   },
                 ],
               },
@@ -3008,7 +3008,7 @@
                     label: { es: "Sin patrones", en: "No patterns" },
                     hint: { es: "La textura hace el trabajo.", en: "Texture does the work." },
                     visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="10" y="5" width="40" height="16" fill="currentColor" opacity="0.15"/></svg>`,
-                    md: { es: "Sin patrones: la textura del material hace ese trabajo.", en: "No patterns: the texture of the material does that work." },
+                    md: { es: "Sin patrones; las superficies se quedan planas.", en: "No patterns; surfaces stay flat." },
                   },
                   {
                     id: "subtle",
@@ -3069,7 +3069,7 @@
                     label: { es: "Solo espacio", en: "Space only" },
                     hint: { es: "El vacío separa.", en: "Emptiness separates." },
                     visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="8" y="4" width="44" height="6" fill="currentColor" opacity="0.3"/><rect x="8" y="16" width="44" height="6" fill="currentColor" opacity="0.3"/></svg>`,
-                    md: { es: "Sin líneas: el espacio vacío es el único separador.", en: "No lines: empty space is the only separator." },
+                    md: { es: "Sin filetes: las secciones se separan por cambio de superficie o por un paso mayor de la escala, nunca por relleno uniforme.", en: "No rules: sections separate by a change of surface or by a larger step of the spacing scale, never by uniform padding." },
                   },
                   {
                     id: "block",
@@ -3448,18 +3448,16 @@
               /* Se toma lo primero que haya respondido de cada bloque, no unas
                  filas fijas: si no, bastaba con saltarse una para que este
                  bloque quedara imposible de completar. */
-              const any = (id) =>
-                (Array.isArray(state[id]) ? state[id] : [])
-                  .map((x) => (x || "").trim())
-                  .filter(Boolean)
-                  .slice(0, 2);
+              /* Destila con las etiquetas cortas: un sello que copia la frase
+                 entera de otro bloque no añade nada al documento. */
               const out = [];
-              const comp = any("compositionGrid"),
-                mat = any("materiality"),
-                gra = any("graphicForms");
-              if (comp.length) out.push(mk("sig-comp", `Composición: ${comp.join(" · ")}`, `Composition: ${comp.join(" · ")}`));
-              if (mat.length) out.push(mk("sig-material", `Superficies: ${mat.join(" · ")}`, `Surfaces: ${mat.join(" · ")}`));
-              if (gra.length) out.push(mk("sig-graphic", `Detalles: ${gra.join(" · ")}`, `Details: ${gra.join(" · ")}`));
+              const add = (id, es, en, fid) => {
+                const l = enLabels(fid, 2);
+                if (l.length) out.push(mk(id, `${es}: ${l.join(", ")}`, `${en}: ${l.join(", ")}`));
+              };
+              add("sig-comp", "Composición", "Composition", "compositionGrid");
+              add("sig-material", "Superficies", "Surfaces", "materiality");
+              add("sig-graphic", "Detalles", "Details", "graphicForms");
               return out;
             },
           },
@@ -3969,8 +3967,9 @@
                 "Los archivos de referencia están en la carpeta `referencias/`, junto a este documento.",
               mdSlots: ["Primary", "Neutral", "Accent 01", "Accent 02", "Accent 03"],
               rulesTitle: "Alternation rules — non-negotiable",
+              defaultsShort: "System defaults:",
               defaults:
-                "System defaults. They apply as written unless the answers above say otherwise; they are never improvised:",
+                "About the system defaults marked in each section: they apply exactly as written unless an answer above says otherwise. They are never improvised, and a structural field left unanswered takes its default rather than an invented value.",
               derive:
                 "Expressive only. Deduce it from the decisions above and keep it constant across every piece:",
               note: "Note:",
@@ -4558,8 +4557,9 @@
                 "Reference files are in the `references/` folder, next to this document.",
               mdSlots: ["Primary", "Neutral", "Accent 01", "Accent 02", "Accent 03"],
               rulesTitle: "Alternation rules — non-negotiable",
+              defaultsShort: "System defaults:",
               defaults:
-                "System defaults. They apply as written unless the answers above say otherwise; they are never improvised:",
+                "About the system defaults marked in each section: they apply exactly as written unless an answer above says otherwise. They are never improvised, and a structural field left unanswered takes its default rather than an invented value.",
               derive:
                 "Expressive only. Deduce it from the decisions above and keep it constant across every piece:",
               note: "Note:",
@@ -4764,7 +4764,7 @@
 
         /* Sello de versión: lo reescribe stamp.sh en cada despliegue, para
            saber de un vistazo qué build se está viendo. */
-        const BUILD = "22 Sep 2026 · 18:52";
+        const BUILD = "22 Sep 2026 · 19:01";
         const STORAGE_KEY = "ai-brand-os-v1";
         const LANG_KEY = "brandbook-os-lang";
 
@@ -6196,7 +6196,8 @@
           const D = T.docs[doc];
           const out = [`# ${D.title}`, "", `_${D.sub}_`];
           const pending = [];
-          let any = false;
+          let any = false,
+            anyDefault = false;
           docSections(doc).forEach((s, i) => {
             const parts = [];
             s.fields.forEach((f) => {
@@ -6224,13 +6225,15 @@
                   "",
                   s.rules.map((r) => `- ${r}`).join("\n"),
                 );
-              if (s.defaults && s.defaults.length)
+              if (s.defaults && s.defaults.length) {
+                anyDefault = true;
                 out.push(
                   "",
-                  `_${T.md.defaults}_`,
+                  `_${T.md.defaultsShort}_`,
                   "",
                   s.defaults.map(([k, v]) => `- **${k}:** ${v}`).join("\n"),
                 );
+              }
               if (s.derive && s.derive.length)
                 out.push("", `_${T.md.derive} ${s.derive.join(" · ")}._`);
             }
@@ -6255,6 +6258,9 @@
             "",
             ruleMD(T.rule),
           );
+          /* La explicación de los valores por defecto, una sola vez y al
+             cierre; en cada sección basta el rótulo corto. */
+          if (anyDefault) out.push("", `_${T.md.defaults}_`);
           return out.join("\n") + "\n";
         }
 
