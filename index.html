@@ -2421,8 +2421,6 @@
           ] },
           { doc: "visual", fields: [
               { id: "pageArchetypes", type: "textarea", rows: 2 },
-              { id: "sectionOrder", type: "textarea", rows: 2, optional: true },
-              { id: "focalRule", type: "text" },
           ] },
           { doc: "visual", fields: [
               { id: "illustration", type: "list", n: 3, min: 2 },
@@ -3501,33 +3499,6 @@
                 },
             ],
           },
-          focalRule: {
-            ui: "SegmentedSlider",
-            def: "one",
-            items: [
-              {
-                id: "one",
-                label: { es: "Un foco", en: "One focus" },
-                hint: { es: "Una sola cosa manda en cada sección.", en: "One thing leads in each section." },
-                visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="20" y="6" width="20" height="14" fill="currentColor"/></svg>`,
-                md: { es: "Un único punto focal por sección: una imagen, una cifra, un titular o una acción.", en: "Exactly one focal point per section: an image, a figure, a headline or an action." },
-              },
-              {
-                id: "two",
-                label: { es: "Dos focos", en: "Two focuses" },
-                hint: { es: "Dos pesos por sección, uno mayor.", en: "Two weights per section, one larger." },
-                visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="6" y="6" width="26" height="14" fill="currentColor"/><rect x="38" y="11" width="16" height="9" fill="currentColor" opacity=0.5/></svg>`,
-                md: { es: "Dos puntos focales por sección, siempre con uno claramente mayor.", en: "Two focal points per section, always with one clearly larger." },
-              },
-              {
-                id: "free",
-                label: { es: "Sin regla", en: "No rule" },
-                hint: { es: "Cada sección decide. Arriesgado.", en: "Each section decides. Risky." },
-                visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="4" y="4" width="14" height="8" fill="currentColor" opacity=0.7/><rect x="22" y="9" width="12" height="12" fill="currentColor"/><rect x="40" y="5" width="16" height="7" fill="currentColor" opacity=0.4/><rect x="40" y="16" width="16" height="6" fill="currentColor" opacity=0.5/></svg>`,
-                md: { es: "Sin regla de foco fija; cada sección decide su propio equilibrio.", en: "No fixed focal rule; each section sets its own balance." },
-              },
-            ],
-          },
         };
 
         const TEXT = {
@@ -3673,16 +3644,6 @@
                     hint: "Elige de 4 a 6. Son los moldes con los que se monta.",
                     why: "Es lo que más decide si la página se ve rica o plana.",
                   },
-                  sectionOrder: {
-                    label: "¿En qué orden van?",
-                    hint: "Escríbelo si lo tienes claro. Si no, déjalo vacío.",
-                    why: "Da a la IA el recorrido exacto en vez de que lo invente.",
-                  },
-                  focalRule: {
-                    label: "¿Cuántas cosas mandan en cada sección?",
-                    hint: "Una sección con dos protagonistas no tiene ninguno.",
-                    why: "Es la regla que evita que cada bloque compita consigo mismo.",
-                  },
                 },
               },
               {
@@ -3819,8 +3780,6 @@
               colorRules: "Color rules",
               compositionGrid: "Composition",
               pageArchetypes: "Section archetypes",
-              sectionOrder: "Section order",
-              focalRule: "Focal rule",
               illustration: "Illustration",
               materiality: "Materiality",
               graphicForms: "Graphic language",
@@ -3865,7 +3824,6 @@
                 "Low: one idea per screen",
                 "At least 30% of any layout",
               ],
-              sectionOrder: "Hero partido · Alternancia · Franja de cifras · Cita a sangre · Pasos · Cierre",
               illustration: [
                 "Sparse line drawing, only where a photograph cannot go",
                 "Single weight, slightly irregular",
@@ -4268,16 +4226,6 @@
                     hint: "Pick 4 to 6. They are the moulds the page is built from.",
                     why: "It is what most decides whether a page reads rich or flat.",
                   },
-                  sectionOrder: {
-                    label: "In what order do they go?",
-                    hint: "Write it if you know. If not, leave it empty.",
-                    why: "It gives the AI the exact run instead of inventing one.",
-                  },
-                  focalRule: {
-                    label: "How many things lead in each section?",
-                    hint: "A section with two leads has none.",
-                    why: "It is the rule that stops each block competing with itself.",
-                  },
                 },
               },
               {
@@ -4414,8 +4362,6 @@
               colorRules: "Color rules",
               compositionGrid: "Composition",
               pageArchetypes: "Section archetypes",
-              sectionOrder: "Section order",
-              focalRule: "Focal rule",
               illustration: "Illustration",
               materiality: "Materiality",
               graphicForms: "Graphic language",
@@ -4460,7 +4406,6 @@
                 "Low: one idea per screen",
                 "At least 30% of any layout",
               ],
-              sectionOrder: "Hero partido · Alternancia · Franja de cifras · Cita a sangre · Pasos · Cierre",
               illustration: [
                 "Sparse line drawing, only where a photograph cannot go",
                 "Single weight, slightly irregular",
@@ -4723,7 +4668,7 @@
 
         /* Sello de versión: lo reescribe stamp.sh en cada despliegue, para
            saber de un vistazo qué build se está viendo. */
-        const BUILD = "23 Sep 2026 · 01:36";
+        const BUILD = "23 Sep 2026 · 01:39";
         const STORAGE_KEY = "ai-brand-os-v1";
         const LANG_KEY = "brandbook-os-lang";
 
