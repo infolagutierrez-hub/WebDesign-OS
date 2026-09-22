@@ -1084,9 +1084,20 @@
         display: grid;
         gap: 8px;
       }
+      .bmk-pairopt svg {
+        width: 100%;
+        height: 32px;
+        display: block;
+        margin-bottom: 5px;
+      }
+      .bmk-toggle svg {
+        width: 46px;
+        height: 26px;
+        flex: none;
+      }
       .bmk-toggle {
         display: grid;
-        grid-template-columns: 1fr auto;
+        grid-template-columns: auto 1fr auto;
         gap: 12px;
         align-items: center;
         padding: 10px 12px;
@@ -2373,6 +2384,14 @@
           md: { es, en },
         }));
 
+        /* Contrato B: escenas para filas segmentadas. Todo en currentColor,
+           porque el botón seleccionado se pinta de rojo entero. SGW añade una
+           tarjeta blanca para las filas donde lo que hay que enseñar ES color. */
+        const SG = (inner) =>
+          `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true">${inner}</svg>`;
+        const SGW = (inner) =>
+          `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="1" y="2" width="58" height="22" rx="2" fill="#ffffff"/>${inner}</svg>`;
+
         const OPTIONS = {
           visualTerritory: {
             ui: "CardPicker",
@@ -2432,36 +2451,42 @@
                 label: { es: "crudo + preciso", en: "raw + precise" },
                 hint: { es: "Materia sin pulir dentro de una estructura exacta.", en: "Unpolished matter inside an exact structure." },
                 md: { es: ["crudo", "preciso"], en: ["raw", "precise"] },
+                visual: `<svg viewBox="0 0 120 32" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M12 22c2-12 14-16 22-11s4 14-5 15-19 1-17-4z" fill="currentColor"/><path d="M68 6v20" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/><path d="M79 6v20" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/><path d="M90 6v20" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/><path d="M101 6v20" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/><path d="M112 6v20" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/><path d="M62 16h52" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/></svg>`,
               },
               {
                 id: "warm-sober",
                 label: { es: "cálido + sobrio", en: "warm + sober" },
                 hint: { es: "Cercano sin perder la compostura.", en: "Close without losing composure." },
                 md: { es: ["cálido", "sobrio"], en: ["warm", "sober"] },
+                visual: `<svg viewBox="0 0 120 32" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><circle cx="32" cy="16" r="12" fill="currentColor"/><rect x="72" y="6" width="36" height="20" fill="currentColor" opacity=0.35/></svg>`,
               },
               {
                 id: "playful-serious",
                 label: { es: "lúdico + serio", en: "playful + serious" },
                 hint: { es: "Se permite el juego, pero se toma en serio.", en: "It allows play, but takes itself seriously." },
                 md: { es: ["lúdico", "serio"], en: ["playful", "serious"] },
+                visual: `<svg viewBox="0 0 120 32" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><circle cx="18" cy="20" r="7" fill="currentColor"/><circle cx="36" cy="11" r="5" fill="currentColor" opacity=".6"/><circle cx="50" cy="21" r="4" fill="currentColor" opacity=".4"/><rect x="72" y="6" width="36" height="20" fill="currentColor"/></svg>`,
               },
               {
                 id: "craft-modern",
                 label: { es: "artesanal + moderno", en: "crafted + modern" },
                 hint: { es: "Oficio de siempre con mirada de hoy.", en: "Old craft with a contemporary eye." },
                 md: { es: ["artesanal", "moderno"], en: ["crafted", "modern"] },
+                visual: `<svg viewBox="0 0 120 32" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M10 24c8-16 22-20 34-14" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/><rect x="70" y="8" width="18" height="16" fill="currentColor"/><rect x="94" y="8" width="18" height="16" fill="currentColor" opacity=0.4/></svg>`,
               },
               {
                 id: "minimal-expressive",
                 label: { es: "minimal + expresivo", en: "minimal + expressive" },
                 hint: { es: "Poco en pantalla, pero cada gesto cuenta.", en: "Little on screen, but every gesture counts." },
                 md: { es: ["minimal", "expresivo"], en: ["minimal", "expressive"] },
+                visual: `<svg viewBox="0 0 120 32" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="26" y="13" width="8" height="8" fill="currentColor"/><path d="M70 26c6-22 26-26 40-10" stroke="currentColor" stroke-width="4" fill="none" stroke-linecap="round"/></svg>`,
               },
               {
                 id: "classic-daring",
                 label: { es: "clásico + atrevido", en: "classic + daring" },
                 hint: { es: "Base que no envejece con un golpe inesperado.", en: "A base that does not date, with one unexpected move." },
                 md: { es: ["clásico", "atrevido"], en: ["classic", "daring"] },
+                visual: `<svg viewBox="0 0 120 32" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><text x="30" y="24" text-anchor="middle" font-family="Georgia, serif" font-size="22" fill="currentColor">Aa</text><path d="M72 26L96 4h16L88 26z" fill="currentColor"/></svg>`,
               },
             ],
           },
@@ -2520,18 +2545,21 @@
                     label: { es: "Apilada", en: "Stacked" },
                     hint: { es: "El nombre debajo del símbolo.", en: "The name below the symbol." },
                     md: { es: "Versión apilada con el nombre bajo el símbolo, para formatos cuadrados.", en: "A stacked version with the name below the symbol, for square formats." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><circle cx="30" cy="8" r="4" fill="currentColor"/><rect x="20" y="15" width="20" height="3" fill="currentColor"/></svg>`,
                   },
                   {
                     id: "inline",
                     label: { es: "En línea", en: "Inline" },
                     hint: { es: "Todo en una sola línea.", en: "Everything on one line." },
                     md: { es: "Versión en una sola línea para pies de página y espacios estrechos.", en: "A single-line version for footers and narrow spaces." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><circle cx="13" cy="13" r="4" fill="currentColor"/><rect x="22" y="11" width="26" height="4" fill="currentColor"/></svg>`,
                   },
                   {
                     id: "both",
                     label: { es: "Las dos", en: "Both" },
                     hint: { es: "Apilada y en línea, según el espacio.", en: "Stacked and inline, depending on space." },
                     md: { es: "Dos versiones secundarias, apilada y en línea, según el espacio disponible.", en: "Two secondary versions, stacked and inline, depending on the space available." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><circle cx="14" cy="7" r="3" fill="currentColor"/><rect x="9" y="12" width="10" height="2.5" fill="currentColor"/><circle cx="42" cy="13" r="4" fill="currentColor"/><rect x="49" y="11" width="8" height="4" fill="currentColor"/></svg>`,
                   },
                 ],
               },
@@ -2544,18 +2572,21 @@
                     label: { es: "Solo si ya se vio el nombre", en: "Only after the name" },
                     hint: { es: "Nunca abre una pieza.", en: "It never opens a piece." },
                     md: { es: "El símbolo aparece solo una vez que el nombre completo ya se ha visto en la pieza.", en: "The symbol appears alone only once the full name has already been seen in the piece." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="4" y="11" width="16" height="4" fill="currentColor" opacity=0.35/><path d="M24 13h5" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/><circle cx="40" cy="13" r="5" fill="currentColor"/></svg>`,
                   },
                   {
                     id: "free",
                     label: { es: "Libre", en: "Free" },
                     hint: { es: "Puede ir solo en cualquier sitio.", en: "It can stand alone anywhere." },
                     md: { es: "El símbolo puede aparecer solo en cualquier soporte, sin el nombre.", en: "The symbol may appear on its own in any medium, without the name." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><circle cx="13" cy="13" r="5" fill="currentColor"/><circle cx="30" cy="13" r="5" fill="currentColor"/><circle cx="47" cy="13" r="5" fill="currentColor"/></svg>`,
                   },
                   {
                     id: "never",
                     label: { es: "Nunca suelto", en: "Never alone" },
                     hint: { es: "Siempre acompañado del nombre.", en: "Always with the name." },
                     md: { es: "El símbolo nunca aparece solo: siempre acompañado del nombre.", en: "The symbol never appears alone: it always comes with the name." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><circle cx="16" cy="13" r="5" fill="currentColor"/><rect x="25" y="11" width="20" height="4" fill="currentColor"/><path d="M46 6l8 14" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>`,
                   },
                 ],
               },
@@ -2568,18 +2599,21 @@
                     label: { es: "Solo colores de marca", en: "Brand colours only" },
                     hint: { es: "Nunca sobre fotografía.", en: "Never over photography." },
                     md: { es: "Solo sobre los colores de la marca; nunca sobre fotografía ni fondos con textura.", en: "Only over brand colours; never over photography or textured backgrounds." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="2" y="3" width="26" height="20" fill="currentColor" opacity=0.9/><circle cx="15" cy="13" r="5" fill="#fff"/><rect x="32" y="3" width="26" height="20" fill="currentColor" opacity=0.25/><circle cx="45" cy="13" r="5" fill="currentColor"/></svg>`,
                   },
                   {
                     id: "plain",
                     label: { es: "Cualquier fondo plano", en: "Any plain background" },
                     hint: { es: "Plano y con contraste suficiente.", en: "Flat, with enough contrast." },
                     md: { es: "Sobre cualquier fondo plano que mantenga contraste suficiente.", en: "Over any flat background that keeps enough contrast." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="2" y="3" width="26" height="20" fill="currentColor" opacity=0.18/><circle cx="15" cy="13" r="5" fill="currentColor"/><rect x="32" y="3" width="26" height="20" fill="currentColor" opacity=0.45/><circle cx="45" cy="13" r="5" fill="#fff"/></svg>`,
                   },
                   {
                     id: "any",
                     label: { es: "También sobre foto", en: "Photography too" },
                     hint: { es: "Con zona tranquila debajo.", en: "With a calm area beneath." },
                     md: { es: "También sobre fotografía, siempre que haya una zona tranquila bajo el logotipo.", en: "Over photography too, as long as there is a calm area beneath the logo." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="32" y="3" width="6" height="6" fill="currentColor" opacity=0.2/><rect x="39" y="3" width="6" height="6" fill="currentColor" opacity=0.5/><rect x="46" y="3" width="6" height="6" fill="currentColor" opacity=0.2/><rect x="53" y="3" width="6" height="6" fill="currentColor" opacity=0.5/><rect x="32" y="10" width="6" height="6" fill="currentColor" opacity=0.2/><rect x="39" y="10" width="6" height="6" fill="currentColor" opacity=0.5/><rect x="46" y="10" width="6" height="6" fill="currentColor" opacity=0.2/><rect x="53" y="10" width="6" height="6" fill="currentColor" opacity=0.5/><rect x="32" y="17" width="6" height="6" fill="currentColor" opacity=0.2/><rect x="39" y="17" width="6" height="6" fill="currentColor" opacity=0.5/><rect x="46" y="17" width="6" height="6" fill="currentColor" opacity=0.2/><rect x="53" y="17" width="6" height="6" fill="currentColor" opacity=0.5/><rect x="2" y="3" width="26" height="20" fill="currentColor" opacity=0.18/><circle cx="15" cy="13" r="5" fill="currentColor"/><circle cx="45" cy="13" r="5" fill="#fff"/></svg>`,
                   },
                 ],
               },
@@ -2595,36 +2629,42 @@
                 label: { es: "Deformarlo", en: "Stretch it" },
                 hint: { es: "Cambiar su proporción al escalar.", en: "Changing its proportion when scaling." },
                 md: { es: "Nunca deformarlo ni cambiar su proporción al escalar.", en: "Never stretch it or change its proportion when scaling." },
+                visual: `<svg viewBox="0 0 46 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><text x="23" y="20" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="currentColor" transform="translate(0,0) scale(1.9,1)" transform-origin="23 16">Aa</text></svg>`,
               },
               {
                 id: "recolour",
                 label: { es: "Cambiarle los colores", en: "Recolour it" },
                 hint: { es: "Usar tonos fuera de la paleta.", en: "Using tones outside the palette." },
                 md: { es: "Nunca recolorearlo fuera de la paleta definida.", en: "Never recolour it outside the defined palette." },
+                visual: `<svg viewBox="0 0 46 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="4" y="5" width="38" height="17" fill="currentColor" opacity=".3"/><text x="23" y="20" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="currentColor">Aa</text></svg>`,
               },
               {
                 id: "busy-bg",
                 label: { es: "Ponerlo sobre fondos recargados", en: "Place it on busy backgrounds" },
                 hint: { es: "Encima de imágenes con ruido.", en: "Over noisy images." },
                 md: { es: "Nunca colocarlo sobre fondos recargados o con mucho detalle.", en: "Never place it over busy or highly detailed backgrounds." },
+                visual: `<svg viewBox="0 0 46 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="2.0" y="3" width="6" height="6" fill="currentColor" opacity=0.18/><rect x="9.5" y="3" width="6" height="6" fill="currentColor" opacity=0.45/><rect x="17.0" y="3" width="6" height="6" fill="currentColor" opacity=0.18/><rect x="24.5" y="3" width="6" height="6" fill="currentColor" opacity=0.45/><rect x="32.0" y="3" width="6" height="6" fill="currentColor" opacity=0.18/><rect x="39.5" y="3" width="6" height="6" fill="currentColor" opacity=0.45/><rect x="2.0" y="11" width="6" height="6" fill="currentColor" opacity=0.18/><rect x="9.5" y="11" width="6" height="6" fill="currentColor" opacity=0.45/><rect x="17.0" y="11" width="6" height="6" fill="currentColor" opacity=0.18/><rect x="24.5" y="11" width="6" height="6" fill="currentColor" opacity=0.45/><rect x="32.0" y="11" width="6" height="6" fill="currentColor" opacity=0.18/><rect x="39.5" y="11" width="6" height="6" fill="currentColor" opacity=0.45/><text x="23" y="20" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="currentColor">Aa</text></svg>`,
               },
               {
                 id: "shadow",
                 label: { es: "Añadirle sombras o efectos", en: "Add shadows or effects" },
                 hint: { es: "Relieve, brillo o degradado.", en: "Emboss, glow or gradient." },
                 md: { es: "Nunca añadirle sombras, relieves ni degradados.", en: "Never add shadows, embossing or gradients." },
+                visual: `<svg viewBox="0 0 46 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><text x="25" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="currentColor" opacity=".35">Aa</text><text x="23" y="20" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="currentColor">Aa</text></svg>`,
               },
               {
                 id: "rotate",
                 label: { es: "Rotarlo", en: "Rotate it" },
                 hint: { es: "Inclinarlo en cualquier ángulo.", en: "Tilting it at any angle." },
                 md: { es: "Nunca rotarlo ni inclinarlo.", en: "Never rotate or tilt it." },
+                visual: `<svg viewBox="0 0 46 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><g transform="rotate(-22 23 16)"><text x="23" y="20" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="currentColor">Aa</text></g></svg>`,
               },
               {
                 id: "tiny",
                 label: { es: "Hacerlo muy pequeño", en: "Shrink it too far" },
                 hint: { es: "Por debajo del tamaño mínimo.", en: "Below the minimum size." },
                 md: { es: "Nunca reducirlo por debajo del tamaño mínimo legible.", en: "Never shrink it below the minimum legible size." },
+                visual: `<svg viewBox="0 0 46 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><text x="14" y="20" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="currentColor">Aa</text><text x="36" y="18" text-anchor="middle" font-family="Georgia, serif" font-size="6" fill="currentColor">Aa</text></svg>`,
               },
             ],
           },
@@ -2708,12 +2748,14 @@
                     label: { es: "Como una frase", en: "Sentence case" },
                     hint: { es: "Solo la primera letra en mayúscula.", en: "Only the first letter capitalised." },
                     md: { es: "Como una frase en todos los niveles; nunca titulares en mayúsculas.", en: "Sentence case at every level; never all-caps headlines." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><text x="6" y="18" font-family="Georgia, serif" font-size="13" fill="currentColor">Aa aa</text></svg>`,
                   },
                   {
                     id: "caps-titles",
                     label: { es: "Mayúsculas en títulos", en: "Caps for titles" },
                     hint: { es: "Titulares en caja alta.", en: "Headlines in all caps." },
                     md: { es: "Mayúsculas reservadas a los titulares; el resto como una frase.", en: "All caps reserved for headlines; everything else in sentence case." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><text x="6" y="18" font-family="Georgia, serif" font-size="13" fill="currentColor">AA AA</text></svg>`,
                   },
                 ],
               },
@@ -2726,18 +2768,21 @@
                     label: { es: "Finos", en: "Light" },
                     hint: { es: "Trazo delgado y ligero.", en: "Thin, light strokes." },
                     md: { es: "Pesos finos y ligeros; nunca negritas.", en: "Light weights only; never bold." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M6 13h48" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/></svg>`,
                   },
                   {
                     id: "normal",
                     label: { es: "Normales", en: "Regular" },
                     hint: { es: "Ni finos ni gruesos.", en: "Neither thin nor heavy." },
                     md: { es: "Pesos regular y medium; sin negritas.", en: "Regular and medium weights; no bold." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M6 13h48" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`,
                   },
                   {
                     id: "bold",
                     label: { es: "Gruesos", en: "Bold" },
                     hint: { es: "Trazo con peso y presencia.", en: "Heavy strokes with presence." },
                     md: { es: "Pesos gruesos para dar presencia; el cuerpo de texto en regular.", en: "Heavy weights for presence; body copy stays regular." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M6 13h48" stroke="currentColor" stroke-width="6" fill="none" stroke-linecap="round"/></svg>`,
                   },
                 ],
               },
@@ -2750,18 +2795,21 @@
                     label: { es: "2 niveles", en: "2 levels" },
                     hint: { es: "Título y texto.", en: "Title and body." },
                     md: { es: "Dos niveles por maqueta: título y texto.", en: "Two levels per layout: title and body." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="6" y="6" width="34" height="6" fill="currentColor"/><rect x="6" y="16" width="26" height="3" fill="currentColor"/></svg>`,
                   },
                   {
                     id: "three",
                     label: { es: "3 niveles", en: "3 levels" },
                     hint: { es: "Título, subtítulo y texto.", en: "Title, subtitle and body." },
                     md: { es: "Tres niveles por maqueta: título, subtítulo y texto.", en: "Three levels per layout: title, subtitle and body." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="6" y="4" width="34" height="5" fill="currentColor"/><rect x="6" y="12" width="26" height="3.5" fill="currentColor"/><rect x="6" y="19" width="20" height="2.5" fill="currentColor"/></svg>`,
                   },
                   {
                     id: "four",
                     label: { es: "4 niveles", en: "4 levels" },
                     hint: { es: "Añade un pie o etiqueta.", en: "Adds a caption or label." },
                     md: { es: "Cuatro niveles por maqueta: título, subtítulo, texto y pie.", en: "Four levels per layout: title, subtitle, body and caption." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="6" y="3" width="34" height="4.5" fill="currentColor"/><rect x="6" y="10" width="26" height="3.5" fill="currentColor"/><rect x="6" y="16" width="20" height="2.5" fill="currentColor"/><rect x="6" y="21" width="14" height="2" fill="currentColor"/></svg>`,
                   },
                 ],
               },
@@ -3077,6 +3125,35 @@
           colorFunction: {
             ui: "CardPicker",
             def: "60-30-10",
+            /* La barra se pinta con la paleta que la persona acaba de elegir
+               en la pregunta anterior, en la proporción de cada opción. */
+            mix: {
+              "60-30-10": [30, 60, 10],
+              "primary-led": [60, 30, 10],
+              quiet: [15, 80, 5],
+              balanced: [45, 45, 10],
+            },
+            gen() {
+              const { P, N, A } = palOf();
+              return this.items.map((it) => {
+                let x = 0;
+                const bars = [
+                  [N, this.mix[it.id][1]],
+                  [P, this.mix[it.id][0]],
+                  [A, this.mix[it.id][2]],
+                ]
+                  .map(([col, wd]) => {
+                    const r = `<rect x="${x * 1.2}" y="0" width="${wd * 1.2}" height="56" fill="${col}"/>`;
+                    x += wd;
+                    return r;
+                  })
+                  .join("");
+                return {
+                  ...it,
+                  visual: `<svg class="bmk-card-vis" viewBox="0 0 120 56" preserveAspectRatio="none" aria-hidden="true">${bars}</svg>`,
+                };
+              });
+            },
             items: [
               {
                 id: "60-30-10",
@@ -3106,6 +3183,15 @@
           },
           colorRules: {
             ui: "SegmentedSlider",
+            rowsGen() {
+              const { P, N, A } = palOf();
+              const sc = (bg, fg) =>
+                `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="1" y="2" width="58" height="22" rx="2" fill="${bg}"/><rect x="8" y="8" width="26" height="4" fill="${fg}"/><rect x="8" y="15" width="16" height="4" fill="${fg}"/></svg>`;
+              const paint = { "primary-on-neutral": sc(N, P), "neutral-on-primary": sc(P, N), "accent-lead": sc(A, N) };
+              return this.rows.map((r, i) =>
+                i ? r : { ...r, items: r.items.map((it) => ({ ...it, visual: paint[it.id] || it.visual })) },
+              );
+            },
             rows: [
               {
                 label: { es: "Combinación dominante", en: "Dominant combinations" },
@@ -3140,12 +3226,14 @@
                     label: { es: "Alto siempre", en: "Always high" },
                     hint: { es: "El texto siempre se lee fácil.", en: "Text is always easy to read." },
                     md: { es: "Texto siempre en contraste alto contra su fondo, nunca por debajo de 4.5:1.", en: "Text always at high contrast against its ground, never below 4.5:1." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="1" y="2" width="58" height="22" rx="2" fill="#ffffff"/><rect x="4" y="5" width="52" height="16" fill="#151515"/><text x="30" y="17" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#ffffff">Aa</text></svg>`,
                   },
                   {
                     id: "soft",
                     label: { es: "Suave, salvo en texto", en: "Soft, except for text" },
                     hint: { es: "Contrastes bajos, texto a salvo.", en: "Low contrast, text protected." },
                     md: { es: "Contrastes suaves entre superficies, pero el texto nunca baja de 4.5:1.", en: "Soft contrast between surfaces, but text never drops below 4.5:1." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="1" y="2" width="58" height="22" rx="2" fill="#ffffff"/><rect x="4" y="5" width="52" height="16" fill="#DDD6CE"/><text x="30" y="17" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#5A544E">Aa</text></svg>`,
                   },
                 ],
               },
@@ -3158,18 +3246,21 @@
                     label: { es: "Dos acentos juntos", en: "Two accents together" },
                     hint: { es: "Compiten y se anulan.", en: "They compete and cancel out." },
                     md: { es: "Nunca dos acentos en la misma maqueta, ni acento sobre acento.", en: "Never two accents in the same layout, nor accent on accent." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="6" y="6" width="22" height="14" fill="currentColor" opacity=0.9/><rect x="22" y="10" width="22" height="14" fill="currentColor"/></svg>`,
                   },
                   {
                     id: "colour-on-photo",
                     label: { es: "Color sobre foto", en: "Colour over photo" },
                     hint: { es: "El texto deja de leerse.", en: "Text stops being readable." },
                     md: { es: "Nunca bloques de color sobre fotografía sin una zona tranquila debajo.", en: "Never colour blocks over photography without a calm area beneath." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="2" y="4" width="9" height="8" fill="currentColor" opacity=0.2/><rect x="12" y="4" width="9" height="8" fill="currentColor" opacity=0.5/><rect x="22" y="4" width="9" height="8" fill="currentColor" opacity=0.2/><rect x="32" y="4" width="9" height="8" fill="currentColor" opacity=0.5/><rect x="42" y="4" width="9" height="8" fill="currentColor" opacity=0.2/><rect x="52" y="4" width="9" height="8" fill="currentColor" opacity=0.5/><rect x="2" y="13" width="9" height="8" fill="currentColor" opacity=0.2/><rect x="12" y="13" width="9" height="8" fill="currentColor" opacity=0.5/><rect x="22" y="13" width="9" height="8" fill="currentColor" opacity=0.2/><rect x="32" y="13" width="9" height="8" fill="currentColor" opacity=0.5/><rect x="42" y="13" width="9" height="8" fill="currentColor" opacity=0.2/><rect x="52" y="13" width="9" height="8" fill="currentColor" opacity=0.5/><rect x="16" y="8" width="28" height="10" fill="currentColor" opacity=0.95/></svg>`,
                   },
                   {
                     id: "pure-black",
                     label: { es: "Negro puro", en: "Pure black" },
                     hint: { es: "Resulta duro junto al beige.", en: "It reads harsh next to warm tones." },
                     md: { es: "Nunca negro puro: siempre el neutro oscuro de la paleta.", en: "Never pure black: always the dark neutral from the palette." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="6" y="6" width="22" height="14" fill="#000000"/><rect x="32" y="6" width="22" height="14" fill="currentColor" opacity=0.35/></svg>`,
                   },
                 ],
               },
@@ -3187,18 +3278,21 @@
                     label: { es: "Vector corporativo", en: "Corporate vector" },
                     hint: { es: "Degradados, 3D, iconos genéricos.", en: "Gradients, 3D, generic icons." },
                     md: { es: "Vector corporativo plano, degradados, renders 3D y brillos.", en: "Flat corporate vector, gradients, 3D renders and glows." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><defs><linearGradient id="g1"><stop offset="0" stop-color="currentColor" stop-opacity=".9"/><stop offset="1" stop-color="currentColor" stop-opacity=".2"/></linearGradient></defs><path d="M8 20c0-7 5-11 10-9s5 9 1 11-11 2-11-2z" fill="url(#g1)"/><path d="M30 20c0-7 5-11 10-9s5 9 1 11-11 2-11-2z" fill="url(#g1)"/></svg>`,
                   },
                   {
                     id: "retro",
                     label: { es: "Nostalgia retro", en: "Retro nostalgia" },
                     hint: { es: "Guiños vintage de catálogo.", en: "Off-the-shelf vintage nods." },
                     md: { es: "Nostalgia retro de catálogo y guiños vintage prestados.", en: "Off-the-shelf retro nostalgia and borrowed vintage nods." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M30 13L52.0 13.0" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/><path d="M30 13L49.1 24.0" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/><path d="M30 13L41.0 32.1" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/><path d="M30 13L30.0 35.0" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/><path d="M30 13L19.0 32.1" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/><path d="M30 13L10.9 24.0" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/><path d="M30 13L8.0 13.0" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/><path d="M30 13L10.9 2.0" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/><path d="M30 13L19.0 -6.1" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/><path d="M30 13L30.0 -9.0" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/><path d="M30 13L41.0 -6.1" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/><path d="M30 13L49.1 2.0" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/><rect x="22" y="9" width="16" height="8" fill="currentColor" opacity=0.9/></svg>`,
                   },
                   {
                     id: "maximal",
                     label: { es: "Maximalismo", en: "Maximalism" },
                     hint: { es: "Todo lleno, sin jerarquía.", en: "Everything full, no hierarchy." },
                     md: { es: "Maximalismo sin jerarquía: todo lleno y nada que mande.", en: "Maximalism with no hierarchy: everything full and nothing leading." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="3" y="3" width="9" height="6" fill="currentColor" opacity=0.45/><rect x="14" y="3" width="9" height="6" fill="currentColor" opacity=0.85/><rect x="25" y="3" width="9" height="6" fill="currentColor" opacity=0.45/><rect x="36" y="3" width="9" height="6" fill="currentColor" opacity=0.85/><rect x="47" y="3" width="9" height="6" fill="currentColor" opacity=0.45/><rect x="3" y="11" width="9" height="6" fill="currentColor" opacity=0.85/><rect x="14" y="11" width="9" height="6" fill="currentColor" opacity=0.45/><rect x="25" y="11" width="9" height="6" fill="currentColor" opacity=0.85/><rect x="36" y="11" width="9" height="6" fill="currentColor" opacity=0.45/><rect x="47" y="11" width="9" height="6" fill="currentColor" opacity=0.85/></svg>`,
                   },
                 ],
               },
@@ -3211,18 +3305,21 @@
                     label: { es: "Neón y flúor", en: "Neon and fluorescent" },
                     hint: { es: "Saturación que grita.", en: "Saturation that shouts." },
                     md: { es: "Neones, flúor y saturaciones que gritan.", en: "Neons, fluorescents and saturations that shout." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="1" y="2" width="58" height="22" rx="2" fill="#ffffff"/><rect x="6" y="7" width="14" height="12" fill="#39FF14"/><rect x="23" y="7" width="14" height="12" fill="#FF00E5"/><rect x="40" y="7" width="14" height="12" fill="#00E5FF"/></svg>`,
                   },
                   {
                     id: "cold",
                     label: { es: "Azules fríos", en: "Cold blues" },
                     hint: { es: "Tecnológico y distante.", en: "Technological and distant." },
                     md: { es: "Azules fríos de tecnología y grises sin temperatura.", en: "Cold technology blues and greys with no temperature." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="1" y="2" width="58" height="22" rx="2" fill="#ffffff"/><rect x="6" y="7" width="14" height="12" fill="#1B4F9C"/><rect x="23" y="7" width="14" height="12" fill="#3E7CC4"/><rect x="40" y="7" width="14" height="12" fill="#8FAFD4"/></svg>`,
                   },
                   {
                     id: "pastel",
                     label: { es: "Pasteles", en: "Pastels" },
                     hint: { es: "Suaves hasta desaparecer.", en: "Soft to the point of vanishing." },
                     md: { es: "Pasteles lavados que restan carácter.", en: "Washed-out pastels that drain character." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="1" y="2" width="58" height="22" rx="2" fill="#ffffff"/><rect x="6" y="7" width="14" height="12" fill="#F3D9E3"/><rect x="23" y="7" width="14" height="12" fill="#DCE8F0"/><rect x="40" y="7" width="14" height="12" fill="#E9E7D2"/></svg>`,
                   },
                 ],
               },
@@ -3235,18 +3332,21 @@
                     label: { es: "Display decorativa", en: "Decorative display" },
                     hint: { es: "Letras con disfraz.", en: "Letters in costume." },
                     md: { es: "Tipografías display decorativas, script y todo lo que lleve disfraz.", en: "Decorative display faces, scripts and anything wearing a costume." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><text x="18" y="20" font-family="Georgia, serif" font-size="20" fill="currentColor">A</text><path d="M14 8c3-4 8-4 10 0M36 8c3-4 8-4 10 0" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/><circle cx="16" cy="6" r="1.5" fill="currentColor"/><circle cx="44" cy="6" r="1.5" fill="currentColor"/></svg>`,
                   },
                   {
                     id: "allcaps",
                     label: { es: "Titulares en mayúsculas", en: "All-caps headlines" },
                     hint: { es: "Suena a que se grita.", en: "It reads as shouting." },
                     md: { es: "Titulares en mayúsculas y tracking exagerado.", en: "All-caps headlines and exaggerated tracking." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="5" y="9" width="10" height="9" fill="currentColor"/><rect x="18" y="9" width="10" height="9" fill="currentColor"/><rect x="31" y="9" width="10" height="9" fill="currentColor"/><rect x="44" y="9" width="10" height="9" fill="currentColor"/></svg>`,
                   },
                   {
                     id: "many",
                     label: { es: "Demasiadas familias", en: "Too many families" },
                     hint: { es: "Más de dos por pieza.", en: "More than two per piece." },
                     md: { es: "Más de dos familias tipográficas en una misma pieza.", en: "More than two typefaces in the same piece." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><text x="4" y="19" font-family="Georgia, serif" font-size="14" fill="currentColor">A</text><text x="18" y="19" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="currentColor">A</text><text x="31" y="19" font-family="'Trebuchet MS', sans-serif" font-size="14" fill="currentColor">A</text><text x="45" y="19" font-family="ui-monospace, monospace" font-size="14" fill="currentColor">A</text></svg>`,
                   },
                 ],
               },
@@ -3259,18 +3359,21 @@
                     label: { es: "Tarjetas apiladas", en: "Stacked cards" },
                     hint: { es: "Con sombra y borde redondeado.", en: "With shadow and rounded border." },
                     md: { es: "Tarjetas apiladas con sombra, la retícula por defecto de cualquier plantilla.", en: "Stacked cards with drop shadows, the default grid of any template." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="4" y="5" width="15" height="16" fill="currentColor" opacity=0.25/><rect x="3" y="4" width="15" height="16" fill="currentColor"/><rect x="23" y="5" width="15" height="16" fill="currentColor" opacity=0.25/><rect x="22" y="4" width="15" height="16" fill="currentColor"/><rect x="42" y="5" width="15" height="16" fill="currentColor" opacity=0.25/><rect x="41" y="4" width="15" height="16" fill="currentColor"/></svg>`,
                   },
                   {
                     id: "centered",
                     label: { es: "Todo centrado", en: "Everything centred" },
                     hint: { es: "Simetría por inercia.", en: "Symmetry out of habit." },
                     md: { es: "Simetría centrada por inercia, sin una razón detrás.", en: "Centred symmetry out of habit, with no reason behind it." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="18" y="5" width="24" height="3" fill="currentColor"/><rect x="12" y="12" width="36" height="3" fill="currentColor"/><rect x="21" y="19" width="18" height="3" fill="currentColor"/></svg>`,
                   },
                   {
                     id: "crowded",
                     label: { es: "Sin márgenes", en: "No margins" },
                     hint: { es: "Los elementos se tocan.", en: "Elements touching each other." },
                     md: { es: "Composiciones sin margen, con los elementos tocándose.", en: "Layouts with no margin, elements touching one another." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="0" y="0" width="60" height="26" fill="currentColor" opacity=0.18/><rect x="0" y="0" width="60" height="7" fill="currentColor"/><rect x="0" y="19" width="60" height="7" fill="currentColor"/><rect x="0" y="7" width="7" height="12" fill="currentColor"/><rect x="53" y="7" width="7" height="12" fill="currentColor"/></svg>`,
                   },
                 ],
               },
@@ -3283,18 +3386,21 @@
                     label: { es: "Fondo blanco de estudio", en: "White studio background" },
                     hint: { es: "Producto flotando en la nada.", en: "Product floating in nothing." },
                     md: { es: "Producto sobre fondo blanco de estudio, flotando en la nada.", en: "Product on a white studio background, floating in nothing." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="0" y="0" width="60" height="26" fill="currentColor" opacity=0.12/><circle cx="30" cy="11" r="7" fill="currentColor"/><ellipse cx="30" cy="21" rx="12" ry="2.5" fill="currentColor" opacity=".35"/></svg>`,
                   },
                   {
                     id: "posed",
                     label: { es: "Sonrisas posadas", en: "Posed smiles" },
                     hint: { es: "Gente actuando naturalidad.", en: "People performing naturalness." },
                     md: { es: "Sonrisas posadas y gente actuando naturalidad.", en: "Posed smiles and people performing naturalness." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><circle cx="30" cy="11" r="7.5" fill="currentColor"/><path d="M26 14a5 5 0 0 0 8 0" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round"/><circle cx="27.5" cy="9" r="1" fill="currentColor"/><circle cx="32.5" cy="9" r="1" fill="currentColor"/></svg>`,
                   },
                   {
                     id: "flash",
                     label: { es: "Flash directo", en: "Direct flash" },
                     hint: { es: "Sombras duras y piel plana.", en: "Hard shadows, flat skin." },
                     md: { es: "Flash directo, sombras duras y piel plana.", en: "Direct flash, hard shadows and flat skin." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="0" y="0" width="60" height="26" fill="currentColor" opacity=0.1/><circle cx="30" cy="13" r="8" fill="currentColor"/><rect x="38" y="5" width="18" height="16" fill="currentColor" opacity=0.55/></svg>`,
                   },
                 ],
               },
@@ -3307,12 +3413,14 @@
                     label: { es: "Cualquier cosa de banco", en: "Anything from a stock library" },
                     hint: { es: "Si parece stock, no sirve.", en: "If it looks like stock, it is out." },
                     md: { es: "Cualquier cosa que se reconozca como imagen de banco.", en: "Anything recognisable as a stock library image." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M6 16l6-5 5 4 6-7 5 8" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M28 13l7-5 5 4 6-6 6 8" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/><rect x="2" y="3" width="56" height="20" fill="currentColor" opacity=0.2/></svg>`,
                   },
                   {
                     id: "ai-look",
                     label: { es: "Estética de IA genérica", en: "Generic AI look" },
                     hint: { es: "Brillo plástico y simetría rara.", en: "Plastic sheen and odd symmetry." },
                     md: { es: "La estética de IA por defecto: brillo plástico, simetría rara y detalle sin sentido.", en: "The default AI look: plastic sheen, odd symmetry and meaningless detail." },
+                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><defs><radialGradient id="g2"><stop offset="0" stop-color="currentColor" stop-opacity="1"/><stop offset="1" stop-color="currentColor" stop-opacity=".15"/></radialGradient></defs><circle cx="30" cy="13" r="9" fill="url(#g2)"/><path d="M30 6a7 7 0 1 1-6 10" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg>`,
                   },
                 ],
               },
@@ -4871,6 +4979,7 @@
           rerenderField("colors", null, (nu) => [
             nu.querySelector(`.bmk-tone[data-slot="${slot}"] .bmk-tone-name`),
           ]);
+          repaint("colors");
           refresh();
         }
 
@@ -5274,6 +5383,17 @@
         const noteOf = (id) => (notes()[id] || "").trim();
         const pickOf = (id) => picks()[id] || {};
         const optsOf = (O) => (O.gen ? O.gen() : O.items);
+        const rowsOf = (O) => (O.rowsGen ? O.rowsGen() : O.rows);
+        /* Tonos elegidos por la persona, con respaldo si aún no ha tocado nada */
+        const palOf = () => {
+          const c = state.colors || {};
+          const h = (k, fb) => ((c[k] && c[k].hex) || fb);
+          return {
+            P: h("primary", "#8c2936"),
+            N: h("neutral", "#f9eed9"),
+            A: h("accent1", "#231f20"),
+          };
+        };
         const optItem = (O, id) => optsOf(O).find((x) => x.id === id);
         const tx = (o) => (o && (o[lang] ?? o.en)) || "";
 
@@ -5338,6 +5458,13 @@
           O.excludeFrom ? pickOf(O.excludeFrom).ids || [] : [];
         /* Al cambiar una pregunta, las que dependen de ella sueltan lo que
            haya quedado en conflicto y se vuelven a dibujar */
+        /* Las preguntas que se pintan con la paleta se redibujan al cambiarla */
+        const REPAINT = { colors: ["colorFunction", "colorRules"] };
+        function repaint(fid) {
+          (REPAINT[fid] || []).forEach((k) => {
+            if (root.querySelector(`[data-field="${k}"]`)) rerenderField(k);
+          });
+        }
         function syncDeps(fid) {
           Object.keys(OPTIONS).forEach((k) => {
             const P = OPTIONS[k];
@@ -5396,6 +5523,7 @@
             .map((it) => {
               const poles = tx(it.label).split(" + ");
               return `<button type="button" class="bmk-pairopt ${sel === it.id ? "is-on" : ""}" role="radio" aria-checked="${sel === it.id}" data-act="pick" data-f="${f.id}" data-o="${it.id}">
+          ${it.visual || ""}
           <span class="bmk-poles"><b>${esc(poles[0])}</b><i class="bmk-pole-x">+</i><b>${esc(poles[1] || "")}</b></span>
           <span class="bmk-card-h">${esc(tx(it.hint))}</span>
         </button>`;
@@ -5426,6 +5554,7 @@
             .map((it) => {
               const on = ids.includes(it.id);
               return `<button type="button" class="bmk-toggle ${on ? "is-on" : ""}" aria-pressed="${on}" data-act="chip" data-f="${f.id}" data-o="${it.id}">
+          ${it.visual || ""}
           <span><b class="bmk-card-t">${esc(tx(it.label))}</b><span class="bmk-card-h">${esc(tx(it.hint))}</span></span>
           <span class="bmk-switch" aria-hidden="true"></span>
         </button>`;
@@ -5444,7 +5573,7 @@
           if (!O.rows) return segRow(f, O.items, pickOf(f.id).id || O.def);
           const rw = pickOf(f.id).rows || {},
             caps = rowLabelsOf(f) || [];
-          return `<div class="bmk-rows">${O.rows
+          return `<div class="bmk-rows">${rowsOf(O)
             .map(
               (r, ri) => `<div><span class="bmk-row-h">${esc(tx(r.label) || caps[ri] || "")}</span>${segRow(f, r.items, rw[ri] ?? r.def, ri)}</div>`,
             )
@@ -6512,6 +6641,7 @@
               applyPreset(fid, b.dataset.o);
               save();
               rerenderField(fid);
+              repaint(fid);
               refresh();
               break;
             }
