@@ -2367,6 +2367,11 @@
               { id: "compositionGrid", type: "list", n: 5, min: 4 },
           ] },
           { doc: "visual", fields: [
+              { id: "pageArchetypes", type: "list", n: 6, min: 4, bullet: true },
+              { id: "sectionOrder", type: "textarea", rows: 2, optional: true },
+              { id: "focalRule", type: "text" },
+          ] },
+          { doc: "visual", fields: [
               { id: "illustration", type: "list", n: 3, min: 2 },
               { id: "materiality", type: "list", n: 2, min: 2 },
           ] },
@@ -3406,7 +3411,7 @@
           visualSignatures: {
             ui: "ToggleList",
             pick: 3,
-            needs: [3, 4, 5],
+            needs: [3, 5, 6],
             /* No se pregunta en blanco: se proponen a partir de los bloques
                04 a 06 y la persona confirma o descarta. */
             gen: () => {
@@ -3429,6 +3434,124 @@
                 out.push(mk("sig-graphic", `Detalles ${[gf(0), gf(3)].filter(Boolean).join(", con ")}`, `Details: ${[gf(0), gf(3)].filter(Boolean).join(" · ")}`));
               return out;
             },
+          },
+          pageArchetypes: {
+            ui: "ToggleList",
+            pick: 6,
+            def: ["hero-split", "zigzag", "figures", "quote", "steps", "closing"],
+            items: [
+                {
+                  id: "hero-split",
+                  label: { es: "Hero partido", en: "Split hero" },
+                  hint: { es: "Texto a un lado, imagen al otro, en proporción 7/5.", en: "Text one side, image the other, in a 7/5 split." },
+                  visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="3" y="4" width="30" height="18" fill="currentColor"/><rect x="36" y="4" width="21" height="18" fill="currentColor" opacity=0.35/></svg>`,
+                  md: { es: "Hero partido: texto en 7 columnas, imagen en 5, sin centrar.", en: "Split hero: text on 7 columns, image on 5, never centred." },
+                },
+                {
+                  id: "hero-editorial",
+                  label: { es: "Hero editorial", en: "Editorial hero" },
+                  hint: { es: "Titular grande arriba, imagen a sangre debajo.", en: "Large headline on top, full-bleed image below." },
+                  visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="4" y="4" width="42" height="5" fill="currentColor"/><rect x="0" y="12" width="60" height="14" fill="currentColor" opacity=0.35/></svg>`,
+                  md: { es: "Hero editorial: titular a tamaño display sobre imagen a sangre.", en: "Editorial hero: display-size headline over a full-bleed image." },
+                },
+                {
+                  id: "manifesto",
+                  label: { es: "Manifiesto", en: "Manifesto" },
+                  hint: { es: "Bloque de texto corto centrado. Máximo uno por página.", en: "A short centred text block. One per page maximum." },
+                  visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="16" y="7" width="28" height="3" fill="currentColor"/><rect x="11" y="13" width="38" height="3" fill="currentColor"/><rect x="20" y="19" width="20" height="3" fill="currentColor"/></svg>`,
+                  md: { es: "Manifiesto: bloque corto centrado, una sola vez en toda la página.", en: "Manifesto: a short centred block, once in the whole page." },
+                },
+                {
+                  id: "zigzag",
+                  label: { es: "Alternancia imagen/texto", en: "Image/text zigzag" },
+                  hint: { es: "Filas que invierten el lado en cada repetición.", en: "Rows that flip side on each repeat." },
+                  visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="3" y="3" width="26" height="9" fill="currentColor" opacity=0.35/><rect x="32" y="3" width="25" height="9" fill="currentColor"/><rect x="3" y="15" width="26" height="8" fill="currentColor"/><rect x="32" y="15" width="25" height="8" fill="currentColor" opacity=0.35/></svg>`,
+                  md: { es: "Alternancia: filas imagen/texto invirtiendo el lado en cada una.", en: "Zigzag: image/text rows flipping side each time." },
+                },
+                {
+                  id: "bento",
+                  label: { es: "Mosaico", en: "Bento grid" },
+                  hint: { es: "Celdas de tamaños distintos en la misma retícula.", en: "Cells of different sizes on one grid." },
+                  visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="3" y="3" width="24" height="12" fill="currentColor"/><rect x="30" y="3" width="27" height="5" fill="currentColor" opacity=0.5/><rect x="30" y="10" width="27" height="5" fill="currentColor" opacity=0.35/><rect x="3" y="18" width="54" height="5" fill="currentColor" opacity=0.5/></svg>`,
+                  md: { es: "Mosaico: celdas de tamaños distintos sobre la misma retícula.", en: "Bento: cells of different sizes on a single grid." },
+                },
+                {
+                  id: "figures",
+                  label: { es: "Franja de cifras", en: "Figures band" },
+                  hint: { es: "Tres o cuatro datos grandes en línea, fondo distinto.", en: "Three or four large figures in a row, different ground." },
+                  visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="0" y="2" width="60" height="22" fill="currentColor" opacity=0.12/><rect x="6" y="8" width="10" height="10" fill="currentColor"/><rect x="25" y="8" width="10" height="10" fill="currentColor"/><rect x="44" y="8" width="10" height="10" fill="currentColor"/></svg>`,
+                  md: { es: "Franja de cifras: 3–4 datos a tamaño display sobre superficie distinta.", en: "Figures band: 3–4 display-size numbers on a different surface." },
+                },
+                {
+                  id: "steps",
+                  label: { es: "Lista de pasos", en: "Step list" },
+                  hint: { es: "Numerada, alineada a un eje izquierdo común.", en: "Numbered, aligned to one left axis." },
+                  visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="3" y="4" width="4" height="4" fill="currentColor"/><rect x="11" y="5" width="40" height="3" fill="currentColor"/><rect x="3" y="12" width="4" height="4" fill="currentColor"/><rect x="11" y="13" width="34" height="3" fill="currentColor"/><rect x="3" y="20" width="4" height="4" fill="currentColor"/><rect x="11" y="21" width="28" height="3" fill="currentColor"/></svg>`,
+                  md: { es: "Lista de pasos numerada, alineada a un eje izquierdo común.", en: "A numbered step list aligned to a common left axis." },
+                },
+                {
+                  id: "table",
+                  label: { es: "Tabla comparativa", en: "Comparison table" },
+                  hint: { es: "Planes, opciones o antes/después.", en: "Plans, options or before/after." },
+                  visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="3" y="3" width="54" height="4" fill="currentColor" opacity=0.4/><rect x="3" y="9" width="54" height="1" fill="currentColor"/><rect x="3" y="13" width="54" height="1" fill="currentColor"/><rect x="3" y="17" width="54" height="1" fill="currentColor"/><rect x="3" y="21" width="54" height="1" fill="currentColor"/><rect x="20" y="3" width="1" height="21" fill="currentColor" opacity=0.4/><rect x="39" y="3" width="1" height="21" fill="currentColor" opacity=0.4/></svg>`,
+                  md: { es: "Tabla comparativa para lo que se compara; nunca en párrafo.", en: "A comparison table for anything comparable; never prose." },
+                },
+                {
+                  id: "quote",
+                  label: { es: "Cita a sangre", en: "Full-bleed quote" },
+                  hint: { es: "Una frase a tamaño display sobre color pleno.", en: "One display-size line over solid colour." },
+                  visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="0" y="0" width="60" height="26" fill="currentColor" opacity=0.85/><rect x="9" y="9" width="42" height="3.5" fill="currentColor"/><rect x="16" y="16" width="28" height="3.5" fill="currentColor"/></svg>`,
+                  md: { es: "Cita a sangre: una frase a tamaño display sobre color pleno.", en: "Full-bleed quote: one display-size line over solid colour." },
+                },
+                {
+                  id: "strip",
+                  label: { es: "Tira horizontal", en: "Horizontal strip" },
+                  hint: { es: "Galería con scroll lateral o fila de tarjetas.", en: "Side-scrolling gallery or card row." },
+                  visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="2" y="5" width="16" height="16" fill="currentColor"/><rect x="21" y="5" width="16" height="16" fill="currentColor" opacity=0.6/><rect x="40" y="5" width="16" height="16" fill="currentColor" opacity=0.3/><rect x="58" y="5" width="4" height="16" fill="currentColor" opacity=0.15/></svg>`,
+                  md: { es: "Tira horizontal: galería con scroll lateral o fila de tarjetas.", en: "Horizontal strip: a side-scrolling gallery or row of cards." },
+                },
+                {
+                  id: "faq",
+                  label: { es: "Preguntas frecuentes", en: "FAQ" },
+                  hint: { es: "Acordeón en una columna estrecha.", en: "An accordion in one narrow column." },
+                  visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="16" y="4" width="28" height="4" fill="currentColor" opacity=0.5/><rect x="16" y="11" width="28" height="4" fill="currentColor" opacity=0.3/><rect x="16" y="18" width="28" height="4" fill="currentColor" opacity=0.3/></svg>`,
+                  md: { es: "FAQ en acordeón, columna estrecha, alineada a la izquierda.", en: "FAQ accordion, narrow column, left-aligned." },
+                },
+                {
+                  id: "closing",
+                  label: { es: "Cierre a color pleno", en: "Full-colour closing" },
+                  hint: { es: "Llamada final sobre el color principal.", en: "Final call over the primary colour." },
+                  visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="0" y="0" width="60" height="26" fill="currentColor" opacity=0.9/><rect x="14" y="8" width="32" height="4" fill="currentColor"/><rect x="22" y="16" width="16" height="5" fill="currentColor" opacity=0.55/></svg>`,
+                  md: { es: "Cierre a color pleno: llamada final sobre el color principal.", en: "Full-colour closing: a final call over the primary colour." },
+                },
+            ],
+          },
+          focalRule: {
+            ui: "SegmentedSlider",
+            def: "one",
+            items: [
+              {
+                id: "one",
+                label: { es: "Un foco", en: "One focus" },
+                hint: { es: "Una sola cosa manda en cada sección.", en: "One thing leads in each section." },
+                visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="20" y="6" width="20" height="14" fill="currentColor"/></svg>`,
+                md: { es: "Un único punto focal por sección: una imagen, una cifra, un titular o una acción.", en: "Exactly one focal point per section: an image, a figure, a headline or an action." },
+              },
+              {
+                id: "two",
+                label: { es: "Dos focos", en: "Two focuses" },
+                hint: { es: "Dos pesos por sección, uno mayor.", en: "Two weights per section, one larger." },
+                visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="6" y="6" width="26" height="14" fill="currentColor"/><rect x="38" y="11" width="16" height="9" fill="currentColor" opacity=0.5/></svg>`,
+                md: { es: "Dos puntos focales por sección, siempre con uno claramente mayor.", en: "Two focal points per section, always with one clearly larger." },
+              },
+              {
+                id: "free",
+                label: { es: "Sin regla", en: "No rule" },
+                hint: { es: "Cada sección decide. Arriesgado.", en: "Each section decides. Risky." },
+                visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="4" y="4" width="14" height="8" fill="currentColor" opacity=0.7/><rect x="22" y="9" width="12" height="12" fill="currentColor"/><rect x="40" y="5" width="16" height="7" fill="currentColor" opacity=0.4/><rect x="40" y="16" width="16" height="6" fill="currentColor" opacity=0.5/></svg>`,
+                md: { es: "Sin regla de foco fija; cada sección decide su propio equilibrio.", en: "No fixed focal rule; each section sets its own balance." },
+              },
+            ],
           },
         };
 
@@ -3466,15 +3589,17 @@
               },
               {
                 title: "Nombre y tipografía",
-                derive: [
-                  "Display usage",
-                  "Body usage",
-                  "Tracking",
-                  "Leading",
-                  "Italics",
-                  "Typography to avoid — see Visual Restrictions",
-                ],
                 tip: "El nombre y la letra con que se escribe ya son media identidad.",
+                defaults: [
+                  ["Display usage", "Steps 5–7 of the scale, headings only"],
+                  ["Body usage", "Step 2: 16–18px, never below 14px"],
+                  ["Tracking", "−2% on display sizes, 0 on body"],
+                  ["Leading", "1.15 on display, 1.55 on body"],
+                  ["Italics", "Reserved for pull quotes and captions"],
+                ],
+                derive: [
+                  "Typography to avoid — see What to avoid",
+                ],
                 fields: {
                   brandName: {
                     label: "¿Cómo se llama tu emprendimiento?",
@@ -3498,10 +3623,10 @@
               },
               {
                 title: "Color",
-                derive: [
-                  "Secondary combinations",
-                ],
                 tip: "Importa más *cuánto* se usa cada color que cuáles son.",
+                defaults: [
+                  ["Secondary combinations", "Neutral on neutral, separated by a primary hairline"],
+                ],
                 fields: {
                   colors: {
                     label: "Los colores de la marca",
@@ -3526,17 +3651,17 @@
               },
               {
                 title: "Estructura de la página",
-                derive: [
-                  "Columns",
-                  "Margins",
-                  "Rhythm",
-                  "Scale",
-                  "Layers",
-                  "Blocks",
-                  "Dividers",
-                  "Image/text relationship",
-                ],
                 tip: "El espacio en blanco es una decisión, no lo que sobra.",
+                defaults: [
+                  ["Columns", "12 on desktop, 6 on tablet, 4 on mobile"],
+                  ["Margins", "24px mobile · 48px tablet · 80px desktop · content max-width 1280px"],
+                  ["Rhythm", "24px inside a group · 64px between sections · 128px between chapters"],
+                  ["Scale", "Spacing steps: 8 · 16 · 24 · 32 · 48 · 64 · 96 · 128"],
+                  ["Layers", "Flat. No drop shadows; elevation is a change of surface colour"],
+                  ["Blocks", "Full-bleed image blocks against contained text blocks"],
+                  ["Dividers", "1px hairline in the border token, used sparingly"],
+                  ["Image/text relationship", "Asymmetric splits 7/5, 8/4 or 9/3. Never 6/6 by default"],
+                ],
                 fields: {
                   compositionGrid: {
                     label: "¿Cómo se ordena la página?",
@@ -3548,6 +3673,35 @@
                       "Density",
                       "White space",
                     ],
+                  },
+                },
+              },
+              {
+                title: "Arquitectura de página",
+                tip: "Sin patrones, una IA apila bloques centrados. Con patrones, compone.",
+                rules: [
+                  "Ningún arquetipo se repite en dos secciones consecutivas.",
+                  "Máximo UNA sección centrada en toda la página.",
+                  "Entre dos secciones consecutivas cambian al menos DOS de: color de fondo, alineación, número de columnas, densidad.",
+                  "Cada sección tiene exactamente un punto focal.",
+                  "Mínimo 3 cambios de superficie en una página de 6 secciones o más.",
+                  "El cuerpo de texto nunca va centrado: el centrado se reserva al Manifiesto y al Cierre a color pleno.",
+                ],
+                fields: {
+                  pageArchetypes: {
+                    label: "¿Qué tipos de sección va a tener la página?",
+                    hint: "Elige de 4 a 6. Son los moldes con los que se monta.",
+                    why: "Es lo que más decide si la página se ve rica o plana.",
+                  },
+                  sectionOrder: {
+                    label: "¿En qué orden van?",
+                    hint: "Escríbelo si lo tienes claro. Si no, déjalo vacío.",
+                    why: "Da a la IA el recorrido exacto en vez de que lo invente.",
+                  },
+                  focalRule: {
+                    label: "¿Cuántas cosas mandan en cada sección?",
+                    hint: "Una sección con dos protagonistas no tiene ninguno.",
+                    why: "Es la regla que evita que cada bloque compita consigo mismo.",
                   },
                 },
               },
@@ -3577,13 +3731,13 @@
               },
               {
                 title: "Elementos gráficos",
-                derive: [
-                  "Frames",
-                  "Borders",
-                  "Graphic devices",
-                  "Repeated motifs",
-                ],
                 tip: "Un detalle repetido reconoce la marca más rápido que un logo.",
+                defaults: [
+                  ["Frames", "None. Content sits on the grid"],
+                  ["Borders", "1px in the border token, inset by the page margin"],
+                  ["Graphic devices", "A single hairline rule under section titles"],
+                  ["Repeated motifs", "Derived from the chosen shapes; one per page maximum"],
+                ],
                 fields: {
                   graphicForms: {
                     label: "¿Qué elementos se repiten por toda la web?",
@@ -3657,7 +3811,7 @@
               visual: {
                 title: "Visual Direction",
                 sub: "Cómo se ve y se comporta la marca",
-                meta: "9 bloques · Dirección visual",
+                meta: "10 bloques · Dirección visual",
               },
             },
             mdTitles: [
@@ -3665,11 +3819,12 @@
               "02. Name & Typography",
               "03. Color System",
               "04. Composition",
-              "05. Illustration & Materiality",
-              "06. Graphic Language",
-              "07. Distinctive Visual Codes",
-              "08. Visual Restrictions",
-              "09. AI Visual Direction",
+              "05. Page Architecture",
+              "06. Illustration & Materiality",
+              "07. Graphic Language",
+              "08. Distinctive Visual Codes",
+              "09. Visual Restrictions",
+              "10. AI Visual Direction",
             ],
             mdLabels: {
               visualTerritory: "Visual territory",
@@ -3684,6 +3839,9 @@
               colorFunction: "Function & proportion",
               colorRules: "Color rules",
               compositionGrid: "Composition",
+              pageArchetypes: "Section archetypes",
+              sectionOrder: "Section order",
+              focalRule: "Focal rule",
               illustration: "Illustration",
               materiality: "Materiality",
               graphicForms: "Graphic language",
@@ -3735,6 +3893,7 @@
                 "Warm, slightly desaturated, film-like",
                 "Present but anonymous: hands and shoulders",
               ],
+              sectionOrder: "Hero partido · Alternancia · Franja de cifras · Cita a sangre · Pasos · Cierre",
               illustration: [
                 "Sparse line drawing, only where a photograph cannot go",
                 "Single weight, slightly irregular",
@@ -3789,15 +3948,18 @@
               filesNote:
                 "Los archivos de referencia están en la carpeta `referencias/`, junto a este documento.",
               mdSlots: ["Primary", "Neutral", "Accent 01", "Accent 02", "Accent 03"],
+              rulesTitle: "Alternation rules — non-negotiable",
+              defaults:
+                "System defaults. They apply as written unless the answers above say otherwise; they are never improvised:",
               derive:
-                "Not specified on purpose. Derive from the decisions above and keep it constant across every piece:",
+                "Expressive only. Deduce it from the decisions above and keep it constant across every piece:",
               note: "Note:",
               toneRef: "Approximate tone",
               colorsNote:
                 "Los tonos son una aproximación de referencia, no códigos Pantone® oficiales.",
               pendingTitle: "Pendiente de definir",
               pendingIntro:
-                "Estos campos aún no tienen respuesta. Si afectan al resultado, pregunta antes de suponer.",
+                "Estos campos aún no tienen respuesta. Si son estructurales, usa el valor por defecto del sistema y déjalo dicho. Nunca los inventes.",
               ruleTitle: "Instrucciones para la IA",
               empty:
                 "_Todavía no hay respuestas. Completa los bloques para construir tu Brandbook OS._",
@@ -4008,15 +4170,17 @@
               },
               {
                 title: "Name and type",
-                derive: [
-                  "Display usage",
-                  "Body usage",
-                  "Tracking",
-                  "Leading",
-                  "Italics",
-                  "Typography to avoid — see Visual Restrictions",
-                ],
                 tip: "The name and the letters it is set in are already half the identity.",
+                defaults: [
+                  ["Display usage", "Steps 5–7 of the scale, headings only"],
+                  ["Body usage", "Step 2: 16–18px, never below 14px"],
+                  ["Tracking", "−2% on display sizes, 0 on body"],
+                  ["Leading", "1.15 on display, 1.55 on body"],
+                  ["Italics", "Reserved for pull quotes and captions"],
+                ],
+                derive: [
+                  "Typography to avoid — see What to avoid",
+                ],
                 fields: {
                   brandName: {
                     label: "What is your venture called?",
@@ -4040,10 +4204,10 @@
               },
               {
                 title: "Colour",
-                derive: [
-                  "Secondary combinations",
-                ],
                 tip: "*How much* of each colour is used matters more than which ones.",
+                defaults: [
+                  ["Secondary combinations", "Neutral on neutral, separated by a primary hairline"],
+                ],
                 fields: {
                   colors: {
                     label: "The brand colours",
@@ -4068,17 +4232,17 @@
               },
               {
                 title: "Page structure",
-                derive: [
-                  "Columns",
-                  "Margins",
-                  "Rhythm",
-                  "Scale",
-                  "Layers",
-                  "Blocks",
-                  "Dividers",
-                  "Image/text relationship",
-                ],
                 tip: "White space is a decision, not what is left over.",
+                defaults: [
+                  ["Columns", "12 on desktop, 6 on tablet, 4 on mobile"],
+                  ["Margins", "24px mobile · 48px tablet · 80px desktop · content max-width 1280px"],
+                  ["Rhythm", "24px inside a group · 64px between sections · 128px between chapters"],
+                  ["Scale", "Spacing steps: 8 · 16 · 24 · 32 · 48 · 64 · 96 · 128"],
+                  ["Layers", "Flat. No drop shadows; elevation is a change of surface colour"],
+                  ["Blocks", "Full-bleed image blocks against contained text blocks"],
+                  ["Dividers", "1px hairline in the border token, used sparingly"],
+                  ["Image/text relationship", "Asymmetric splits 7/5, 8/4 or 9/3. Never 6/6 by default"],
+                ],
                 fields: {
                   compositionGrid: {
                     label: "How is the page ordered?",
@@ -4090,6 +4254,35 @@
                       "Density",
                       "White space",
                     ],
+                  },
+                },
+              },
+              {
+                title: "Page architecture",
+                tip: "Without patterns an AI stacks centred blocks. With patterns, it composes.",
+                rules: [
+                  "No archetype repeats in two consecutive sections.",
+                  "At most ONE centred section in the whole page.",
+                  "Between two consecutive sections at least TWO of these change: background colour, alignment, number of columns, density.",
+                  "Each section has exactly one focal point.",
+                  "At least 3 surface changes in a page of 6 sections or more.",
+                  "Body copy is never centred: centring is reserved for the Manifesto and the Full-colour closing.",
+                ],
+                fields: {
+                  pageArchetypes: {
+                    label: "Which kinds of section will the page have?",
+                    hint: "Pick 4 to 6. They are the moulds the page is built from.",
+                    why: "It is what most decides whether a page reads rich or flat.",
+                  },
+                  sectionOrder: {
+                    label: "In what order do they go?",
+                    hint: "Write it if you know. If not, leave it empty.",
+                    why: "It gives the AI the exact run instead of inventing one.",
+                  },
+                  focalRule: {
+                    label: "How many things lead in each section?",
+                    hint: "A section with two leads has none.",
+                    why: "It is the rule that stops each block competing with itself.",
                   },
                 },
               },
@@ -4119,13 +4312,13 @@
               },
               {
                 title: "Graphic elements",
-                derive: [
-                  "Frames",
-                  "Borders",
-                  "Graphic devices",
-                  "Repeated motifs",
-                ],
                 tip: "A repeated detail identifies the brand faster than a logo.",
+                defaults: [
+                  ["Frames", "None. Content sits on the grid"],
+                  ["Borders", "1px in the border token, inset by the page margin"],
+                  ["Graphic devices", "A single hairline rule under section titles"],
+                  ["Repeated motifs", "Derived from the chosen shapes; one per page maximum"],
+                ],
                 fields: {
                   graphicForms: {
                     label: "Which elements repeat across the site?",
@@ -4199,7 +4392,7 @@
               visual: {
                 title: "Visual Direction",
                 sub: "How the brand looks and behaves",
-                meta: "9 blocks · Visual direction",
+                meta: "10 blocks · Visual direction",
               },
             },
             mdTitles: [
@@ -4207,11 +4400,12 @@
               "02. Name & Typography",
               "03. Color System",
               "04. Composition",
-              "05. Illustration & Materiality",
-              "06. Graphic Language",
-              "07. Distinctive Visual Codes",
-              "08. Visual Restrictions",
-              "09. AI Visual Direction",
+              "05. Page Architecture",
+              "06. Illustration & Materiality",
+              "07. Graphic Language",
+              "08. Distinctive Visual Codes",
+              "09. Visual Restrictions",
+              "10. AI Visual Direction",
             ],
             mdLabels: {
               visualTerritory: "Visual territory",
@@ -4226,6 +4420,9 @@
               colorFunction: "Function & proportion",
               colorRules: "Color rules",
               compositionGrid: "Composition",
+              pageArchetypes: "Section archetypes",
+              sectionOrder: "Section order",
+              focalRule: "Focal rule",
               illustration: "Illustration",
               materiality: "Materiality",
               graphicForms: "Graphic language",
@@ -4277,6 +4474,7 @@
                 "Warm, slightly desaturated, film-like",
                 "Present but anonymous: hands and shoulders",
               ],
+              sectionOrder: "Hero partido · Alternancia · Franja de cifras · Cita a sangre · Pasos · Cierre",
               illustration: [
                 "Sparse line drawing, only where a photograph cannot go",
                 "Single weight, slightly irregular",
@@ -4331,15 +4529,18 @@
               filesNote:
                 "Reference files are in the `references/` folder, next to this document.",
               mdSlots: ["Primary", "Neutral", "Accent 01", "Accent 02", "Accent 03"],
+              rulesTitle: "Alternation rules — non-negotiable",
+              defaults:
+                "System defaults. They apply as written unless the answers above say otherwise; they are never improvised:",
               derive:
-                "Not specified on purpose. Derive from the decisions above and keep it constant across every piece:",
+                "Expressive only. Deduce it from the decisions above and keep it constant across every piece:",
               note: "Note:",
               toneRef: "Approximate tone",
               colorsNote:
                 "Tones are a reference approximation, not official Pantone® codes.",
               pendingTitle: "Still to define",
               pendingIntro:
-                "These fields haven't been answered yet. If they affect the output, ask rather than assume.",
+                "These fields have no answer yet. If a field is structural, use the system default and say so. Never invent one.",
               ruleTitle: "Instructions for AI",
               empty:
                 "_No answers yet. Complete the blocks to build your Brandbook OS._",
@@ -4608,6 +4809,8 @@
               ...b,
               doc: b.doc || "concept",
               derive: t.derive,
+              defaults: t.defaults,
+              rules: t.rules,
               title: t.title,
               desc: t.desc,
               tip: t.tip,
@@ -4970,6 +5173,7 @@
           s.fields.filter(
             (f) =>
               f.type !== "fixed" &&
+              !f.optional &&
               !(AUTO[f.id] && pickOf(f.id).id !== OTHER),
           );
         function secProg(s) {
@@ -5743,7 +5947,7 @@
             const edited = pickOf(f.id).id === OTHER,
               val = state[f.id],
               empty = !(Array.isArray(val) ? val.filter(Boolean).length : (val || "").trim());
-            if (!edited && empty) c = emptyFrom([0, 3, 4, 7]);
+            if (!edited && empty) c = emptyFrom([0, 3, 5, 6, 8]);
             else
             c = edited
               ? `<div class="bmk-opts">${c}<div class="bmk-opt-actions"><button type="button" class="bmk-optbtn" data-act="unother" data-f="${f.id}">${IC_BACK}<span>${esc(T.ui.autoBack)}</span></button></div></div>`
@@ -5927,6 +6131,20 @@
               );
               /* Las hojas que ya no se preguntan siguen en el documento, marcadas
                  como derivables: la IA conserva la estructura sin inventar rumbo. */
+              if (s.rules && s.rules.length)
+                out.push(
+                  "",
+                  `**${T.md.rulesTitle}**`,
+                  "",
+                  s.rules.map((r) => `- ${r}`).join("\n"),
+                );
+              if (s.defaults && s.defaults.length)
+                out.push(
+                  "",
+                  `_${T.md.defaults}_`,
+                  "",
+                  s.defaults.map(([k, v]) => `- **${k}:** ${v}`).join("\n"),
+                );
               if (s.derive && s.derive.length)
                 out.push("", `_${T.md.derive} ${s.derive.join(" · ")}._`);
             }
