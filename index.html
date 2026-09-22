@@ -2273,9 +2273,6 @@
               { id: "visualAvoid", type: "list", n: 6, min: 4 },
           ] },
           { doc: "visual", fields: [
-              { id: "appPriority", type: "list", n: 4, min: 2, bullet: true },
-          ] },
-          { doc: "visual", fields: [
               { id: "aiBasePrompt", type: "textarea", rows: 4 },
               { id: "aiNegativePrompt", type: "textarea", rows: 3 },
               { id: "aiParameters", type: "list", n: 3, min: 3, bullet: true },
@@ -3295,84 +3292,6 @@
               },
             ],
           },
-          appPriority: {
-            ui: "ChipPicker",
-            pick: 4,
-            def: ["instagram", "web", "packaging"],
-            items: [
-              {
-                id: "instagram",
-                label: { es: "Instagram", en: "Instagram" },
-                hint: { es: "Feed y stories.", en: "Feed and stories." },
-                visual: `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><rect x="2.5" y="2.5" width="11" height="11" rx="3"/><circle cx="8" cy="8" r="3"/><circle cx="11.4" cy="4.6" r=".8" fill="currentColor"/></svg>`,
-                md: { es: "Instagram: feed y stories", en: "Instagram: feed and stories" },
-              },
-              {
-                id: "web",
-                label: { es: "Web", en: "Website" },
-                hint: { es: "La página del sitio.", en: "The site itself." },
-                visual: `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><rect x="2" y="3" width="12" height="10" rx="1"/><path d="M2 6h12"/></svg>`,
-                md: { es: "Web: la página del sitio", en: "Website: the site itself" },
-              },
-              {
-                id: "packaging",
-                label: { es: "Packaging", en: "Packaging" },
-                hint: { es: "Cajas y etiquetas.", en: "Boxes and labels." },
-                visual: `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M8 2l6 3v6l-6 3-6-3V5l6-3z"/><path d="M2 5l6 3 6-3M8 8v6"/></svg>`,
-                md: { es: "Packaging: cajas y etiquetas", en: "Packaging: boxes and labels" },
-              },
-              {
-                id: "deck",
-                label: { es: "Presentación", en: "Presentation" },
-                hint: { es: "Diapositivas.", en: "Slides." },
-                visual: `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><rect x="2" y="3" width="12" height="8" rx="1"/><path d="M8 11v3M5.5 14h5"/></svg>`,
-                md: { es: "Presentación: diapositivas", en: "Presentation: slides" },
-              },
-              {
-                id: "email",
-                label: { es: "Email", en: "Email" },
-                hint: { es: "Boletines y avisos.", en: "Newsletters and notices." },
-                visual: `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><rect x="2" y="4" width="12" height="8" rx="1"/><path d="M2.5 5l5.5 4 5.5-4"/></svg>`,
-                md: { es: "Email: boletines y avisos", en: "Email: newsletters and notices" },
-              },
-              {
-                id: "print",
-                label: { es: "Impresos", en: "Print" },
-                hint: { es: "Folletos y papelería.", en: "Leaflets and stationery." },
-                visual: `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M4 6V2.5h8V6"/><rect x="2" y="6" width="12" height="5" rx="1"/><path d="M4 11h8v3H4z"/></svg>`,
-                md: { es: "Impresos: folletos y papelería", en: "Print: leaflets and stationery" },
-              },
-              {
-                id: "signage",
-                label: { es: "Cartelería", en: "Signage" },
-                hint: { es: "Carteles y rótulos.", en: "Posters and signs." },
-                visual: `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><rect x="2.5" y="2.5" width="11" height="8"/><path d="M8 10.5V14M5.5 14h5"/></svg>`,
-                md: { es: "Cartelería: carteles y rótulos", en: "Signage: posters and signs" },
-              },
-              {
-                id: "merch",
-                label: { es: "Merchandising", en: "Merchandise" },
-                hint: { es: "Camisetas, bolsas, tazas.", en: "Shirts, bags, mugs." },
-                visual: `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M5 3l3 1.5L11 3l3 2-2 2v6H4V7L2 5l3-2z"/></svg>`,
-                md: { es: "Merchandising: camisetas, bolsas y tazas", en: "Merchandise: shirts, bags and mugs" },
-              },
-              {
-                id: "video",
-                label: { es: "Vídeo", en: "Video" },
-                hint: { es: "Piezas en movimiento.", en: "Moving pieces." },
-                visual: `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><rect x="2" y="4" width="12" height="8" rx="1"/><path d="M6.8 6.5l3.4 1.5-3.4 1.5z" fill="currentColor"/></svg>`,
-                md: { es: "Vídeo: piezas en movimiento", en: "Video: moving pieces" },
-              },
-              {
-                id: "interior",
-                label: { es: "Espacio físico", en: "Physical space" },
-                hint: { es: "Tienda, oficina, stand.", en: "Shop, office, stand." },
-                visual: `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M2 7l6-4.5L14 7"/><path d="M3.5 7v6h9V7"/></svg>`,
-                md: { es: "Espacio físico: tienda, oficina o stand", en: "Physical space: shop, office or stand" },
-              },
-            ],
-          },
-
           colors: {
             ui: "ColorPicker",
             def: "warm-earth",
@@ -3657,25 +3576,6 @@
                 },
               },
               {
-                title: "Dónde se aplica",
-                derive: [
-                  "Format / canvas",
-                  "Layout",
-                  "Typographic treatment",
-                  "Color use",
-                  "Image treatment",
-                  "Do / Don't — for each format named above",
-                ],
-                tip: "El sistema de arriba vale para todas; solo hay que nombrarlas.",
-                fields: {
-                  appPriority: {
-                    label: "¿Dónde se va a usar?",
-                    hint: "Marca hasta cuatro.",
-                    why: "Define qué piezas hay que resolver y cuáles puede deducir la IA.",
-                  },
-                },
-              },
-              {
                 title: "Instrucciones para la IA",
                 tip: "La lista de «no» trabaja tanto como la instrucción base.",
                 fields: {
@@ -3706,7 +3606,7 @@
               visual: {
                 title: "Visual Direction",
                 sub: "Cómo se ve y se comporta la marca",
-                meta: "10 bloques · Dirección visual",
+                meta: "9 bloques · Dirección visual",
               },
             },
             mdTitles: [
@@ -3718,8 +3618,7 @@
               "06. Graphic Language",
               "07. Distinctive Visual Codes",
               "08. Visual Restrictions",
-              "09. Applications",
-              "10. AI Visual Direction",
+              "09. AI Visual Direction",
             ],
             mdLabels: {
               visualTerritory: "Visual territory",
@@ -3746,7 +3645,6 @@
               aiParameters: "Variable parameters",
               aiRules: "Non-negotiable rules",
               aiChecklist: "Evaluation checklist",
-              appPriority: "Priority formats",
 
             },
             examples: {
@@ -3839,7 +3737,6 @@
                 "Is the palette within the neutral and primary range?",
                 "Would this be mistaken for stock?",
               ],
-              appPriority: ["Instagram feed and stories", "Website", "Packaging"],
 
             },
             md: {
@@ -3864,7 +3761,6 @@
             auto: {
               noText: "Sin texto, sin logotipo, sin marca de agua, sin estética de banco de imágenes.",
               ratio: "Proporción: 4:5, 9:16 o 16:9 según el formato",
-              formats: "Formatos previstos:",
               check: "¿Se cumple?",
               checkStock: "¿Podría confundirse con una imagen de banco?",
             },
@@ -4236,25 +4132,6 @@
                 },
               },
               {
-                title: "Where it is used",
-                derive: [
-                  "Format / canvas",
-                  "Layout",
-                  "Typographic treatment",
-                  "Color use",
-                  "Image treatment",
-                  "Do / Don't — for each format named above",
-                ],
-                tip: "The system above covers them all; you only have to name them.",
-                fields: {
-                  appPriority: {
-                    label: "Where will it be used?",
-                    hint: "Tick up to four.",
-                    why: "It sets which pieces must be resolved and which the AI can infer.",
-                  },
-                },
-              },
-              {
                 title: "Instructions for the AI",
                 tip: "The «no» list does as much work as the base instruction.",
                 fields: {
@@ -4285,7 +4162,7 @@
               visual: {
                 title: "Visual Direction",
                 sub: "How the brand looks and behaves",
-                meta: "10 blocks · Visual direction",
+                meta: "9 blocks · Visual direction",
               },
             },
             mdTitles: [
@@ -4297,8 +4174,7 @@
               "06. Graphic Language",
               "07. Distinctive Visual Codes",
               "08. Visual Restrictions",
-              "09. Applications",
-              "10. AI Visual Direction",
+              "09. AI Visual Direction",
             ],
             mdLabels: {
               visualTerritory: "Visual territory",
@@ -4325,7 +4201,6 @@
               aiParameters: "Variable parameters",
               aiRules: "Non-negotiable rules",
               aiChecklist: "Evaluation checklist",
-              appPriority: "Priority formats",
 
             },
             examples: {
@@ -4418,7 +4293,6 @@
                 "Is the palette within the neutral and primary range?",
                 "Would this be mistaken for stock?",
               ],
-              appPriority: ["Instagram feed and stories", "Website", "Packaging"],
 
             },
             md: {
@@ -4443,7 +4317,6 @@
             auto: {
               noText: "No text, no logo, no watermark, no stock-library look.",
               ratio: "Aspect ratio: 4:5, 9:16 or 16:9 depending on the format",
-              formats: "Intended formats:",
               check: "Does it hold?",
               checkStock: "Could this be mistaken for a stock image?",
             },
@@ -5594,9 +5467,12 @@
               .join(" ");
           },
           aiParameters: () => {
-            const apps = clean(state.appPriority);
-            if (!apps.length) return [];
-            return [T.auto.ratio, `${T.auto.formats} ${apps.join(", ")}`];
+            const R = (id, i) => (Array.isArray(state[id]) ? state[id][i] : "") || "";
+            /* Sin bloque de aplicaciones, lo que varía pieza a pieza sale de
+               las decisiones que sí admiten grado: proporción y patrón. */
+            const rows = [R("graphicForms", 1), R("materiality", 1)].filter(Boolean);
+            if (!rows.length) return [];
+            return [T.auto.ratio].concat(rows);
           },
           aiRules: () => {
             const R = (id, i) => (Array.isArray(state[id]) ? state[id][i] : "") || "";
@@ -5732,7 +5608,7 @@
             const edited = pickOf(f.id).id === OTHER,
               val = state[f.id],
               empty = !(Array.isArray(val) ? val.filter(Boolean).length : (val || "").trim());
-            if (!edited && empty) c = emptyFrom([0, 3, 4, 7, 8]);
+            if (!edited && empty) c = emptyFrom([0, 3, 4, 7]);
             else
             c = edited
               ? `<div class="bmk-opts">${c}<div class="bmk-opt-actions"><button type="button" class="bmk-optbtn" data-act="unother" data-f="${f.id}">${IC_BACK}<span>${esc(T.ui.autoBack)}</span></button></div></div>`
