@@ -469,27 +469,6 @@
         font-style: italic;
         line-height: 1.4;
       }
-      .bmk-tip {
-        margin-top: 22px;
-        padding-top: 16px;
-        border-top: 1px solid var(--line);
-        color: var(--rojo);
-        font-size: 15px;
-        font-style: italic;
-        line-height: 1.45;
-      }
-      .bmk-tip em {
-        font-style: normal;
-      }
-      .bmk-tip b {
-        display: block;
-        font-size: 10.5px;
-        font-style: normal;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
-        color: var(--ink);
-        margin-bottom: 8px;
-      }
 
       .bmk-form {
         border-bottom: 1px solid var(--line);
@@ -1357,14 +1336,6 @@
         cursor: pointer;
         margin-bottom: 10px;
       }
-      .bmk-railtip {
-        display: block;
-        margin-top: 3px;
-        font-size: 12px;
-        line-height: 1.45;
-        font-style: italic;
-        color: var(--muted);
-      }
       /* ---------- Retrato en vivo ---------- */
       .bmk-digest {
         margin-top: 24px;
@@ -2137,9 +2108,6 @@
         }
         .bmk-inblock .bmk-bar {
           margin-bottom: 0;
-        }
-        .bmk-tip {
-          margin-top: 18px;
         }
         .bmk .bmk-intro {
           font-size: 15px;
@@ -3511,7 +3479,6 @@
                   "Desired perception — see Brand Personality",
                   "Overall character",
                 ],
-                tip: "El sistema visual tiene que *ampliar* la idea, no decorarla.",
                 fields: {
                   visualTerritory: {
                     label: "¿Qué mundo visual quieres?",
@@ -3535,7 +3502,6 @@
               },
               {
                 title: "Nombre y tipografía",
-                tip: "El nombre y la letra con que se escribe ya son media identidad.",
                 defaults: [
                   ["Display usage", "Steps 5–7 of the scale, headings only"],
                   ["Body usage", "Step 2: 16–18px, never below 14px"],
@@ -3569,7 +3535,6 @@
               },
               {
                 title: "Color",
-                tip: "Importa más *cuánto* se usa cada color que cuáles son.",
                 defaults: [
                   ["Secondary combinations", "Neutral on neutral, separated by a primary hairline"],
                 ],
@@ -3597,7 +3562,6 @@
               },
               {
                 title: "Estructura de la página",
-                tip: "El espacio en blanco es una decisión, no lo que sobra.",
                 defaults: [
                   ["Columns", "12 on desktop, 6 on tablet, 4 on mobile"],
                   ["Column spans", "Body text 6–7 of 12, never fewer than 5. Headings up to 9. A three-piece row takes 4 each; a four-piece row, 3 each. Nothing sits on fewer than 3"],
@@ -3628,7 +3592,6 @@
               },
               {
                 title: "Arquitectura de página",
-                tip: "Sin patrones, una IA apila bloques centrados. Con patrones, compone.",
                 rules: [
                   "Ningún arquetipo se repite en dos secciones consecutivas.",
                   "Máximo UNA sección centrada en toda la página.",
@@ -3655,7 +3618,6 @@
                   "Surfaces",
                   "Physical references",
                 ],
-                tip: "Un dibujo propio distingue más que cualquier foto comprada.",
                 fields: {
                   illustration: {
                     label: "¿Hay ilustración?",
@@ -3672,7 +3634,6 @@
               },
               {
                 title: "Elementos gráficos",
-                tip: "Un detalle repetido reconoce la marca más rápido que un logo.",
                 defaults: [
                   ["Frames", "None. Content sits on the grid"],
                   ["Borders", "1px in the border token, inset by the page margin"],
@@ -3693,7 +3654,6 @@
                   "Elements that should recur — see Distinctive Codes",
                   "Elements that make the brand recognizable — see Distinctive Codes",
                 ],
-                tip: "Tapa el logo con el dedo. Lo que sigas reconociendo, eso es esto.",
                 fields: {
                   visualSignatures: {
                     label: "¿Qué tres cosas te delatan?",
@@ -3704,7 +3664,6 @@
               },
               {
                 title: "Lo que hay que evitar",
-                tip: "Los «no» son lo que impide que una IA se vaya a lo genérico.",
                 fields: {
                   visualAvoid: {
                     label: "¿Qué no quieres ver nunca?",
@@ -3722,7 +3681,6 @@
               },
               {
                 title: "Instrucciones para la IA",
-                tip: "La lista de «no» trabaja tanto como la instrucción base.",
                 fields: {
                   aiBasePrompt: {
                     label: "Instrucción base",
@@ -3952,7 +3910,6 @@
               saved: "Se guarda automáticamente",
               savedOk: "Guardado ✓",
               completed: "Completado",
-              tip: "Consejo",
               of: (a, r) => `${a} de ${r}`,
               max: " · Máximo alcanzado",
               enter: " · Escribe y pulsa Enter",
@@ -4093,7 +4050,6 @@
                   "Desired perception — see Brand Personality",
                   "Overall character",
                 ],
-                tip: "The visual system has to *extend* the idea, not decorate it.",
                 fields: {
                   visualTerritory: {
                     label: "What visual world do you want?",
@@ -4117,7 +4073,6 @@
               },
               {
                 title: "Name and type",
-                tip: "The name and the letters it is set in are already half the identity.",
                 defaults: [
                   ["Display usage", "Steps 5–7 of the scale, headings only"],
                   ["Body usage", "Step 2: 16–18px, never below 14px"],
@@ -4151,7 +4106,6 @@
               },
               {
                 title: "Colour",
-                tip: "*How much* of each colour is used matters more than which ones.",
                 defaults: [
                   ["Secondary combinations", "Neutral on neutral, separated by a primary hairline"],
                 ],
@@ -4179,7 +4133,6 @@
               },
               {
                 title: "Page structure",
-                tip: "White space is a decision, not what is left over.",
                 defaults: [
                   ["Columns", "12 on desktop, 6 on tablet, 4 on mobile"],
                   ["Column spans", "Body text 6–7 of 12, never fewer than 5. Headings up to 9. A three-piece row takes 4 each; a four-piece row, 3 each. Nothing sits on fewer than 3"],
@@ -4210,7 +4163,6 @@
               },
               {
                 title: "Page architecture",
-                tip: "Without patterns an AI stacks centred blocks. With patterns, it composes.",
                 rules: [
                   "No archetype repeats in two consecutive sections.",
                   "At most ONE centred section in the whole page.",
@@ -4237,7 +4189,6 @@
                   "Surfaces",
                   "Physical references",
                 ],
-                tip: "Your own drawing sets you apart more than any bought photo.",
                 fields: {
                   illustration: {
                     label: "Is there illustration?",
@@ -4254,7 +4205,6 @@
               },
               {
                 title: "Graphic elements",
-                tip: "A repeated detail identifies the brand faster than a logo.",
                 defaults: [
                   ["Frames", "None. Content sits on the grid"],
                   ["Borders", "1px in the border token, inset by the page margin"],
@@ -4275,7 +4225,6 @@
                   "Elements that should recur — see Distinctive Codes",
                   "Elements that make the brand recognizable — see Distinctive Codes",
                 ],
-                tip: "Cover the logo with your finger. Whatever you still recognise, that is this.",
                 fields: {
                   visualSignatures: {
                     label: "Which three things give you away?",
@@ -4286,7 +4235,6 @@
               },
               {
                 title: "What to avoid",
-                tip: "The «no» list is what stops an AI drifting into the generic.",
                 fields: {
                   visualAvoid: {
                     label: "What do you never want to see?",
@@ -4304,7 +4252,6 @@
               },
               {
                 title: "Instructions for the AI",
-                tip: "The «no» list does as much work as the base instruction.",
                 fields: {
                   aiBasePrompt: {
                     label: "Base instruction",
@@ -4534,7 +4481,6 @@
               saved: "Saves automatically",
               savedOk: "Saved ✓",
               completed: "Completed",
-              tip: "Tip",
               of: (a, r) => `${a} of ${r}`,
               max: " · Maximum reached",
               enter: " · Type and press Enter",
@@ -4668,7 +4614,7 @@
 
         /* Sello de versión: lo reescribe stamp.sh en cada despliegue, para
            saber de un vistazo qué build se está viendo. */
-        const BUILD = "23 Sep 2026 · 01:39";
+        const BUILD = "23 Sep 2026 · 01:42";
         const STORAGE_KEY = "ai-brand-os-v1";
         const LANG_KEY = "brandbook-os-lang";
 
@@ -5328,7 +5274,7 @@
               const st = status(i),
                 locked = !canOpen(i);
               return `<button class="bmk-rail-step is-${st} ${i === nx ? "is-next" : ""} ${locked ? "is-locked" : ""} ${line(3 + i)}" data-act="open" data-i="${i}" aria-disabled="${locked}" ${locked ? `title="${esc(T.ui.lockedTitle)}"` : ""} aria-label="${pad(i + 1)} ${esc(plain(s.title))}">
-        <span class="bmk-node">${st === "done" ? "✓" : st === "auto" ? "✦" : pad(i + 1)}</span><span class="bmk-rail-label">${rich(s.title)}${st === "auto" ? ` <em class="bmk-autotag">${esc(T.ui.autoBlock)}</em>` : ""}${s.tip ? `<em class="bmk-railtip">${rich(noDot(s.tip))}</em>` : ""}</span></button>`;
+        <span class="bmk-node">${st === "done" ? "✓" : st === "auto" ? "✦" : pad(i + 1)}</span><span class="bmk-rail-label">${rich(s.title)}${st === "auto" ? ` <em class="bmk-autotag">${esc(T.ui.autoBlock)}</em>` : ""}</span></button>`;
             }).join("") +
             `<button class="bmk-rail-step is-final ${canResult() ? "" : "is-locked"} ${line(3 + SECTIONS.length)}" data-act="result" aria-disabled="${!canResult()}" ${canResult() ? "" : `title="${esc(T.ui.lockedTitle)}"`} aria-label="${esc(T.ui.result)}"><span class="bmk-node">✦</span><span class="bmk-rail-label"><em>Brandbook OS</em></span></button>`;
 
