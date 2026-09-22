@@ -375,7 +375,46 @@
       .bmk-util {
         display: flex;
         justify-content: flex-end;
+        align-items: center;
+        gap: 12px;
         margin: -32px 0 16px;
+      }
+      .bmk-wipe {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 11px;
+        border: 1px solid var(--line-strong);
+        border-radius: 999px;
+        background: none;
+        color: var(--muted);
+        font-family: inherit;
+        font-size: 12.5px;
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+      }
+      .bmk-wipe:hover {
+        color: var(--rojo);
+        border-color: var(--rojo);
+      }
+      .bmk-wipe:focus-visible {
+        outline: 2px solid var(--rojo);
+        outline-offset: 2px;
+      }
+      .bmk-wipe svg {
+        width: 13px;
+        height: 13px;
+        flex: none;
+      }
+      @media (max-width: 640px) {
+        .bmk-wipe span {
+          display: none;
+        }
+        .bmk-wipe {
+          padding: 7px;
+        }
       }
       .bmk-saved {
         font-size: 13px;
@@ -4020,6 +4059,7 @@
               missing: (n, pct) => `Te faltan ${n} campos · ${pct}% completado`,
               complete:
                 "✓ Todo completo. Tu marca está <em>lista para trabajar con IA</em>.",
+              wipe: "Empezar de cero",
               reset: "Borrar todas las respuestas",
               confirmReset:
                 "¿Borrar todas las respuestas? Esta acción no se puede deshacer.",
@@ -4601,6 +4641,7 @@
               missing: (n, pct) => `${n} fields left · ${pct}% complete`,
               complete:
                 "✓ All complete. Your brand is <em>ready to work with AI</em>.",
+              wipe: "Start over",
               reset: "Clear all answers",
               confirmReset: "Clear all answers? This can't be undone.",
               cleared: "Answers cleared",
@@ -5249,7 +5290,7 @@
 
         /* ---------- Views ---------- */
         function mount() {
-          root.innerHTML = `<div class="bmk-wrap"><div class="bmk-util">${langSwitch()}</div><div class="bmk-stage"></div></div>`;
+          root.innerHTML = `<div class="bmk-wrap"><div class="bmk-util">${wipeBtn()}${langSwitch()}</div><div class="bmk-stage"></div></div>`;
           document.documentElement.lang = lang;
           render();
           placeLangPill(false);
@@ -5406,6 +5447,13 @@
           ).join(
             "",
           )}<button class="bmk-pill ${canResult() ? "" : "is-locked"}" role="tab" aria-selected="${current === "result"}" aria-disabled="${!canResult()}" data-final data-act="result" title="${esc(canResult() ? "Brandbook OS" : T.ui.lockedTitle)}">✦ <em>OS</em></button></div>`;
+        }
+
+        /* Empezar de cero desde cualquier pantalla: hasta ahora solo se podía
+           al llegar al resultado, y probando nunca se llega. */
+        const IC_WIPE = `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4.5h11M6 4.5V3h4v1.5M4 4.5l.7 8.2h6.6l.7-8.2M6.6 7v3.4M9.4 7v3.4"/></svg>`;
+        function wipeBtn() {
+          return `<button type="button" class="bmk-wipe" data-act="reset" title="${esc(T.ui.confirmReset)}">${IC_WIPE}<span>${esc(T.ui.wipe)}</span></button>`;
         }
 
         function topBar(current, keepTop) {
@@ -6847,6 +6895,7 @@
               if (confirm(T.ui.confirmReset)) {
                 state = {};
                 save();
+                openEx.clear();
                 view = { name: "result" };
                 go({ name: "map" });
                 toast(T.ui.cleared);
