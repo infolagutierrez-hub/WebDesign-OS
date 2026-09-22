@@ -1035,6 +1035,9 @@
         border-color: var(--rojo);
         box-shadow: 0 0 0 3px var(--accent-soft);
       }
+      .bmk-card-vis--tall {
+        height: 104px;
+      }
       .bmk-card-vis {
         width: 100%;
         height: 56px;
@@ -1456,7 +1459,10 @@
         .bmk-cards {
           grid-template-columns: 1fr 1fr;
         }
-        .bmk-card-vis {
+        .bmk-card-vis--tall {
+        height: 104px;
+      }
+      .bmk-card-vis {
           height: 46px;
         }
       }
@@ -2414,7 +2420,7 @@
               { id: "compositionGrid", type: "list", n: 5, min: 4 },
           ] },
           { doc: "visual", fields: [
-              { id: "pageArchetypes", type: "list", n: 6, min: 4, bullet: true },
+              { id: "pageArchetypes", type: "textarea", rows: 2 },
               { id: "sectionOrder", type: "textarea", rows: 2, optional: true },
               { id: "focalRule", type: "text" },
           ] },
@@ -3462,93 +3468,36 @@
             },
           },
           pageArchetypes: {
-            ui: "ToggleList",
-            pick: 6,
-            def: ["hero-split", "zigzag", "figures", "quote", "steps", "closing"],
+            ui: "CardPicker",
+            def: "editorial",
             items: [
                 {
-                  id: "hero-split",
-                  label: { es: "Hero partido", en: "Split hero" },
-                  hint: { es: "Texto a un lado, imagen al otro, en proporción 7/5.", en: "Text one side, image the other, in a 7/5 split." },
-                  visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="3" y="4" width="30" height="18" fill="currentColor"/><rect x="36" y="4" width="21" height="18" fill="currentColor" opacity=0.35/></svg>`,
-                  md: { es: "Hero partido: texto en 7 columnas, imagen en 5, sin centrar.", en: "Split hero: text on 7 columns, image on 5, never centred." },
+                  id: "editorial",
+                  label: { es: "Editorial", en: "Editorial" },
+                  hint: { es: "Texto ancho, franjas de color y una imagen grande.", en: "Wide text, colour bands and one large image." },
+                  visual: `<svg class="bmk-card-vis bmk-card-vis--tall" viewBox="0 0 120 96" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect width="120" height="96" fill="${CO.bg}"/><rect x="8" y="6" width="44" height="4" fill="${CO.ink}"/><rect x="8" y="13" width="36" height="3" fill="${CO.ink}" opacity="0.45"/><rect x="8" y="19" width="30" height="3" fill="${CO.ink}" opacity="0.45"/><rect x="8" y="26" width="18" height="5" fill="${CO.red}"/><rect x="62" y="6" width="50" height="26" fill="${CO.ink}" opacity="0.3"/><rect x="0" y="38" width="120" height="20" fill="${CO.red}"/><rect x="12" y="44" width="56" height="5" fill="${CO.bg}"/><rect x="12" y="52" width="40" height="3" fill="${CO.bg}" opacity="0.7"/><rect x="8" y="64" width="44" height="4" fill="${CO.ink}"/><rect x="8" y="71" width="96" height="3" fill="${CO.ink}" opacity="0.35"/><rect x="8" y="77" width="96" height="3" fill="${CO.ink}" opacity="0.35"/><rect x="8" y="83" width="64" height="3" fill="${CO.ink}" opacity="0.35"/></svg>`,
+                  md: { es: "Receta editorial. Recorrido: hero partido, texto en 7 columnas e imagen en 5 · franja a color pleno con una sola frase · dos o tres secciones de texto a 7 columnas con subtítulo · cierre a color.", en: "Editorial recipe. Run: split hero, text on 7 columns and image on 5 · full-colour band with a single line · two or three text sections on 7 columns with a subhead · colour closing." },
                 },
                 {
-                  id: "hero-editorial",
-                  label: { es: "Hero editorial", en: "Editorial hero" },
-                  hint: { es: "Titular grande arriba, imagen a sangre debajo.", en: "Large headline on top, full-bleed image below." },
-                  visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="4" y="4" width="42" height="5" fill="currentColor"/><rect x="0" y="12" width="60" height="14" fill="currentColor" opacity=0.35/></svg>`,
-                  md: { es: "Hero editorial: titular a tamaño display sobre imagen a sangre.", en: "Editorial hero: display-size headline over a full-bleed image." },
+                  id: "alternating",
+                  label: { es: "Alternancia", en: "Alternating" },
+                  hint: { es: "Imagen y texto turnándose de lado en cada fila.", en: "Image and text swapping sides on each row." },
+                  visual: `<svg class="bmk-card-vis bmk-card-vis--tall" viewBox="0 0 120 96" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect width="120" height="96" fill="${CO.bg}"/><rect x="8" y="6" width="44" height="26" fill="${CO.ink}" opacity="0.3"/><rect x="60" y="10" width="50" height="4" fill="${CO.ink}"/><rect x="60" y="18" width="44" height="3" fill="${CO.ink}" opacity="0.4"/><rect x="60" y="24" width="36" height="3" fill="${CO.ink}" opacity="0.4"/><rect x="68" y="38" width="44" height="26" fill="${CO.ink}" opacity="0.3"/><rect x="8" y="42" width="44" height="4" fill="${CO.ink}"/><rect x="8" y="50" width="48" height="3" fill="${CO.ink}" opacity="0.4"/><rect x="8" y="56" width="38" height="3" fill="${CO.ink}" opacity="0.4"/><rect x="8" y="72" width="44" height="18" fill="${CO.ink}" opacity="0.3"/><rect x="60" y="76" width="46" height="4" fill="${CO.ink}"/><rect x="60" y="84" width="40" height="3" fill="${CO.ink}" opacity="0.4"/></svg>`,
+                  md: { es: "Receta de alternancia. Recorrido: hero partido · tres o cuatro filas de imagen y texto invirtiendo el lado en cada una, imagen en 5 columnas y texto en 6 con una columna de aire · cierre a color.", en: "Alternating recipe. Run: split hero · three or four image-and-text rows flipping side each time, image on 5 columns and text on 6 with one column of air · colour closing." },
                 },
                 {
-                  id: "manifesto",
-                  label: { es: "Manifiesto", en: "Manifesto" },
-                  hint: { es: "Bloque de texto corto centrado. Máximo uno por página.", en: "A short centred text block. One per page maximum." },
-                  visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="16" y="7" width="28" height="3" fill="currentColor"/><rect x="11" y="13" width="38" height="3" fill="currentColor"/><rect x="20" y="19" width="20" height="3" fill="currentColor"/></svg>`,
-                  md: { es: "Manifiesto: bloque corto centrado, una sola vez en toda la página.", en: "Manifesto: a short centred block, once in the whole page." },
+                  id: "grid",
+                  label: { es: "Mosaico", en: "Grid" },
+                  hint: { es: "Piezas en rejilla: pasos, cifras o tarjetas.", en: "Pieces on a grid: steps, figures or cards." },
+                  visual: `<svg class="bmk-card-vis bmk-card-vis--tall" viewBox="0 0 120 96" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect width="120" height="96" fill="${CO.bg}"/><rect x="8" y="6" width="50" height="4" fill="${CO.ink}"/><rect x="8" y="14" width="30" height="3" fill="${CO.ink}" opacity="0.4"/><rect x="8" y="22" width="32" height="30" fill="${CO.ink}" opacity="0.3"/><rect x="44" y="22" width="32" height="30" fill="${CO.red}"/><rect x="80" y="22" width="32" height="30" fill="${CO.ink}" opacity="0.3"/><rect x="8" y="56" width="32" height="30" fill="${CO.ink}" opacity="0.3"/><rect x="44" y="56" width="32" height="14" fill="${CO.ink}" opacity="0.15"/><rect x="44" y="74" width="32" height="12" fill="${CO.ink}" opacity="0.3"/><rect x="80" y="56" width="32" height="30" fill="${CO.ink}" opacity="0.3"/></svg>`,
+                  md: { es: "Receta de mosaico. Recorrido: hero editorial · rejilla de tres o cuatro piezas iguales, cada una en 3 o 4 columnas · una pieza destacada al doble de ancho · franja de cifras · cierre a color.", en: "Grid recipe. Run: editorial hero · a grid of three or four equal pieces, each on 3 or 4 columns · one featured piece at double width · figures band · colour closing." },
                 },
                 {
-                  id: "zigzag",
-                  label: { es: "Alternancia imagen/texto", en: "Image/text zigzag" },
-                  hint: { es: "Filas que invierten el lado en cada repetición.", en: "Rows that flip side on each repeat." },
-                  visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="3" y="3" width="26" height="9" fill="currentColor" opacity=0.35/><rect x="32" y="3" width="25" height="9" fill="currentColor"/><rect x="3" y="15" width="26" height="8" fill="currentColor"/><rect x="32" y="15" width="25" height="8" fill="currentColor" opacity=0.35/></svg>`,
-                  md: { es: "Alternancia: filas imagen/texto invirtiendo el lado en cada una.", en: "Zigzag: image/text rows flipping side each time." },
-                },
-                {
-                  id: "bento",
-                  label: { es: "Mosaico", en: "Bento grid" },
-                  hint: { es: "Celdas de tamaños distintos en la misma retícula.", en: "Cells of different sizes on one grid." },
-                  visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="3" y="3" width="24" height="12" fill="currentColor"/><rect x="30" y="3" width="27" height="5" fill="currentColor" opacity=0.5/><rect x="30" y="10" width="27" height="5" fill="currentColor" opacity=0.35/><rect x="3" y="18" width="54" height="5" fill="currentColor" opacity=0.5/></svg>`,
-                  md: { es: "Mosaico: celdas de tamaños distintos sobre la misma retícula.", en: "Bento: cells of different sizes on a single grid." },
-                },
-                {
-                  id: "figures",
-                  label: { es: "Franja de cifras", en: "Figures band" },
-                  hint: { es: "Tres o cuatro datos grandes en línea, fondo distinto.", en: "Three or four large figures in a row, different ground." },
-                  visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="0" y="2" width="60" height="22" fill="currentColor" opacity=0.12/><rect x="6" y="8" width="10" height="10" fill="currentColor"/><rect x="25" y="8" width="10" height="10" fill="currentColor"/><rect x="44" y="8" width="10" height="10" fill="currentColor"/></svg>`,
-                  md: { es: "Franja de cifras: 3–4 datos a tamaño display sobre superficie distinta.", en: "Figures band: 3–4 display-size numbers on a different surface." },
-                },
-                {
-                  id: "steps",
-                  label: { es: "Lista de pasos", en: "Step list" },
-                  hint: { es: "Numerada, alineada a un eje izquierdo común.", en: "Numbered, aligned to one left axis." },
-                  visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="3" y="4" width="4" height="4" fill="currentColor"/><rect x="11" y="5" width="40" height="3" fill="currentColor"/><rect x="3" y="12" width="4" height="4" fill="currentColor"/><rect x="11" y="13" width="34" height="3" fill="currentColor"/><rect x="3" y="20" width="4" height="4" fill="currentColor"/><rect x="11" y="21" width="28" height="3" fill="currentColor"/></svg>`,
-                  md: { es: "Lista de pasos numerada, alineada a un eje izquierdo común.", en: "A numbered step list aligned to a common left axis." },
-                },
-                {
-                  id: "table",
-                  label: { es: "Tabla comparativa", en: "Comparison table" },
-                  hint: { es: "Planes, opciones o antes/después.", en: "Plans, options or before/after." },
-                  visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="3" y="3" width="54" height="4" fill="currentColor" opacity=0.4/><rect x="3" y="9" width="54" height="1" fill="currentColor"/><rect x="3" y="13" width="54" height="1" fill="currentColor"/><rect x="3" y="17" width="54" height="1" fill="currentColor"/><rect x="3" y="21" width="54" height="1" fill="currentColor"/><rect x="20" y="3" width="1" height="21" fill="currentColor" opacity=0.4/><rect x="39" y="3" width="1" height="21" fill="currentColor" opacity=0.4/></svg>`,
-                  md: { es: "Tabla comparativa para lo que se compara; nunca en párrafo.", en: "A comparison table for anything comparable; never prose." },
-                },
-                {
-                  id: "quote",
-                  label: { es: "Cita a sangre", en: "Full-bleed quote" },
-                  hint: { es: "Una frase a tamaño display sobre color pleno.", en: "One display-size line over solid colour." },
-                  visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="0" y="0" width="60" height="26" fill="currentColor" opacity=0.85/><rect x="9" y="9" width="42" height="3.5" fill="currentColor"/><rect x="16" y="16" width="28" height="3.5" fill="currentColor"/></svg>`,
-                  md: { es: "Cita a sangre: una frase a tamaño display sobre color pleno.", en: "Full-bleed quote: one display-size line over solid colour." },
-                },
-                {
-                  id: "strip",
-                  label: { es: "Tira horizontal", en: "Horizontal strip" },
-                  hint: { es: "Galería con scroll lateral o fila de tarjetas.", en: "Side-scrolling gallery or card row." },
-                  visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="2" y="5" width="16" height="16" fill="currentColor"/><rect x="21" y="5" width="16" height="16" fill="currentColor" opacity=0.6/><rect x="40" y="5" width="16" height="16" fill="currentColor" opacity=0.3/><rect x="58" y="5" width="4" height="16" fill="currentColor" opacity=0.15/></svg>`,
-                  md: { es: "Tira horizontal: galería con scroll lateral o fila de tarjetas.", en: "Horizontal strip: a side-scrolling gallery or row of cards." },
-                },
-                {
-                  id: "faq",
-                  label: { es: "Preguntas frecuentes", en: "FAQ" },
-                  hint: { es: "Acordeón en una columna estrecha.", en: "An accordion in one narrow column." },
-                  visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="16" y="4" width="28" height="4" fill="currentColor" opacity=0.5/><rect x="16" y="11" width="28" height="4" fill="currentColor" opacity=0.3/><rect x="16" y="18" width="28" height="4" fill="currentColor" opacity=0.3/></svg>`,
-                  md: { es: "FAQ en acordeón, columna estrecha, alineada a la izquierda.", en: "FAQ accordion, narrow column, left-aligned." },
-                },
-                {
-                  id: "closing",
-                  label: { es: "Cierre a color pleno", en: "Full-colour closing" },
-                  hint: { es: "Llamada final sobre el color principal.", en: "Final call over the primary colour." },
-                  visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="0" y="0" width="60" height="26" fill="currentColor" opacity=0.9/><rect x="14" y="8" width="32" height="4" fill="currentColor"/><rect x="22" y="16" width="16" height="5" fill="currentColor" opacity=0.55/></svg>`,
-                  md: { es: "Cierre a color pleno: llamada final sobre el color principal.", en: "Full-colour closing: a final call over the primary colour." },
+                  id: "cinematic",
+                  label: { es: "Cinematográfica", en: "Cinematic" },
+                  hint: { es: "Imágenes a sangre con el texto encima.", en: "Full-bleed images with text over them." },
+                  visual: `<svg class="bmk-card-vis bmk-card-vis--tall" viewBox="0 0 120 96" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect width="120" height="96" fill="${CO.bg}"/><rect x="0" y="0" width="120" height="44" fill="${CO.ink}" opacity="0.75"/><rect x="18" y="16" width="84" height="6" fill="${CO.bg}"/><rect x="30" y="26" width="60" height="4" fill="${CO.bg}" opacity="0.6"/><rect x="8" y="52" width="44" height="4" fill="${CO.ink}"/><rect x="8" y="59" width="40" height="3" fill="${CO.ink}" opacity="0.4"/><rect x="8" y="65" width="34" height="3" fill="${CO.ink}" opacity="0.4"/><rect x="0" y="74" width="120" height="22" fill="${CO.red}"/><rect x="26" y="82" width="68" height="6" fill="${CO.bg}"/></svg>`,
+                  md: { es: "Receta cinematográfica. Recorrido: imagen a sangre a pantalla completa con titular encima y capa de contraste · secciones de texto a 6 columnas entre imágenes · una cita a tamaño display sobre color pleno · cierre a color.", en: "Cinematic recipe. Run: full-bleed full-height image with the headline over it and a contrast layer · text sections on 6 columns between images · one display-size quote over solid colour · colour closing." },
                 },
             ],
           },
@@ -3680,9 +3629,13 @@
                 tip: "El espacio en blanco es una decisión, no lo que sobra.",
                 defaults: [
                   ["Columns", "12 on desktop, 6 on tablet, 4 on mobile"],
+                  ["Column spans", "Body text 6–7 of 12, never fewer than 5. Headings up to 9. A three-piece row takes 4 each; a four-piece row, 3 each. Nothing sits on fewer than 3"],
+                  ["Measure", "60–75 characters per line. If a block would fall below 45, widen its span instead of letting it go narrow"],
                   ["Margins", "24px mobile · 48px tablet · 80px desktop · content max-width 1280px"],
                   ["Rhythm", "24px inside a group · 64px between sections · 128px between chapters"],
                   ["Scale", "Spacing steps: 8 · 16 · 24 · 32 · 48 · 64 · 96 · 128"],
+                  ["Breakpoints", "390 mobile · 768 tablet · 1280 desktop · 1600 wide"],
+                  ["Responsive behaviour", "Below 768 every split becomes one column, image first and text after; grids of 3 or 4 become 2 columns, then 1 below 480. Type drops one step of the scale and vertical rhythm halves. No horizontal scroll at any width"],
                   ["Layers", "Flat. No drop shadows; elevation is a change of surface colour"],
                   ["Blocks", "Full-bleed image blocks against contained text blocks"],
                   ["Dividers", "1px hairline in the border token, used sparingly"],
@@ -3712,6 +3665,7 @@
                   "Cada sección tiene exactamente un punto focal.",
                   "Mínimo 3 cambios de superficie en una página de 6 secciones o más.",
                   "El cuerpo de texto nunca va centrado: el centrado se reserva al Manifiesto y al Cierre a color pleno.",
+                  "Ningún bloque de texto ocupa menos de 5 columnas de 12: una columna estrecha junto a media fila vacía es el error más visible.",
                 ],
                 fields: {
                   pageArchetypes: {
@@ -4270,9 +4224,13 @@
                 tip: "White space is a decision, not what is left over.",
                 defaults: [
                   ["Columns", "12 on desktop, 6 on tablet, 4 on mobile"],
+                  ["Column spans", "Body text 6–7 of 12, never fewer than 5. Headings up to 9. A three-piece row takes 4 each; a four-piece row, 3 each. Nothing sits on fewer than 3"],
+                  ["Measure", "60–75 characters per line. If a block would fall below 45, widen its span instead of letting it go narrow"],
                   ["Margins", "24px mobile · 48px tablet · 80px desktop · content max-width 1280px"],
                   ["Rhythm", "24px inside a group · 64px between sections · 128px between chapters"],
                   ["Scale", "Spacing steps: 8 · 16 · 24 · 32 · 48 · 64 · 96 · 128"],
+                  ["Breakpoints", "390 mobile · 768 tablet · 1280 desktop · 1600 wide"],
+                  ["Responsive behaviour", "Below 768 every split becomes one column, image first and text after; grids of 3 or 4 become 2 columns, then 1 below 480. Type drops one step of the scale and vertical rhythm halves. No horizontal scroll at any width"],
                   ["Layers", "Flat. No drop shadows; elevation is a change of surface colour"],
                   ["Blocks", "Full-bleed image blocks against contained text blocks"],
                   ["Dividers", "1px hairline in the border token, used sparingly"],
@@ -4302,6 +4260,7 @@
                   "Each section has exactly one focal point.",
                   "At least 3 surface changes in a page of 6 sections or more.",
                   "Body copy is never centred: centring is reserved for the Manifesto and the Full-colour closing.",
+                  "No text block takes fewer than 5 of 12 columns: a narrow column beside half an empty row is the most visible mistake.",
                 ],
                 fields: {
                   pageArchetypes: {
@@ -4764,7 +4723,7 @@
 
         /* Sello de versión: lo reescribe stamp.sh en cada despliegue, para
            saber de un vistazo qué build se está viendo. */
-        const BUILD = "22 Sep 2026 · 19:01";
+        const BUILD = "23 Sep 2026 · 01:36";
         const STORAGE_KEY = "ai-brand-os-v1";
         const LANG_KEY = "brandbook-os-lang";
 
