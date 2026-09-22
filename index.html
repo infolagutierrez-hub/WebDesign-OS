@@ -2204,7 +2204,6 @@
               { id: "compositionGrid", type: "list", n: 5, min: 4 },
           ] },
           { doc: "visual", fields: [
-              { id: "photography", type: "list", n: 5, min: 4 },
               { id: "illustration", type: "list", n: 3, min: 2 },
               { id: "materiality", type: "list", n: 2, min: 2 },
           ] },
@@ -2822,143 +2821,6 @@
               },
             ],
           },
-          photography: {
-            ui: "SegmentedSlider",
-            rows: [
-              {
-                label: { es: "Sujeto", en: "Subject matter" },
-                def: "hands",
-                items: [
-                  {
-                    id: "hands",
-                    label: { es: "Manos y gestos", en: "Hands and gestures" },
-                    hint: { es: "El producto en uso.", en: "The product in use." },
-                    md: { es: "Manos y gestos: el producto o el servicio en uso, no posando.", en: "Hands and gestures: the product or service in use, not posing." },
-                  },
-                  {
-                    id: "people",
-                    label: { es: "Personas", en: "People" },
-                    hint: { es: "Retratos y situaciones.", en: "Portraits and situations." },
-                    md: { es: "Personas en situaciones reales, más cerca del retrato que del posado.", en: "People in real situations, closer to portraiture than to posing." },
-                  },
-                  {
-                    id: "objects",
-                    label: { es: "Objetos y materia", en: "Objects and material" },
-                    hint: { es: "Bodegones y superficies.", en: "Still lifes and surfaces." },
-                    md: { es: "Objetos y materia: bodegones, superficies y detalle de acabado.", en: "Objects and material: still lifes, surfaces and finish detail." },
-                  },
-                  {
-                    id: "spaces",
-                    label: { es: "Espacios", en: "Spaces" },
-                    hint: { es: "Lugares e interiores.", en: "Places and interiors." },
-                    md: { es: "Espacios y lugares habitados, con el objeto integrado en el entorno.", en: "Lived-in spaces and places, with the object set into its environment." },
-                  },
-                ],
-              },
-              {
-                label: { es: "Encuadre", en: "Framing" },
-                def: "offcentre",
-                items: [
-                  {
-                    id: "centred",
-                    label: { es: "Centrado", en: "Centred" },
-                    hint: { es: "El sujeto en el medio.", en: "The subject in the middle." },
-                    md: { es: "Encuadre centrado, con el sujeto en el eje de la imagen.", en: "Centred framing, with the subject on the axis of the image." },
-                  },
-                  {
-                    id: "offcentre",
-                    label: { es: "Descentrado", en: "Off-centre" },
-                    hint: { es: "Con espacio libre a un lado.", en: "With free space to one side." },
-                    md: { es: "Encuadre descentrado, dejando espacio libre a un lado o encima.", en: "Off-centre framing, leaving free space to one side or above." },
-                  },
-                  {
-                    id: "close",
-                    label: { es: "Muy cerca", en: "Very close" },
-                    hint: { es: "Detalle que llena el cuadro.", en: "Detail filling the frame." },
-                    md: { es: "Encuadre muy cercano: el detalle llena el cuadro.", en: "Very close framing: the detail fills the frame." },
-                  },
-                ],
-              },
-              {
-                label: { es: "Luz", en: "Lighting" },
-                def: "soft",
-                items: [
-                  {
-                    id: "soft",
-                    label: { es: "Suave y lateral", en: "Soft and side-on" },
-                    hint: { es: "Como luz de ventana.", en: "Like window light." },
-                    md: { es: "Una sola fuente suave y lateral, como luz de ventana, con sombras largas.", en: "A single soft side light, like window light, with long shadows." },
-                  },
-                  {
-                    id: "bright",
-                    label: { es: "Clara y pareja", en: "Bright and even" },
-                    hint: { es: "Sin sombras marcadas.", en: "No strong shadows." },
-                    md: { es: "Luz clara y pareja, sin sombras marcadas.", en: "Bright, even light with no strong shadows." },
-                  },
-                  {
-                    id: "hard",
-                    label: { es: "Dura y marcada", en: "Hard and defined" },
-                    hint: { es: "Contrastes fuertes.", en: "Strong contrast." },
-                    md: { es: "Luz dura y direccional, con sombras de borde marcado.", en: "Hard, directional light with sharp-edged shadows." },
-                  },
-                ],
-              },
-              {
-                label: { es: "Color de la imagen", en: "Color treatment" },
-                def: "warm-muted",
-                items: [
-                  {
-                    id: "warm-muted",
-                    label: { es: "Cálido y apagado", en: "Warm and muted" },
-                    hint: { es: "Tonos tierra, algo desaturado.", en: "Earth tones, slightly desaturated." },
-                    md: { es: "Tratamiento cálido y ligeramente desaturado, con grano visible.", en: "A warm, slightly desaturated treatment with visible grain." },
-                  },
-                  {
-                    id: "natural",
-                    label: { es: "Natural", en: "Natural" },
-                    hint: { es: "Color fiel, sin tratar.", en: "True colour, untreated." },
-                    md: { es: "Color natural y fiel, sin tratamiento aparente.", en: "Natural, faithful colour with no apparent treatment." },
-                  },
-                  {
-                    id: "contrast",
-                    label: { es: "Saturado", en: "Saturated" },
-                    hint: { es: "Color vivo y contrastado.", en: "Vivid, contrasted colour." },
-                    md: { es: "Color saturado y contrastado, con negros profundos.", en: "Saturated, contrasted colour with deep blacks." },
-                  },
-                  {
-                    id: "bw",
-                    label: { es: "Blanco y negro", en: "Black and white" },
-                    hint: { es: "Sin color.", en: "No colour." },
-                    md: { es: "Blanco y negro, apoyado en la textura y el contraste.", en: "Black and white, leaning on texture and contrast." },
-                  },
-                ],
-              },
-              {
-                label: { es: "Presencia humana", en: "Human presence" },
-                def: "anonymous",
-                items: [
-                  {
-                    id: "anonymous",
-                    label: { es: "Anónima", en: "Anonymous" },
-                    hint: { es: "Manos y hombros, rara vez caras.", en: "Hands and shoulders, rarely faces." },
-                    md: { es: "Presencia humana anónima: manos y hombros, rara vez caras completas.", en: "Anonymous human presence: hands and shoulders, rarely full faces." },
-                  },
-                  {
-                    id: "faces",
-                    label: { es: "Con caras", en: "With faces" },
-                    hint: { es: "Personas reconocibles.", en: "Recognisable people." },
-                    md: { es: "Personas reconocibles y presentes, mirando o no a cámara.", en: "Recognisable people, present in frame, looking at camera or not." },
-                  },
-                  {
-                    id: "none",
-                    label: { es: "Sin personas", en: "No people" },
-                    hint: { es: "Solo objeto y espacio.", en: "Object and space only." },
-                    md: { es: "Sin presencia humana: solo objeto, materia y espacio.", en: "No human presence: only object, material and space." },
-                  },
-                ],
-              },
-            ],
-          },
           illustration: {
             ui: "CardPicker",
             def: "line",
@@ -2968,7 +2830,7 @@
                 label: { es: "Ninguna", en: "None" },
                 hint: { es: "Solo fotografía.", en: "Photography only." },
                 visual: `<svg class="bmk-card-vis" viewBox="0 0 120 56" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="120" height="56" fill="${CO.bg}"/><path d="M28 18l14 20M42 18L28 38" stroke="${CO.soft}" stroke-width="3" stroke-linecap="round"/><text x="62" y="34" font-family="Georgia, serif" font-size="13" fill="${CO.soft}">—</text></svg>`,
-                md: { es: ["Sin ilustración: el sistema se apoya solo en fotografía.", "—", "—"], en: ["No illustration: the system relies on photography alone.", "—", "—"] },
+                md: { es: ["Sin ilustración: el sistema se apoya en la composición y la materia.", "—", "—"], en: ["No illustration: the system relies on composition and material.", "—", "—"] },
               },
               {
                 id: "line",
@@ -3512,7 +3374,7 @@
             gen: () => {
               const row = (id, i) => (Array.isArray(state[id]) ? state[id][i] : "") || "";
               const c = (i) => row("compositionGrid", i),
-                ph = (i) => row("photography", i),
+                mt = (i) => row("materiality", i),
                 gf = (i) => row("graphicForms", i);
               const mk = (id, es, en) => ({
                 id,
@@ -3523,8 +3385,8 @@
               const out = [];
               if (c(2) || c(4))
                 out.push(mk("sig-comp", `Composición ${[c(2), c(4)].filter(Boolean).join(", la página ")}`, `Composition: ${[c(2), c(4)].filter(Boolean).join(" · ")}`));
-              if (ph(1) || ph(2))
-                out.push(mk("sig-photo", `Imágenes ${[ph(1), ph(2)].filter(Boolean).join(", con ")}`, `Images: ${[ph(1), ph(2)].filter(Boolean).join(" · ")}`));
+              if (mt(1))
+                out.push(mk("sig-material", `Superficies ${mt(1)}`, `Surfaces: ${mt(1)}`));
               if (gf(0) || gf(3))
                 out.push(mk("sig-graphic", `Detalles ${[gf(0), gf(3)].filter(Boolean).join(", con ")}`, `Details: ${[gf(0), gf(3)].filter(Boolean).join(" · ")}`));
               return out;
@@ -3678,36 +3540,17 @@
                 },
               },
               {
-                title: "Imágenes",
+                title: "Ilustración y materia",
                 derive: [
-                  "Camera distance",
-                  "Perspective",
-                  "Shadows",
-                  "Depth of field",
-                  "Photographic texture",
-                  "Objects",
-                  "Environment",
                   "Shape language",
                   "Illustration colour treatment",
                   "Grain",
                   "Surfaces",
                   "Physical references",
                 ],
-                desc: "Decide cómo son y de dónde salen las imágenes.",
-                tip: "Las imágenes son lo que salva a una web de parecer una plantilla.",
+                desc: "Decide si hay dibujo y cómo se sienten las superficies.",
+                tip: "Un dibujo propio distingue más que cualquier foto comprada.",
                 fields: {
-                  photography: {
-                    label: "¿Cómo son las fotos de la web?",
-                    hint: "Cinco decisiones que hacen que un conjunto de fotos parezca de la misma marca.",
-                    why: "Es lo que evita que la web acabe con fotos que no pegan entre sí.",
-                    rowLabels: [
-                      "Subject matter",
-                      "Framing",
-                      "Lighting",
-                      "Color treatment",
-                      "Human presence",
-                    ],
-                  },
                   illustration: {
                     label: "¿Hay ilustración?",
                     hint: "Dibujos, no fotos. Si no la usas, marca «Ninguna» y seguimos.",
@@ -3754,11 +3597,6 @@
                     label: "¿Qué tres cosas te delatan?",
                     hint: "Salen de lo que ya has elegido. Quita las que no te representen.",
                     why: "Es el resumen que un diseñador o una IA lee primero.",
-                    rowLabels: [
-                      "Signature compositions",
-                      "Signature color relationships",
-                      "Signature photographic behaviors",
-                    ],
                   },
                 },
               },
@@ -3847,7 +3685,7 @@
               "02. Identity System",
               "03. Color System",
               "04. Composition",
-              "05. Art Direction",
+              "05. Illustration & Materiality",
               "06. Graphic Language",
               "07. Distinctive Visual Codes",
               "08. Visual Restrictions",
@@ -3869,7 +3707,6 @@
               colorFunction: "Function & proportion",
               colorRules: "Color rules",
               compositionGrid: "Composition",
-              photography: "Photography",
               illustration: "Illustration",
               materiality: "Materiality",
               graphicForms: "Graphic language",
@@ -3998,8 +3835,6 @@
             auto: {
               noText: "Sin texto, sin logotipo, sin marca de agua, sin estética de banco de imágenes.",
               ratio: "Proporción: 4:5, 9:16 o 16:9 según el formato",
-              light: "Momento de luz dentro de la hora elegida",
-              subject: "Sujeto concreto de cada pieza",
               formats: "Formatos previstos:",
               check: "¿Se cumple?",
               checkStock: "¿Podría confundirse con una imagen de banco?",
@@ -4310,36 +4145,17 @@
                 },
               },
               {
-                title: "Images",
+                title: "Illustration & materials",
                 derive: [
-                  "Camera distance",
-                  "Perspective",
-                  "Shadows",
-                  "Depth of field",
-                  "Photographic texture",
-                  "Objects",
-                  "Environment",
                   "Shape language",
                   "Illustration colour treatment",
                   "Grain",
                   "Surfaces",
                   "Physical references",
                 ],
-                desc: "Decide what the images look like and where they come from.",
-                tip: "Images are what save a site from looking like a template.",
+                desc: "Decide whether there is drawing and how surfaces feel.",
+                tip: "Your own drawing sets you apart more than any bought photo.",
                 fields: {
-                  photography: {
-                    label: "What are the photos like?",
-                    hint: "Five decisions that make a set of photos look like one brand.",
-                    why: "It is what stops the site ending up with photos that clash.",
-                    rowLabels: [
-                      "Subject matter",
-                      "Framing",
-                      "Lighting",
-                      "Color treatment",
-                      "Human presence",
-                    ],
-                  },
                   illustration: {
                     label: "Is there illustration?",
                     hint: "Drawings, not photos. If you do not use it, tick «None» and move on.",
@@ -4386,11 +4202,6 @@
                     label: "Which three things give you away?",
                     hint: "They come from what you already chose. Drop the ones that are not you.",
                     why: "It is the summary a designer or an AI reads first.",
-                    rowLabels: [
-                      "Signature compositions",
-                      "Signature color relationships",
-                      "Signature photographic behaviors",
-                    ],
                   },
                 },
               },
@@ -4479,7 +4290,7 @@
               "02. Identity System",
               "03. Color System",
               "04. Composition",
-              "05. Art Direction",
+              "05. Illustration & Materiality",
               "06. Graphic Language",
               "07. Distinctive Visual Codes",
               "08. Visual Restrictions",
@@ -4501,7 +4312,6 @@
               colorFunction: "Function & proportion",
               colorRules: "Color rules",
               compositionGrid: "Composition",
-              photography: "Photography",
               illustration: "Illustration",
               materiality: "Materiality",
               graphicForms: "Graphic language",
@@ -4630,8 +4440,6 @@
             auto: {
               noText: "No text, no logo, no watermark, no stock-library look.",
               ratio: "Aspect ratio: 4:5, 9:16 or 16:9 depending on the format",
-              light: "Moment of light within the chosen hour",
-              subject: "The specific subject of each piece",
               formats: "Intended formats:",
               check: "Does it hold?",
               checkStock: "Could this be mistaken for a stock image?",
@@ -5757,11 +5565,10 @@
             const R = (id, i) => (Array.isArray(state[id]) ? state[id][i] : "") || "";
             return [
               state.visualTerritory,
-              R("photography", 0),
-              R("photography", 2),
-              R("photography", 3),
               R("compositionGrid", 3),
               R("compositionGrid", 4),
+              R("graphicForms", 0),
+              R("materiality", 1),
               clean(state.visualKeywords).join(", "),
             ]
               .filter(Boolean)
@@ -5783,23 +5590,21 @@
           },
           aiParameters: () => {
             const apps = clean(state.appPriority);
-            if (!apps.length && !(state.photography || []).filter(Boolean).length)
-              return [];
-            return [T.auto.ratio, T.auto.light, T.auto.subject].concat(
-              apps.length ? [`${T.auto.formats} ${apps.join(", ")}`] : [],
-            );
+            if (!apps.length) return [];
+            return [T.auto.ratio, `${T.auto.formats} ${apps.join(", ")}`];
           },
           aiRules: () => {
             const R = (id, i) => (Array.isArray(state[id]) ? state[id][i] : "") || "";
-            return [R("photography", 2), R("compositionGrid", 4), R("photography", 4)].filter(Boolean);
+            return [R("compositionGrid", 4), R("graphicForms", 1), R("materiality", 1)].filter(Boolean);
           },
           aiChecklist: () => {
             const R = (id, i) => (Array.isArray(state[id]) ? state[id][i] : "") || "";
-            const rows = [R("photography", 2), R("compositionGrid", 3)].filter(Boolean);
+            const rows = [R("compositionGrid", 3), R("graphicForms", 0)].filter(Boolean);
             if (!rows.length) return [];
             return rows.map((x) => `${T.auto.check} ${x}`).concat(T.auto.checkStock);
           },
         };
+
         /* Recalcula los campos automáticos, salvo los que se hayan ajustado a mano */
         function refreshAuto() {
           Object.keys(AUTO).forEach((id) => {
