@@ -379,6 +379,14 @@
         gap: 12px;
         margin: -32px 0 16px;
       }
+      .bmk-build {
+        margin: 40px 0 0;
+        text-align: center;
+        font-size: 11px;
+        letter-spacing: 0.06em;
+        color: var(--muted);
+        opacity: 0.55;
+      }
       .bmk-wipe {
         display: inline-flex;
         align-items: center;
@@ -4759,6 +4767,9 @@
 
         };
 
+        /* Sello de versión: lo reescribe stamp.sh en cada despliegue, para
+           saber de un vistazo qué build se está viendo. */
+        const BUILD = "22 Sep 2026 · 18:12";
         const STORAGE_KEY = "ai-brand-os-v1";
         const LANG_KEY = "brandbook-os-lang";
 
@@ -5424,7 +5435,8 @@
         </div>
       </header>
       <nav class="bmk-rail" aria-label="${esc(T.ui.roadmap)}">${rail}</nav>
-      <section class="bmk-how">${rows(T.ui.how, 13)}</section>`;
+      <section class="bmk-how">${rows(T.ui.how, 13)}</section>
+      <p class="bmk-build">${esc(BUILD)}</p>`;
         }
 
         function rows(items, from) {
