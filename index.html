@@ -1157,6 +1157,32 @@
         color: var(--blanco);
       }
       /* acciones comunes */
+      .bmk-note {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 8px 2px;
+        border: 0;
+        border-bottom: 1px solid transparent;
+        border-radius: 0;
+        background: none;
+        font-family: inherit;
+        font-size: 13.5px;
+        font-style: italic;
+        color: var(--ink);
+        transition: border-color 0.18s;
+      }
+      .bmk-note::placeholder {
+        color: var(--muted);
+        opacity: 0.65;
+      }
+      .bmk-note:hover {
+        border-bottom-color: var(--line);
+      }
+      .bmk-note:focus,
+      .bmk-note.is-set {
+        outline: none;
+        border-bottom-color: var(--rojo);
+      }
       .bmk-opt-actions {
         display: flex;
         flex-wrap: wrap;
@@ -3748,6 +3774,7 @@
               mdSlots: ["Primary", "Neutral", "Accent 01", "Accent 02", "Accent 03"],
               derive:
                 "Not specified on purpose. Derive from the decisions above and keep it constant across every piece:",
+              note: "Note:",
               toneRef: "Approximate tone",
               colorsNote:
                 "Los tonos son una aproximación de referencia, no códigos Pantone® oficiales.",
@@ -3894,6 +3921,7 @@
               autoEdit: "Ajustar",
               autoBack: "Volver a lo generado",
               techDetails: "Detalles técnicos (HEX, RGB, CMYK)",
+              notePh: "¿Algo que matizar?",
               optOther: "Otro",
               optBack: "Volver",
               optSuggest: "Sugiéreme",
@@ -4304,6 +4332,7 @@
               mdSlots: ["Primary", "Neutral", "Accent 01", "Accent 02", "Accent 03"],
               derive:
                 "Not specified on purpose. Derive from the decisions above and keep it constant across every piece:",
+              note: "Note:",
               toneRef: "Approximate tone",
               colorsNote:
                 "Tones are a reference approximation, not official Pantone® codes.",
@@ -4448,6 +4477,7 @@
               autoEdit: "Adjust",
               autoBack: "Back to the generated text",
               techDetails: "Technical details (HEX, RGB, CMYK)",
+              notePh: "Anything to add?",
               optOther: "Other",
               optBack: "Back",
               optSuggest: "Suggest one",
@@ -5217,6 +5247,10 @@
            ============================================================ */
         const OTHER = "__other"; // respuesta escrita a mano
         const picks = () => (state.picks = state.picks || {});
+        /* Los matices viven aparte de las respuestas: se concatenan al .md
+           pero no cuentan para isFilled() y nunca bloquean un bloque. */
+        const notes = () => (state.notes = state.notes || {});
+        const noteOf = (id) => (notes()[id] || "").trim();
         const pickOf = (id) => picks()[id] || {};
         const optsOf = (O) => (O.gen ? O.gen() : O.items);
         const optItem = (O, id) => optsOf(O).find((x) => x.id === id);
@@ -5302,10 +5336,19 @@
         const IC_BACK = `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M13 8H3M6.5 4.5L3 8l3.5 3.5"/></svg>`;
         const IC_WAND = `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3L4 13"/><path d="M11.5 1.5v2M13.8 4.2h-2M12.4 7.6l1 1M14.5 2.2l-1.4 1.4"/></svg>`;
 
+        /* Aparece en cuanto hay algo elegido. Sin borde hasta el foco. */
+        function noteField(f) {
+          const answered =
+            pickOf(f.id).id || (pickOf(f.id).ids || []).length || pickOf(f.id).rows;
+          if (!answered) return "";
+          const v = notes()[f.id] || "";
+          return `<input class="bmk-note ${v ? "is-set" : ""}" data-f="${f.id}" data-t="note" value="${esc(v)}" placeholder="${esc(T.ui.notePh)}" aria-label="${esc(T.ui.notePh)}">`;
+        }
+
         function optActions(f, O) {
           const p = pickOf(f.id),
             isOther = p.id === OTHER;
-          return `<div class="bmk-opt-actions">
+          return `${noteField(f)}<div class="bmk-opt-actions">
         <button type="button" class="bmk-optbtn" data-act="${isOther ? "unother" : "other"}" data-f="${f.id}">${isOther ? IC_BACK : IC_PEN}<span>${esc(isOther ? T.ui.optBack : T.ui.optOther)}</span></button>
         <button type="button" class="bmk-optbtn bmk-optbtn--sug" data-act="suggest" data-f="${f.id}">${IC_WAND}<span>${esc(T.ui.optSuggest)}</span></button>
         ${p.suggested ? `<span class="bmk-sugg">${esc(T.ui.optSuggested)}</span>` : ""}
@@ -5678,6 +5721,17 @@
         /* ---------- Export ---------- */
         /* Cada respuesta se redacta como una línea del documento; null si no hay respuesta */
         function mdField(f) {
+          const out = mdValue(f);
+          if (out === null) return null;
+          const n = noteOf(f.id);
+          if (!n) return out;
+          /* En una respuesta de una línea el matiz se pega a la frase de la
+             opción. En una lista iría tras los dos puntos, dejando un guion
+             huérfano: ahí se añade al cierre, ya fuera de las filas. */
+          return out.includes("\n") ? `${out}\n\n_${T.md.note} ${n}_` : `${out} — ${n}`;
+        }
+
+        function mdValue(f) {
           const v = state[f.id],
             L = f.md || f.label;
           switch (f.type) {
@@ -6179,6 +6233,10 @@
             ty = t.dataset.t;
           if (!id) return;
           if (ty === "text") state[id] = t.value;
+          else if (ty === "note") {
+            notes()[id] = t.value;
+            t.classList.toggle("is-set", !!t.value.trim());
+          }
           else if (ty === "list") {
             const a = Array.isArray(state[id]) ? state[id] : [];
             a[+t.dataset.k] = t.value;
