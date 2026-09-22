@@ -1315,6 +1315,75 @@
         font-style: italic;
         color: var(--muted);
       }
+      /* ---------- Retrato en vivo ---------- */
+      .bmk-digest {
+        margin-top: 24px;
+        padding-top: 20px;
+        border-top: 1px solid var(--line);
+        display: grid;
+        gap: 14px;
+      }
+      .bmk-dg-h {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .bmk-dg-h.is-yes {
+        color: var(--rojo);
+      }
+      .bmk-dg-h.is-no {
+        color: var(--muted);
+      }
+      .bmk-dg-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+      }
+      .bmk-dg-list li {
+        padding: 4px 9px;
+        border-radius: 999px;
+        font-size: 12px;
+        line-height: 1.35;
+        background: var(--blanco);
+        border: 1px solid var(--line);
+        color: var(--ink);
+      }
+      .bmk-dg-list.is-yes li {
+        border-color: var(--accent-soft);
+        background: var(--accent-soft);
+      }
+      .bmk-dg-list.is-no li {
+        color: var(--muted);
+        text-decoration: line-through;
+        text-decoration-color: var(--line-strong);
+      }
+      .bmk-dg-list li.bmk-dg-more {
+        background: none;
+        border-style: dashed;
+        color: var(--muted);
+        text-decoration: none;
+      }
+      .bmk-dg-empty {
+        margin: 0;
+        font-size: 12px;
+        font-style: italic;
+        color: var(--muted);
+      }
+      .bmk-dg-note {
+        margin: 0;
+        padding-left: 10px;
+        border-left: 2px solid var(--rojo);
+        font-size: 12px;
+        font-style: italic;
+        line-height: 1.45;
+        color: var(--muted);
+      }
       .bmk-autotag {
         font-size: 11px;
         font-style: italic;
@@ -1777,6 +1846,9 @@
         }
         .bmk-layout > div:not(.bmk-gauge) {
           order: 3;
+        }
+        .bmk-digest {
+          order: 5;
         }
         .bmk-checklist {
           order: 4;
@@ -4045,6 +4117,10 @@
               emptyGen: "Esta pregunta se construye con tus respuestas. Completa estos bloques y aparecerá sola:",
               emptyGenReady: "Listo: ya hay respuestas suficientes para construirla.",
               whyTitle: "¿Por qué se pregunta esto?",
+              digestIs: "Tu marca es",
+              digestIsnt: "Tu marca no es",
+              digestPending: "Aún sin definir",
+              digestMore: (n) => `+${n} más`,
               autoBlock: "Se escribe solo",
               autoNote: "Generado con tus respuestas",
               autoEdit: "Ajustar",
@@ -4601,6 +4677,10 @@
               emptyGen: "This question is built from your answers. Complete these blocks and it will appear on its own:",
               emptyGenReady: "Ready: there are enough answers to build it.",
               whyTitle: "Why is this asked?",
+              digestIs: "Your brand is",
+              digestIsnt: "Your brand is not",
+              digestPending: "Not defined yet",
+              digestMore: (n) => `+${n} more`,
               autoBlock: "Written for you",
               autoNote: "Generated from your answers",
               autoEdit: "Adjust",
@@ -5336,6 +5416,73 @@
     </div>`;
         }
 
+        /* ============================================================
+           Retrato en vivo. Se arma con lo ya elegido, en el idioma de la
+           interfaz: la persona ve en todo momento qué marca está describiendo
+           y qué está descartando, que es lo que luego serán las reglas de la IA.
+           ============================================================ */
+        function labelsOf(fid, max) {
+          const O = OPTIONS[fid],
+            p = pickOf(fid);
+          if (!O || p.id === OTHER) return [];
+          const pool = (O.rows ? rowsOf(O).flatMap((r) => r.items) : optsOf(O)) || [];
+          const pick = (id) => {
+            const it = pool.find((x) => x.id === id);
+            return it ? tx(it.label) : null;
+          };
+          let out = [];
+          if (p.ids) out = p.ids.map(pick);
+          else if (p.rows) out = Object.values(p.rows).map(pick);
+          else if (p.id) out = [pick(p.id)];
+          out = out.filter(Boolean);
+          return max ? out.slice(0, max) : out;
+        }
+
+        function digest() {
+          const is = [].concat(
+            labelsOf("visualTerritory"),
+            labelsOf("visualKeywords"),
+            labelsOf("visualTension"),
+            labelsOf("logoPrimary"),
+            labelsOf("typePrimary"),
+            labelsOf("colorFunction"),
+            labelsOf("compositionGrid", 2),
+            labelsOf("graphicForms", 2),
+            labelsOf("illustration"),
+            labelsOf("materiality"),
+          );
+          const isnt = [].concat(
+            labelsOf("visualAntiKeywords"),
+            labelsOf("visualAvoid", 4),
+            labelsOf("logoMisuse", 2),
+          );
+          const note = Object.values(notes())
+            .map((x) => (x || "").trim())
+            .filter(Boolean);
+          return { is, isnt, note: note[note.length - 1] || "" };
+        }
+
+        function digestHTML() {
+          const d = digest();
+          if (!d.is.length && !d.isnt.length) return "";
+          /* Con tope: el retrato es un vistazo, no un inventario */
+          const CAP = 8;
+          const list = (arr, cls) => {
+            if (!arr.length)
+              return `<p class="bmk-dg-empty">${esc(T.ui.digestPending)}</p>`;
+            const head = arr.slice(0, CAP),
+              rest = arr.length - head.length;
+            return `<ul class="bmk-dg-list ${cls}">${head
+              .map((x) => `<li>${esc(x)}</li>`)
+              .join("")}${rest > 0 ? `<li class="bmk-dg-more">${esc(T.ui.digestMore(rest))}</li>` : ""}</ul>`;
+          };
+          return `<div class="bmk-digest">
+        <div class="bmk-dg-block"><b class="bmk-dg-h is-yes">${esc(T.ui.digestIs)}</b>${list(d.is, "is-yes")}</div>
+        <div class="bmk-dg-block"><b class="bmk-dg-h is-no">${esc(T.ui.digestIsnt)}</b>${list(d.isnt, "is-no")}</div>
+        ${d.note ? `<p class="bmk-dg-note">${esc(d.note)}</p>` : ""}
+      </div>`;
+        }
+
         function sectionView(i, keepTop) {
           const s = SECTIONS[i],
             p = secProg(s),
@@ -5358,6 +5505,7 @@
               )
               .join("")}</ol>
           </div>
+          ${digestHTML()}
         </aside>
         <div>
           ${s.intro ? `<p class="bmk-intro ${line(1)}">${rich(noDot(s.intro))}</p>` : ""}
@@ -6293,6 +6441,16 @@
             fin.setAttribute("aria-disabled", String(locked));
             fin.title = locked ? T.ui.lockedTitle : "Brandbook OS";
             if (locked !== wasLocked) replay([fin]);
+          }
+          const aside = root.querySelector(".bmk-aside");
+          if (aside) {
+            const dg = root.querySelector(".bmk-digest"),
+              nu = document.createElement("div");
+            nu.innerHTML = digestHTML();
+            const fresh = nu.firstElementChild;
+            if (dg && fresh) dg.replaceWith(fresh);
+            else if (dg) dg.remove();
+            else if (fresh) aside.appendChild(fresh);
           }
           const nb = root.querySelector("[data-next]");
           if (nb) {
