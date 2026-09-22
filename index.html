@@ -2429,7 +2429,7 @@
               { id: "visualSignatures", type: "list", n: 3, min: 3 },
           ] },
           { doc: "visual", fields: [
-              { id: "visualAvoid", type: "list", n: 6, min: 4 },
+              { id: "visualAvoid", type: "list", n: 5, min: 4 },
           ] },
           { doc: "visual", fields: [
               { id: "aiBasePrompt", type: "textarea", rows: 4 },
@@ -3338,33 +3338,6 @@
                 ],
               },
               {
-                label: { es: "Fotografía", en: "Photography to avoid" },
-                def: "studio",
-                items: [
-                  {
-                    id: "studio",
-                    label: { es: "Fondo blanco de estudio", en: "White studio background" },
-                    hint: { es: "Producto flotando en la nada.", en: "Product floating in nothing." },
-                    md: { es: "Producto sobre fondo blanco de estudio, flotando en la nada.", en: "Product on a white studio background, floating in nothing." },
-                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="0" y="0" width="60" height="26" fill="currentColor" opacity=0.12/><circle cx="30" cy="11" r="7" fill="currentColor"/><ellipse cx="30" cy="21" rx="12" ry="2.5" fill="currentColor" opacity=".35"/></svg>`,
-                  },
-                  {
-                    id: "posed",
-                    label: { es: "Sonrisas posadas", en: "Posed smiles" },
-                    hint: { es: "Gente actuando naturalidad.", en: "People performing naturalness." },
-                    md: { es: "Sonrisas posadas y gente actuando naturalidad.", en: "Posed smiles and people performing naturalness." },
-                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><circle cx="30" cy="11" r="7.5" fill="currentColor"/><path d="M26 14a5 5 0 0 0 8 0" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round"/><circle cx="27.5" cy="9" r="1" fill="currentColor"/><circle cx="32.5" cy="9" r="1" fill="currentColor"/></svg>`,
-                  },
-                  {
-                    id: "flash",
-                    label: { es: "Flash directo", en: "Direct flash" },
-                    hint: { es: "Sombras duras y piel plana.", en: "Hard shadows, flat skin." },
-                    md: { es: "Flash directo, sombras duras y piel plana.", en: "Direct flash, hard shadows and flat skin." },
-                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="0" y="0" width="60" height="26" fill="currentColor" opacity=0.1/><circle cx="30" cy="13" r="8" fill="currentColor"/><rect x="38" y="5" width="18" height="16" fill="currentColor" opacity=0.55/></svg>`,
-                  },
-                ],
-              },
-              {
                 label: { es: "Estética genérica", en: "Generic / stock aesthetics to avoid" },
                 def: "stock",
                 items: [
@@ -3472,13 +3445,21 @@
                 hint: { es: "Sale de lo que ya has elegido; puedes quitarlo.", en: "It comes from what you already chose; you can drop it." },
                 md: { es, en },
               });
+              /* Se toma lo primero que haya respondido de cada bloque, no unas
+                 filas fijas: si no, bastaba con saltarse una para que este
+                 bloque quedara imposible de completar. */
+              const any = (id) =>
+                (Array.isArray(state[id]) ? state[id] : [])
+                  .map((x) => (x || "").trim())
+                  .filter(Boolean)
+                  .slice(0, 2);
               const out = [];
-              if (c(2) || c(4))
-                out.push(mk("sig-comp", `Composición ${[c(2), c(4)].filter(Boolean).join(", la página ")}`, `Composition: ${[c(2), c(4)].filter(Boolean).join(" · ")}`));
-              if (mt(1))
-                out.push(mk("sig-material", `Superficies ${mt(1)}`, `Surfaces: ${mt(1)}`));
-              if (gf(0) || gf(3))
-                out.push(mk("sig-graphic", `Detalles ${[gf(0), gf(3)].filter(Boolean).join(", con ")}`, `Details: ${[gf(0), gf(3)].filter(Boolean).join(" · ")}`));
+              const comp = any("compositionGrid"),
+                mat = any("materiality"),
+                gra = any("graphicForms");
+              if (comp.length) out.push(mk("sig-comp", `Composición: ${comp.join(" · ")}`, `Composition: ${comp.join(" · ")}`));
+              if (mat.length) out.push(mk("sig-material", `Superficies: ${mat.join(" · ")}`, `Surfaces: ${mat.join(" · ")}`));
+              if (gra.length) out.push(mk("sig-graphic", `Detalles: ${gra.join(" · ")}`, `Details: ${gra.join(" · ")}`));
               return out;
             },
           },
@@ -3821,8 +3802,7 @@
                       "Colors to avoid",
                       "Typography to avoid",
                       "Composition to avoid",
-                      "Photography to avoid",
-                      "Generic / stock aesthetics to avoid",
+                          "Generic / stock aesthetics to avoid",
                     ],
                   },
                 },
@@ -4403,8 +4383,7 @@
                       "Colors to avoid",
                       "Typography to avoid",
                       "Composition to avoid",
-                      "Photography to avoid",
-                      "Generic / stock aesthetics to avoid",
+                          "Generic / stock aesthetics to avoid",
                     ],
                   },
                 },
@@ -4769,7 +4748,7 @@
 
         /* Sello de versión: lo reescribe stamp.sh en cada despliegue, para
            saber de un vistazo qué build se está viendo. */
-        const BUILD = "22 Sep 2026 · 18:12";
+        const BUILD = "22 Sep 2026 · 18:23";
         const STORAGE_KEY = "ai-brand-os-v1";
         const LANG_KEY = "brandbook-os-lang";
 
@@ -5177,15 +5156,25 @@
         }
 
         /* ---------- Progress ---------- */
+        /* Cuántas respuestas exige de verdad un campo: si sus opciones se
+           generan, nunca más de las que existan. */
+        function needOf(f) {
+          const O = OPTIONS[f.id],
+            base = f.min || f.n || 1;
+          if (!O || !O.gen) return base;
+          return Math.min(base, optsOf(O).length);
+        }
         function isFilled(f) {
           if (AUTO[f.id] && pickOf(f.id).id !== OTHER) return true;
+          const O = OPTIONS[f.id];
+          if (O && O.gen && !optsOf(O).length) return false;
           const v = state[f.id];
           switch (f.type) {
             case "text":
             case "textarea":
               return !!(v || "").trim();
             case "list":
-              return clean(v).length >= (f.min || f.n);
+              return clean(v).length >= needOf(f);
             case "tags":
               return clean(v).length >= (f.min || 1);
             case "pair":
@@ -5226,6 +5215,7 @@
             (f) =>
               f.type !== "fixed" &&
               !f.optional &&
+              !(OPTIONS[f.id] && OPTIONS[f.id].gen && !optsOf(OPTIONS[f.id]).length) &&
               !(AUTO[f.id] && pickOf(f.id).id !== OTHER),
           );
         function secProg(s) {
@@ -5779,7 +5769,13 @@
           if (!O.rows) return segRow(f, O.items, pickOf(f.id).id || O.def);
           const rw = pickOf(f.id).rows || {},
             caps = rowLabelsOf(f) || [];
-          return `<div class="bmk-rows">${rowsOf(O)
+          const done = clean(state[f.id]).length,
+            need = needOf(f);
+          const tally =
+            done >= need
+              ? ""
+              : `<div class="bmk-count">${T.ui.of(done, need)}</div>`;
+          return `${tally}<div class="bmk-rows">${rowsOf(O)
             .map(
               (r, ri) => `<div><span class="bmk-row-h">${esc(tx(r.label) || caps[ri] || "")}</span>${segRow(f, r.items, rw[ri] ?? r.def, ri)}</div>`,
             )
@@ -5859,7 +5855,6 @@
               R(1),
               R(3),
               R(4),
-              R(5),
               T.auto.noText,
             ]
               .filter(Boolean)
