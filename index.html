@@ -1179,13 +1179,21 @@
         flex-wrap: wrap;
         gap: 8px;
       }
-      .bmk-why {
-        margin: -2px 0 10px;
-        padding-left: 11px;
-        border-left: 2px solid var(--line-strong);
+      /* .bmk-why solo sobrevive dentro de los avisos de bloque vacío */
+      .bmk-empty .bmk-why {
+        margin: 0;
         font-size: 12px;
         line-height: 1.5;
         color: var(--muted);
+      }
+      .bmk-ex-h {
+        display: block;
+        margin: 10px 0 2px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--rojo);
       }
       .bmk-optbtn {
         display: inline-flex;
@@ -1261,6 +1269,14 @@
         color: var(--rojo);
         cursor: pointer;
         margin-bottom: 10px;
+      }
+      .bmk-railtip {
+        display: block;
+        margin-top: 3px;
+        font-size: 12px;
+        line-height: 1.45;
+        font-style: italic;
+        color: var(--muted);
       }
       .bmk-autotag {
         font-size: 11px;
@@ -1691,6 +1707,46 @@
       }
       .bmk-prompt button.is-ok {
         border-color: var(--rojo);
+      }
+      /* ---------- Móvil: la pregunta primero ----------
+         En una columna el panel lateral se interponía entre la cabecera y el
+         formulario. Ahora solo el contador queda arriba, pegajoso, y la lista
+         de preguntas baja detrás del formulario. */
+      @media (max-width: 860px) {
+        .bmk-layout {
+          display: flex;
+          flex-direction: column;
+        }
+        .bmk-aside {
+          display: contents;
+        }
+        .bmk-aside .bmk-sec-head,
+        .bmk-aside h2,
+        .bmk-aside .bmk-desc {
+          order: 1;
+        }
+        .bmk-inblock {
+          display: contents;
+        }
+        .bmk-gauge {
+          order: 2;
+          position: sticky;
+          top: 0;
+          z-index: 3;
+          display: grid;
+          gap: 6px;
+          padding: 8px 0 10px;
+          background: var(--bg);
+        }
+        .bmk-layout > div:not(.bmk-gauge) {
+          order: 3;
+        }
+        .bmk-checklist {
+          order: 4;
+          margin-top: 28px;
+          padding-top: 20px;
+          border-top: 1px solid var(--line);
+        }
       }
       @media (max-width: 860px) {
         .bmk-guide {
@@ -3404,27 +3460,24 @@
                   "Desired perception — see Brand Personality",
                   "Overall character",
                 ],
-                desc: "Define el mundo visual antes de tocar un solo elemento.",
                 tip: "El sistema visual tiene que *ampliar* la idea, no decorarla.",
                 fields: {
                   visualTerritory: {
                     label: "¿Qué mundo visual quieres?",
-                    hint: "Elige el ambiente general. Todo lo demás se apoya en esto.",
                     why: "Marca el tono de lo que venga después: colores, fotos y formas.",
                   },
                   visualTension: {
                     label: "¿Qué dos cualidades conviven?",
-                    hint: "Dos rasgos que tiran en direcciones distintas.",
                     why: "Una marca de una sola nota aburre; la tensión es lo que la hace memorable.",
                   },
                   visualKeywords: {
                     label: "¿Qué tres palabras la describen?",
-                    hint: "Elige 3. Serán la brújula de cualquier decisión.",
+                    hint: "Lo que elijas aquí queda fuera de la siguiente.",
                     why: "Es lo primero que lee una IA para entender el encargo.",
                   },
                   visualAntiKeywords: {
                     label: "¿Y qué tres nunca?",
-                    hint: "Elige 3 que la marca no debe ser. Lo elegido arriba se desactiva.",
+                    hint: "Lo ya elegido arriba aparece desactivado.",
                     why: "Descartar acota más rápido que describir.",
                   },
                 },
@@ -3442,38 +3495,32 @@
                   "Italics",
                   "Typography to avoid — see Visual Restrictions",
                 ],
-                desc: "Elige el logo y las tipografías que sostienen la identidad.",
                 tip: "Un sistema se define tanto por sus *reglas* como por sus piezas.",
                 fields: {
                   logoPrimary: {
                     label: "¿Qué forma tiene tu logo?",
-                    hint: "La versión principal, la que se usa por defecto en toda la web.",
                     why: "Determina cuánto espacio ocupa la marca en la cabecera y si sirve de favicon.",
                   },
                   logoSystem: {
                     label: "¿Cómo puede usarse el logo?",
-                    hint: "Tres reglas que evitan que cada página lo ponga a su manera.",
                     why: "Sin estas reglas, quien toque la web improvisará.",
                     rowLabels: ["Secondary versions", "Isotype", "Backgrounds"],
                   },
                   logoMisuse: {
                     label: "Lo que nadie debe hacerle a tu logo",
-                    hint: "Marca lo que quieres prohibir. Si dudas, deja las que vienen marcadas.",
+                    hint: "Si dudas, deja marcadas las que vienen.",
                     why: "Va tal cual al documento como lista de «no». Es lo que más frena a una IA.",
                   },
                   typePrimary: {
                     label: "¿Con qué letra se escriben los títulos?",
-                    hint: "La tipografía que da carácter. Se ve en titulares y cabecera.",
                     why: "Es la decisión tipográfica que más se nota a primera vista.",
                   },
                   typeSecondary: {
                     label: "¿Y el texto largo?",
-                    hint: "La que sostiene párrafos, menús y formularios. Prioriza que se lea.",
                     why: "Un texto largo mal elegido cansa y la gente abandona la página.",
                   },
                   typeSettings: {
                     label: "¿Cómo se componen los textos?",
-                    hint: "Tres ajustes que se aplican en toda la web.",
                     why: "Es lo que hace que todas las páginas parezcan de la misma web.",
                     rowLabels: ["Case", "Weight", "Hierarchy"],
                   },
@@ -3484,23 +3531,20 @@
                 derive: [
                   "Secondary combinations",
                 ],
-                desc: "Fija los colores y cómo se usan.",
                 tip: "Importa más *cuánto* se usa cada color que cuáles son.",
                 fields: {
                   colors: {
                     label: "Los colores de la marca",
-                    hint: "Elige una combinación y ajústala si quieres. Los códigos se calculan solos.",
+                    hint: "Elige una combinación y ajústala si quieres.",
                     why: "Son los colores exactos que usará quien monte la web.",
                   },
                   colorFunction: {
                     label: "¿Cuánto se ve cada color?",
-                    hint: "No es qué colores, sino cuánto espacio ocupa cada uno en la pantalla.",
                     why: "Es lo que hace que dos webs con los mismos colores se vean distintas.",
                     rowLabels: ["Primary", "Neutral", "Accent 01", "Accent 02", "Accent 03"],
                   },
                   colorRules: {
                     label: "¿Cómo se combinan entre sí?",
-                    hint: "Tres reglas para que la web no acabe con cada sección de un color.",
                     why: "Evita que alguien improvise un color sobre otro que no se lee.",
                     rowLabels: [
                       "Dominant combinations",
@@ -3522,12 +3566,10 @@
                   "Dividers",
                   "Image/text relationship",
                 ],
-                desc: "Decide cómo se ordena la página antes de poner nada dentro.",
                 tip: "El espacio en blanco es una decisión, no lo que sobra.",
                 fields: {
                   compositionGrid: {
                     label: "¿Cómo se ordena la página?",
-                    hint: "Dónde caen las cosas y cuánto espacio se dejan entre ellas.",
                     why: "Es la decisión que más se nota en la web, aunque nadie sepa nombrarla.",
                     rowLabels: [
                       "Grid",
@@ -3548,18 +3590,16 @@
                   "Surfaces",
                   "Physical references",
                 ],
-                desc: "Decide si hay dibujo y cómo se sienten las superficies.",
                 tip: "Un dibujo propio distingue más que cualquier foto comprada.",
                 fields: {
                   illustration: {
                     label: "¿Hay ilustración?",
-                    hint: "Dibujos, no fotos. Si no la usas, marca «Ninguna» y seguimos.",
+                    hint: "Si no la usas, marca «Ninguna» y seguimos.",
                     why: "Una ilustración propia distingue más que una foto comprada.",
                     rowLabels: ["Style", "Line quality", "Level of detail"],
                   },
                   materiality: {
                     label: "¿Las superficies se ven planas o con textura?",
-                    hint: "Cómo se tratan fondos y tarjetas en pantalla.",
                     why: "Da profundidad sin recargar: afecta a fondos, tarjetas y botones.",
                     rowLabels: ["Paper", "Texture"],
                   },
@@ -3573,12 +3613,10 @@
                   "Graphic devices",
                   "Repeated motifs",
                 ],
-                desc: "Define las formas pequeñas que se repiten por toda la web.",
                 tip: "Un detalle repetido reconoce la marca más rápido que un logo.",
                 fields: {
                   graphicForms: {
                     label: "¿Qué elementos se repiten por toda la web?",
-                    hint: "Las formas pequeñas que nadie mira de frente pero que hacen que todo pegue.",
                     why: "Se repiten tanto que reconocen la marca más rápido que el propio logo.",
                     rowLabels: ["Shapes", "Patterns", "Icons", "Separators"],
                   },
@@ -3590,24 +3628,22 @@
                   "Elements that should recur — see Distinctive Codes",
                   "Elements that make the brand recognizable — see Distinctive Codes",
                 ],
-                desc: "Aísla lo que te hace reconocible sin necesidad del logo.",
                 tip: "Tapa el logo con el dedo. Lo que sigas reconociendo, eso es esto.",
                 fields: {
                   visualSignatures: {
                     label: "¿Qué tres cosas te delatan?",
-                    hint: "Salen de lo que ya has elegido. Quita las que no te representen.",
+                    hint: "Quita las que no te representen.",
                     why: "Es el resumen que un diseñador o una IA lee primero.",
                   },
                 },
               },
               {
                 title: "Lo que hay que evitar",
-                desc: "Nombra lo que el sistema no debe llegar a ser nunca.",
                 tip: "Los «no» son lo que impide que una IA se vaya a lo genérico.",
                 fields: {
                   visualAvoid: {
                     label: "¿Qué no quieres ver nunca?",
-                    hint: "Marca todo lo que te chirríe. Esta es la lista que más trabajo hace.",
+                    hint: "Marca todo lo que te chirríe.",
                     why: "Un «no» claro dirige mejor que diez «sí».",
                     rowLabels: [
                       "Styles to avoid",
@@ -3630,44 +3666,37 @@
                   "Image treatment",
                   "Do / Don't — for each format named above",
                 ],
-                desc: "Di en qué partes de la web se aplica todo lo anterior.",
                 tip: "El sistema de arriba vale para todas; solo hay que nombrarlas.",
                 fields: {
                   appPriority: {
                     label: "¿Dónde se va a usar?",
-                    hint: "Marca hasta cuatro. El sistema de arriba vale para todas.",
+                    hint: "Marca hasta cuatro.",
                     why: "Define qué piezas hay que resolver y cuáles puede deducir la IA.",
                   },
                 },
               },
               {
                 title: "Instrucciones para la IA",
-                desc: "Convierte todo el sistema en instrucciones que una IA pueda seguir.",
                 tip: "La lista de «no» trabaja tanto como la instrucción base.",
                 fields: {
                   aiBasePrompt: {
                     label: "Instrucción base",
-                    hint: "El texto que se le da a la IA para cualquier imagen de la web.",
                     why: "Es lo que pegas antes de pedir una imagen.",
                   },
                   aiNegativePrompt: {
                     label: "Lo que la IA no debe hacer",
-                    hint: "La lista de «no». Sé tajante: aquí funciona.",
                     why: "Sin esto, los modelos se van a lo genérico por defecto.",
                   },
                   aiParameters: {
                     label: "Lo que cambia en cada imagen",
-                    hint: "Lo que se ajusta pieza a pieza: proporción, sujeto, luz.",
                     why: "Marca qué puedes tocar sin romper el sistema.",
                   },
                   aiRules: {
                     label: "Reglas que no se saltan",
-                    hint: "Se cumplen en todas las imágenes, sin excepción.",
                     why: "Es el filtro que mantiene la coherencia entre piezas.",
                   },
                   aiChecklist: {
                     label: "Antes de aprobar una imagen",
-                    hint: "Tres cosas que comprobar. Si alguna falla, se repite.",
                     why: "Convierte el criterio en algo que otra persona puede aplicar.",
                   },
                 },
@@ -3963,14 +3992,15 @@
               ],
               emptyGen: "Esta pregunta se construye con tus respuestas. Completa estos bloques y aparecerá sola:",
               emptyGenReady: "Listo: ya hay respuestas suficientes para construirla.",
+              whyTitle: "¿Por qué se pregunta esto?",
               autoBlock: "Se escribe solo",
               autoNote: "Generado con tus respuestas",
               autoEdit: "Ajustar",
               autoBack: "Volver a lo generado",
               techDetails: "Detalles técnicos (HEX, RGB, CMYK)",
-              optOther: "Otro (lo escribo yo)",
-              optBack: "Volver a las opciones",
-              optSuggest: "No lo sé, sugiéreme",
+              optOther: "Otro",
+              optBack: "Volver",
+              optSuggest: "Sugiéreme",
               optSuggested: "sugerida",
               optSuggestedToast: "Sugerencia aplicada · puedes cambiarla",
               refsMax: "Máximo 6 archivos",
@@ -4009,27 +4039,24 @@
                   "Desired perception — see Brand Personality",
                   "Overall character",
                 ],
-                desc: "Define the visual world before touching a single element.",
                 tip: "The visual system has to *extend* the idea, not decorate it.",
                 fields: {
                   visualTerritory: {
                     label: "What visual world do you want?",
-                    hint: "Choose the overall mood. Everything else leans on this.",
                     why: "It sets the tone for what follows: colours, photos and shapes.",
                   },
                   visualTension: {
                     label: "Which two qualities live together?",
-                    hint: "Two traits pulling in different directions.",
                     why: "A one-note brand is dull; tension is what makes it memorable.",
                   },
                   visualKeywords: {
                     label: "Which three words describe it?",
-                    hint: "Pick 3. They become the compass for every decision.",
+                    hint: "What you pick here is ruled out of the next one.",
                     why: "It is the first thing an AI reads to understand the brief.",
                   },
                   visualAntiKeywords: {
                     label: "And which three never?",
-                    hint: "Pick 3 the brand must not be. What you chose above is disabled.",
+                    hint: "What you chose above appears disabled.",
                     why: "Ruling out narrows faster than describing.",
                   },
                 },
@@ -4047,38 +4074,32 @@
                   "Italics",
                   "Typography to avoid — see Visual Restrictions",
                 ],
-                desc: "Choose the logo and the typefaces that carry the identity.",
                 tip: "A system is defined as much by its *rules* as by its pieces.",
                 fields: {
                   logoPrimary: {
                     label: "What shape is your logo?",
-                    hint: "The primary version, used by default across the site.",
                     why: "It decides how much room the brand takes in the header, and whether it works as a favicon.",
                   },
                   logoSystem: {
                     label: "How may the logo be used?",
-                    hint: "Three rules that stop every page placing it its own way.",
                     why: "Without these rules, whoever touches the site will improvise.",
                     rowLabels: ["Secondary versions", "Isotype", "Backgrounds"],
                   },
                   logoMisuse: {
                     label: "What nobody should do to your logo",
-                    hint: "Tick what you want to forbid. If unsure, keep the ones already ticked.",
+                    hint: "If unsure, keep the ones already ticked.",
                     why: "It goes straight into the document as a «no» list. It is what reins an AI in most.",
                   },
                   typePrimary: {
                     label: "Which type sets the headings?",
-                    hint: "The typeface that gives character. Seen in headlines and the header.",
                     why: "It is the type decision people notice first.",
                   },
                   typeSecondary: {
                     label: "And the long text?",
-                    hint: "The one carrying paragraphs, menus and forms. Legibility first.",
                     why: "A badly chosen text face tires readers and they leave the page.",
                   },
                   typeSettings: {
                     label: "How is the text set?",
-                    hint: "Three settings applied across the whole site.",
                     why: "It is what makes every page look like the same site.",
                     rowLabels: ["Case", "Weight", "Hierarchy"],
                   },
@@ -4089,23 +4110,20 @@
                 derive: [
                   "Secondary combinations",
                 ],
-                desc: "Fix the colours and how they are used.",
                 tip: "*How much* of each colour is used matters more than which ones.",
                 fields: {
                   colors: {
                     label: "The brand colours",
-                    hint: "Pick a combination and adjust it if you want. The codes are worked out for you.",
+                    hint: "Pick a combination and adjust it if you want.",
                     why: "These are the exact colours whoever builds the site will use.",
                   },
                   colorFunction: {
                     label: "How much of each colour shows?",
-                    hint: "Not which colours, but how much room each one takes on screen.",
                     why: "It is what makes two sites with the same colours look completely different.",
                     rowLabels: ["Primary", "Neutral", "Accent 01", "Accent 02", "Accent 03"],
                   },
                   colorRules: {
                     label: "How do they combine?",
-                    hint: "Three rules so the site does not end up with a colour per section.",
                     why: "It stops anyone improvising one colour over another that cannot be read.",
                     rowLabels: [
                       "Dominant combinations",
@@ -4127,12 +4145,10 @@
                   "Dividers",
                   "Image/text relationship",
                 ],
-                desc: "Decide how the page is ordered before putting anything in it.",
                 tip: "White space is a decision, not what is left over.",
                 fields: {
                   compositionGrid: {
                     label: "How is the page ordered?",
-                    hint: "Where things land and how much room they leave each other.",
                     why: "It is the most visible decision on a site, even if nobody can name it.",
                     rowLabels: [
                       "Grid",
@@ -4153,18 +4169,16 @@
                   "Surfaces",
                   "Physical references",
                 ],
-                desc: "Decide whether there is drawing and how surfaces feel.",
                 tip: "Your own drawing sets you apart more than any bought photo.",
                 fields: {
                   illustration: {
                     label: "Is there illustration?",
-                    hint: "Drawings, not photos. If you do not use it, tick «None» and move on.",
+                    hint: "If you do not use it, tick «None» and move on.",
                     why: "Your own illustration sets you apart more than a bought photo.",
                     rowLabels: ["Style", "Line quality", "Level of detail"],
                   },
                   materiality: {
                     label: "Do surfaces look flat or textured?",
-                    hint: "How backgrounds and cards are treated on screen.",
                     why: "It adds depth without clutter: it affects backgrounds, cards and buttons.",
                     rowLabels: ["Paper", "Texture"],
                   },
@@ -4178,12 +4192,10 @@
                   "Graphic devices",
                   "Repeated motifs",
                 ],
-                desc: "Define the small shapes that repeat across the whole site.",
                 tip: "A repeated detail identifies the brand faster than a logo.",
                 fields: {
                   graphicForms: {
                     label: "Which elements repeat across the site?",
-                    hint: "The small shapes nobody looks at directly, but that hold everything together.",
                     why: "They repeat so often they identify the brand faster than the logo does.",
                     rowLabels: ["Shapes", "Patterns", "Icons", "Separators"],
                   },
@@ -4195,24 +4207,22 @@
                   "Elements that should recur — see Distinctive Codes",
                   "Elements that make the brand recognizable — see Distinctive Codes",
                 ],
-                desc: "Isolate what makes you recognisable without the logo.",
                 tip: "Cover the logo with your finger. Whatever you still recognise, that is this.",
                 fields: {
                   visualSignatures: {
                     label: "Which three things give you away?",
-                    hint: "They come from what you already chose. Drop the ones that are not you.",
+                    hint: "Drop the ones that are not you.",
                     why: "It is the summary a designer or an AI reads first.",
                   },
                 },
               },
               {
                 title: "What to avoid",
-                desc: "Name what the system must never become.",
                 tip: "The «no» list is what stops an AI drifting into the generic.",
                 fields: {
                   visualAvoid: {
                     label: "What do you never want to see?",
-                    hint: "Tick everything that grates. This is the list that does the most work.",
+                    hint: "Tick everything that grates.",
                     why: "One clear «no» steers better than ten «yes».",
                     rowLabels: [
                       "Styles to avoid",
@@ -4235,44 +4245,37 @@
                   "Image treatment",
                   "Do / Don't — for each format named above",
                 ],
-                desc: "Say which parts of the site everything above applies to.",
                 tip: "The system above covers them all; you only have to name them.",
                 fields: {
                   appPriority: {
                     label: "Where will it be used?",
-                    hint: "Tick up to four. The system above covers them all.",
+                    hint: "Tick up to four.",
                     why: "It sets which pieces must be resolved and which the AI can infer.",
                   },
                 },
               },
               {
                 title: "Instructions for the AI",
-                desc: "Turn the whole system into instructions an AI can follow.",
                 tip: "The «no» list does as much work as the base instruction.",
                 fields: {
                   aiBasePrompt: {
                     label: "Base instruction",
-                    hint: "The text handed to the AI for any image on the site.",
                     why: "It is what you paste before asking for an image.",
                   },
                   aiNegativePrompt: {
                     label: "What the AI must not do",
-                    hint: "The «no» list. Be blunt: it works here.",
                     why: "Without it, models drift to the generic by default.",
                   },
                   aiParameters: {
                     label: "What changes per image",
-                    hint: "What is adjusted piece by piece: ratio, subject, light.",
                     why: "It marks what you can move without breaking the system.",
                   },
                   aiRules: {
                     label: "Rules that never bend",
-                    hint: "They hold in every image, without exception.",
                     why: "It is the filter that keeps pieces coherent.",
                   },
                   aiChecklist: {
                     label: "Before approving an image",
-                    hint: "Three things to check. If one fails, do it again.",
                     why: "It turns judgement into something another person can apply.",
                   },
                 },
@@ -4566,14 +4569,15 @@
               ],
               emptyGen: "This question is built from your answers. Complete these blocks and it will appear on its own:",
               emptyGenReady: "Ready: there are enough answers to build it.",
+              whyTitle: "Why is this asked?",
               autoBlock: "Written for you",
               autoNote: "Generated from your answers",
               autoEdit: "Adjust",
               autoBack: "Back to the generated text",
               techDetails: "Technical details (HEX, RGB, CMYK)",
-              optOther: "Other (I'll write it)",
-              optBack: "Back to the options",
-              optSuggest: "I don't know, suggest one",
+              optOther: "Other",
+              optBack: "Back",
+              optSuggest: "Suggest one",
               optSuggested: "suggested",
               optSuggestedToast: "Suggestion applied · you can change it",
               refsMax: "Maximum 6 files",
@@ -5249,7 +5253,7 @@
               const st = status(i),
                 locked = !canOpen(i);
               return `<button class="bmk-rail-step is-${st} ${i === nx ? "is-next" : ""} ${locked ? "is-locked" : ""} ${line(3 + i)}" data-act="open" data-i="${i}" aria-disabled="${locked}" ${locked ? `title="${esc(T.ui.lockedTitle)}"` : ""} aria-label="${pad(i + 1)} ${esc(plain(s.title))}">
-        <span class="bmk-node">${st === "done" ? "✓" : st === "auto" ? "✦" : pad(i + 1)}</span><span class="bmk-rail-label">${rich(s.title)}${st === "auto" ? ` <em class="bmk-autotag">${esc(T.ui.autoBlock)}</em>` : ""}</span></button>`;
+        <span class="bmk-node">${st === "done" ? "✓" : st === "auto" ? "✦" : pad(i + 1)}</span><span class="bmk-rail-label">${rich(s.title)}${st === "auto" ? ` <em class="bmk-autotag">${esc(T.ui.autoBlock)}</em>` : ""}${s.tip ? `<em class="bmk-railtip">${rich(noDot(s.tip))}</em>` : ""}</span></button>`;
             }).join("") +
             `<button class="bmk-rail-step is-final ${canResult() ? "" : "is-locked"} ${line(3 + SECTIONS.length)}" data-act="result" aria-disabled="${!canResult()}" ${canResult() ? "" : `title="${esc(T.ui.lockedTitle)}"`} aria-label="${esc(T.ui.result)}"><span class="bmk-node">✦</span><span class="bmk-rail-label"><em>Brandbook OS</em></span></button>`;
 
@@ -5308,10 +5312,12 @@
         <aside class="bmk-aside">
           <div class="bmk-sec-head ${line(1)}"><span class="bmk-sec-node">${pad(i + 1)}</span><span class="bmk-sec-of">${esc(T.ui.blockOf(i + 1, SECTIONS.length))}</span></div>
           <h2 class="${line(2)}">${esc(plain(s.title))}</h2>
-          <p class="bmk-desc ${line(3)}">${esc(noDot(plain(s.desc)))}</p>
+          ${s.desc ? `<p class="bmk-desc ${line(3)}">${esc(noDot(plain(s.desc)))}</p>` : ""}
           <div class="bmk-inblock ${line(4)}">
-            <div class="bmk-inblock-top"><b>${esc(p.auto ? T.ui.autoBlock : T.ui.inBlock)}</b><span data-sec-count style="display:inline-block">${p.auto ? "✦" : `${p.done}/${p.total}`}</span></div>
-            <div class="bmk-bar ${p.done === p.total ? "is-done" : ""}" data-sec-bar><i style="width:${p.pct}%"></i></div>
+            <div class="bmk-gauge">
+              <div class="bmk-inblock-top"><b>${esc(p.auto ? T.ui.autoBlock : T.ui.inBlock)}</b><span data-sec-count style="display:inline-block">${p.auto ? "✦" : `${p.done}/${p.total}`}</span></div>
+              <div class="bmk-bar ${p.done === p.total ? "is-done" : ""}" data-sec-bar><i style="width:${p.pct}%"></i></div>
+            </div>
             <ol class="bmk-checklist">${countable(s)
               .map(
                 (f) =>
@@ -5319,7 +5325,6 @@
               )
               .join("")}</ol>
           </div>
-          ${s.tip ? `<div class="bmk-tip ${line(5)}"><b>${esc(T.ui.tip)}</b>${rich(noDot(s.tip))}</div>` : ""}
         </aside>
         <div>
           ${s.intro ? `<p class="bmk-intro ${line(1)}">${rich(noDot(s.intro))}</p>` : ""}
@@ -5741,13 +5746,13 @@
           const exText = Array.isArray(f.example)
             ? f.example.join(" · ")
             : f.example;
-          const example = exText
+          const example = exText || f.why
             ? `<button class="bmk-ex-btn" data-act="example" data-f="${f.id}" aria-expanded="${exOpen}">${esc(exOpen ? T.ui.exampleHide : T.ui.exampleShow)}</button>
-        <div class="bmk-ex" data-ex="${f.id}" ${exOpen ? "" : "hidden"}><span>${esc(T.ui.exampleOf)}</span>${esc(noDot(exText))}</div>`
+        <div class="bmk-ex" data-ex="${f.id}" ${exOpen ? "" : "hidden"}><span>${esc(T.ui.exampleOf)}</span>${esc(noDot(exText))}${f.why ? `<span class="bmk-ex-h">${esc(T.ui.whyTitle)}</span>${esc(noDot(f.why))}` : ""}</div>`
             : "";
           return `<div class="bmk-field ${fixed ? "bmk-field--fixed" : ""} ${!fixed && isFilled(f) ? "is-done" : ""} ${k === undefined ? "" : line(Math.min(k + 2, 10))}" data-field="${f.id}">
-      <div class="bmk-field-head"><span class="bmk-check">${fixed ? "•" : "✓"}</span><div>${pos >= 0 ? `<span class="bmk-qnum">${esc(T.ui.question(pos + 1, qs.length))}</span>` : ""}<span class="bmk-label">${esc(f.label)}</span></div></div>
-      <div class="bmk-field-body">${f.hint ? `<p class="bmk-hint">${rich(noDot(f.hint))}</p>` : ""}${f.why ? `<p class="bmk-why">${esc(noDot(f.why))}</p>` : ""}${example}<div class="bmk-control">${c}</div></div></div>`;
+      <div class="bmk-field-head"><span class="bmk-check">${fixed ? "•" : "✓"}</span><div><span class="bmk-label">${esc(f.label)}</span></div></div>
+      <div class="bmk-field-body">${f.hint ? `<p class="bmk-hint">${rich(noDot(f.hint))}</p>` : ""}${example}<div class="bmk-control">${c}</div></div></div>`;
         }
 
         function docCard(doc, k) {
