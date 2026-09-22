@@ -1262,6 +1262,12 @@
         cursor: pointer;
         margin-bottom: 10px;
       }
+      .bmk-autotag {
+        font-size: 11px;
+        font-style: italic;
+        color: var(--rojo);
+        white-space: nowrap;
+      }
       .bmk-sugg {
         font-size: 12px;
         font-style: italic;
@@ -2175,13 +2181,13 @@
      Tipos de campo: text · textarea · list · tags · pair · fixed
      ============================================================ */
         const BASE = [
-          { doc: "visual", time: 4, fields: [
+          { doc: "visual", fields: [
               { id: "visualTerritory", type: "textarea", rows: 2 },
               { id: "visualTension", type: "pair" },
               { id: "visualKeywords", type: "tags", min: 3, max: 3 },
               { id: "visualAntiKeywords", type: "tags", min: 3, max: 3 },
           ] },
-          { doc: "visual", time: 6, fields: [
+          { doc: "visual", fields: [
               { id: "logoPrimary", type: "textarea", rows: 2 },
               { id: "logoSystem", type: "list", n: 3, min: 3 },
               { id: "logoMisuse", type: "list", n: 3, min: 3, bullet: true },
@@ -2189,32 +2195,32 @@
               { id: "typeSecondary", type: "textarea", rows: 2 },
               { id: "typeSettings", type: "list", n: 3, min: 3 },
           ] },
-          { doc: "visual", time: 5, fields: [
+          { doc: "visual", fields: [
               { id: "colors", type: "palette" },
               { id: "colorFunction", type: "list", n: 5, min: 3 },
               { id: "colorRules", type: "list", n: 3, min: 3 },
           ] },
-          { doc: "visual", time: 3, fields: [
+          { doc: "visual", fields: [
               { id: "compositionGrid", type: "list", n: 5, min: 4 },
           ] },
-          { doc: "visual", time: 5, fields: [
+          { doc: "visual", fields: [
               { id: "photography", type: "list", n: 5, min: 4 },
               { id: "illustration", type: "list", n: 3, min: 2 },
               { id: "materiality", type: "list", n: 2, min: 2 },
           ] },
-          { doc: "visual", time: 3, fields: [
+          { doc: "visual", fields: [
               { id: "graphicForms", type: "list", n: 4, min: 3 },
           ] },
-          { doc: "visual", time: 3, fields: [
+          { doc: "visual", fields: [
               { id: "visualSignatures", type: "list", n: 3, min: 3 },
           ] },
-          { doc: "visual", time: 3, fields: [
+          { doc: "visual", fields: [
               { id: "visualAvoid", type: "list", n: 6, min: 4 },
           ] },
-          { doc: "visual", time: 2, fields: [
+          { doc: "visual", fields: [
               { id: "appPriority", type: "list", n: 4, min: 2, bullet: true },
           ] },
-          { doc: "visual", time: 6, fields: [
+          { doc: "visual", fields: [
               { id: "aiBasePrompt", type: "textarea", rows: 4 },
               { id: "aiNegativePrompt", type: "textarea", rows: 3 },
               { id: "aiParameters", type: "list", n: 3, min: 3, bullet: true },
@@ -4122,6 +4128,7 @@
               ],
               emptyGen: "Esta pregunta se construye con tus respuestas. Completa estos bloques y aparecerá sola:",
               emptyGenReady: "Listo: ya hay respuestas suficientes para construirla.",
+              autoBlock: "Se escribe solo",
               autoNote: "Generado con tus respuestas",
               autoEdit: "Ajustar",
               autoBack: "Volver a lo generado",
@@ -4751,6 +4758,7 @@
               ],
               emptyGen: "This question is built from your answers. Complete these blocks and it will appear on its own:",
               emptyGenReady: "Ready: there are enough answers to build it.",
+              autoBlock: "Written for you",
               autoNote: "Generated from your answers",
               autoEdit: "Adjust",
               autoBack: "Back to the generated text",
@@ -5234,10 +5242,19 @@
             (_, i) => (src[i] || "").trim() || (fb ? fb[i] : `${i + 1}`),
           );
         }
-        const countable = (s) => s.fields.filter((f) => f.type !== "fixed");
+        /* Los campos automáticos no son preguntas: no suman al progreso.
+           Un bloque entero de campos automáticos se marca como "se escribe
+           solo" en lugar de aparecer completado sin haber hecho nada. */
+        const countable = (s) =>
+          s.fields.filter(
+            (f) =>
+              f.type !== "fixed" &&
+              !(AUTO[f.id] && pickOf(f.id).id !== OTHER),
+          );
         function secProg(s) {
           const fs = countable(s);
           const done = fs.filter(isFilled).length;
+          if (!fs.length) return { done: 0, total: 0, pct: 100, auto: true };
           return {
             done,
             total: fs.length,
@@ -5252,7 +5269,7 @@
             d += p.done;
             t += p.total;
           });
-          return { done: d, total: t, pct: Math.round((d / t) * 100) };
+          return { done: d, total: t, pct: t ? Math.round((d / t) * 100) : 0 };
         }
         function nextIndex() {
           return SECTIONS.findIndex((s) => {
@@ -5262,6 +5279,7 @@
         }
         function status(i) {
           const p = secProg(SECTIONS[i]);
+          if (p.auto) return "auto";
           return p.done === p.total ? "done" : p.done > 0 ? "partial" : "todo";
         }
 
@@ -5423,7 +5441,7 @@
               const st = status(i),
                 locked = !canOpen(i);
               return `<button class="bmk-rail-step is-${st} ${i === nx ? "is-next" : ""} ${locked ? "is-locked" : ""} ${line(3 + i)}" data-act="open" data-i="${i}" aria-disabled="${locked}" ${locked ? `title="${esc(T.ui.lockedTitle)}"` : ""} aria-label="${pad(i + 1)} ${esc(plain(s.title))}">
-        <span class="bmk-node">${st === "done" ? "✓" : pad(i + 1)}</span><span class="bmk-rail-label">${rich(s.title)}</span></button>`;
+        <span class="bmk-node">${st === "done" ? "✓" : st === "auto" ? "✦" : pad(i + 1)}</span><span class="bmk-rail-label">${rich(s.title)}${st === "auto" ? ` <em class="bmk-autotag">${esc(T.ui.autoBlock)}</em>` : ""}</span></button>`;
             }).join("") +
             `<button class="bmk-rail-step is-final ${canResult() ? "" : "is-locked"} ${line(3 + SECTIONS.length)}" data-act="result" aria-disabled="${!canResult()}" ${canResult() ? "" : `title="${esc(T.ui.lockedTitle)}"`} aria-label="${esc(T.ui.result)}"><span class="bmk-node">✦</span><span class="bmk-rail-label"><em>Brandbook OS</em></span></button>`;
 
@@ -5440,7 +5458,7 @@
         </div>
       </header>
       <nav class="bmk-rail" aria-label="${esc(T.ui.roadmap)}">${rail}</nav>
-      <section class="bmk-how">${rows(T.ui.how.slice(1), 13)}</section>`;
+      <section class="bmk-how">${rows(T.ui.how, 13)}</section>`;
         }
 
         function rows(items, from) {
@@ -5484,7 +5502,7 @@
           <h2 class="${line(2)}">${esc(plain(s.title))}</h2>
           <p class="bmk-desc ${line(3)}">${esc(noDot(plain(s.desc)))}</p>
           <div class="bmk-inblock ${line(4)}">
-            <div class="bmk-inblock-top"><b>${esc(T.ui.inBlock)}</b><span data-sec-count style="display:inline-block">${p.done}/${p.total}</span></div>
+            <div class="bmk-inblock-top"><b>${esc(p.auto ? T.ui.autoBlock : T.ui.inBlock)}</b><span data-sec-count style="display:inline-block">${p.auto ? "✦" : `${p.done}/${p.total}`}</span></div>
             <div class="bmk-bar ${p.done === p.total ? "is-done" : ""}" data-sec-bar><i style="width:${p.pct}%"></i></div>
             <ol class="bmk-checklist">${countable(s)
               .map(
@@ -5957,7 +5975,7 @@
         <ol class="bmk-guide">
           <li class="${line(6)}"><span class="bmk-guide-n">1</span><h4>${esc(g[0].t)}</h4><p>${esc(noDot(g[0].p))}</p>
             <div class="bmk-guide-actions">
-              <button class="bmk-btn bmk-btn--ghost" data-act="download">${ICON_DOWN}<span class="bmk-btn-t">${esc(T.ui.download)}</span></button>
+              <button class="bmk-btn bmk-btn--ghost" data-act="download" data-doc="${DOCS[0].key}">${ICON_DOWN}<span class="bmk-btn-t">${esc(T.ui.download)}</span></button>
             </div></li>
           <li class="${line(7)}"><span class="bmk-guide-n">2</span><h4>${esc(g[1].t)}</h4><p>${esc(noDot(g[1].p))}</p>
             <ul>${g[1].list.map((x) => `<li>${noDot(x)}</li>`).join("")}</ul></li>
@@ -6207,6 +6225,7 @@
 
         /* Un documento suelto en .md */
         function downloadDoc(doc) {
+          if (!T.docs[doc]) return toast(T.ui.zipFail);
           saveBlob(
             new Blob([buildText(doc)], {
               type: "text/markdown;charset=utf-8",
@@ -6737,7 +6756,7 @@
               break;
             }
             case "copy": {
-              const doc = b.dataset.doc || "concept";
+              const doc = b.dataset.doc || DOCS[0].key;
               if (await copyText(buildText(doc))) {
                 flash(b, T.ui.copiedBtn);
               } else {
@@ -6756,7 +6775,7 @@
               break;
             }
             case "download":
-              downloadDoc(b.dataset.doc || "concept");
+              downloadDoc(b.dataset.doc || DOCS[0].key);
               flash(b, T.ui.downloadedBtn);
               break;
             case "reset":
