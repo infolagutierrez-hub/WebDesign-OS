@@ -203,7 +203,8 @@
       /* ---------- MAP: rail ---------- */
       .bmk-rail {
         display: grid;
-        grid-template-columns: repeat(7, 1fr);
+        grid-template-columns: repeat(6, 1fr);
+        row-gap: 44px;
         margin: 80px 0 0;
       }
       .bmk-rail-step {
@@ -271,25 +272,12 @@
       }
 
       /* ---------- MAP: filas bajo la línea de tiempo / rows under the timeline ---------- */
-      /* Filas editoriales: etiqueta en cursiva a la izquierda, contenido a la derecha */
-      .bmk-how {
-        max-width: 820px;
-        margin: 80px auto 0;
-        display: grid;
-        gap: 30px;
-      }
-      .bmk-row {
+      /* Filas editoriales: etiqueta en cursiva a la izquierda, contenido a la derecha */      .bmk-row {
         display: grid;
         grid-template-columns: 170px 1fr;
         gap: 28px;
         align-items: baseline;
-      }
-      .bmk-row > em {
-        font-size: 19px;
-        color: var(--rojo);
-        text-align: right;
-      }
-      .bmk-row p {
+      }      .bmk-row p {
         font-size: clamp(18px, 2.2vw, 22px);
         line-height: 1.2;
         color: var(--sombra);
@@ -313,43 +301,10 @@
         padding-bottom: 18px;
         border-bottom: 1px solid var(--rojo);
       }
-      .bmk-steps,
-      .bmk-lang {
-        position: relative;
-        display: inline-flex;
-        align-items: center;
-        gap: 3px;
-        padding: 3px;
-        border-radius: 48px;
-        background: #f0ddc4;
-        max-width: 100%;
-        overflow-x: auto;
-        scrollbar-width: none;
-      }
-      .bmk-steps::-webkit-scrollbar {
+      .bmk-steps,      .bmk-steps::-webkit-scrollbar {
         display: none;
       }
-      .bmk-steps-pill,
-      .bmk-lang-pill {
-        position: absolute;
-        top: 3px;
-        left: 0;
-        height: 30px;
-        width: 0;
-        background: var(--blanco);
-        border-radius: 48px;
-        box-shadow:
-          0 1px 2px rgba(140, 41, 54, 0.14),
-          0 2px 6px -2px rgba(140, 41, 54, 0.14);
-        transform: translateX(0);
-        transition:
-          transform var(--tabs-dur) var(--tabs-ease),
-          width var(--tabs-dur) var(--tabs-ease);
-        will-change: transform, width;
-        z-index: 0;
-        pointer-events: none;
-      }
-      .bmk-pill {
+      .bmk-steps-pill,      .bmk-pill {
         position: relative;
         z-index: 1;
         flex: none;
@@ -434,9 +389,7 @@
         color: var(--rojo);
       }
       @media (prefers-reduced-motion: reduce) {
-        .bmk-steps-pill,
-        .bmk-lang-pill,
-        .bmk-pill {
+        .bmk-steps-pill,        .bmk-pill {
           transition: none !important;
         }
       }
@@ -1978,18 +1931,9 @@
         }
         .bmk-util {
           margin: -20px 0 12px;
-        }
-        .bmk-row {
-          grid-template-columns: 1fr;
-          gap: 4px;
-        }
-        .bmk-row > em {
+        }        .bmk-row > em {
           text-align: left;
-        }
-        .bmk-how {
-          margin-top: 56px;
-        }
-        .bmk-pair {
+        }        .bmk-pair {
           grid-template-columns: 1fr;
         }
         .bmk-pair span {
@@ -2040,11 +1984,7 @@
           padding: 9px 10px;
         }
         .bmk-pill,
-        .bmk-steps-pill,
-        .bmk-lang-pill {
-          height: 36px;
-        }
-        .bmk-pill {
+        .bmk-steps-pill,        .bmk-pill {
           min-width: 38px;
           padding: 4px 11px;
         }
@@ -2289,11 +2229,7 @@
       .bmk.is-map .bmk-rail-step.is-locked .bmk-rail-label,
       .bmk.is-map .bmk-rail-step.is-locked:hover .bmk-rail-label {
         color: rgba(255, 255, 255, 0.5);
-      }
-      .bmk.is-map .bmk-how {
-        border-top-color: rgba(255, 255, 255, 0.3);
-      }
-      .bmk.is-map .bmk-row > em {
+      }      .bmk.is-map .bmk-row > em {
         color: var(--blanco);
       }
       .bmk.is-map .bmk-row p {
@@ -2301,18 +2237,6 @@
       }
       .bmk.is-map .bmk-row p small {
         color: rgba(255, 255, 255, 0.72);
-      }
-      .bmk.is-map .bmk-lang {
-        background: rgba(255, 255, 255, 0.16);
-      }
-      .bmk.is-map .bmk-lang .bmk-pill {
-        color: rgba(255, 255, 255, 0.8);
-      }
-      .bmk.is-map .bmk-lang .bmk-pill[aria-selected="true"] {
-        color: var(--rojo);
-      }
-      .bmk.is-map .bmk-lang-pill {
-        background: var(--blanco);
       }
       @media (max-width: 640px) {
         .bmk-sig {
@@ -3470,577 +3394,6 @@
         };
 
         const TEXT = {
-          es: {
-            pending: "[Pendiente]",
-            sections: [
-              {
-                title: "El mundo visual",
-                derive: [
-                  "Desired perception — see Brand Personality",
-                  "Overall character",
-                ],
-                fields: {
-                  visualTerritory: {
-                    label: "¿Qué mundo visual quieres?",
-                    why: "Marca el tono de lo que venga después: colores, fotos y formas.",
-                  },
-                  visualTension: {
-                    label: "¿Qué dos cualidades conviven?",
-                    why: "Una marca de una sola nota aburre; la tensión es lo que la hace memorable.",
-                  },
-                  visualKeywords: {
-                    label: "¿Qué tres palabras la describen?",
-                    hint: "Lo que elijas aquí queda fuera de la siguiente.",
-                    why: "Es lo primero que lee una IA para entender el encargo.",
-                  },
-                  visualAntiKeywords: {
-                    label: "¿Y qué tres nunca?",
-                    hint: "Lo ya elegido arriba aparece desactivado.",
-                    why: "Descartar acota más rápido que describir.",
-                  },
-                },
-              },
-              {
-                title: "Nombre y tipografía",
-                defaults: [
-                  ["Display usage", "Steps 5–7 of the scale, headings only"],
-                  ["Body usage", "Step 2: 16–18px, never below 14px"],
-                  ["Tracking", "−2% on display sizes, 0 on body"],
-                  ["Leading", "1.15 on display, 1.55 on body"],
-                  ["Italics", "Reserved for pull quotes and captions"],
-                ],
-                derive: [
-                  "Typography to avoid — see What to avoid",
-                ],
-                fields: {
-                  brandName: {
-                    label: "¿Cómo se llama tu emprendimiento?",
-                    hint: "El nombre tal como quieres verlo escrito.",
-                    why: "Es lo único que la IA no puede deducir, y encabeza todo lo que genere.",
-                  },
-                  typePrimary: {
-                    label: "¿Con qué letra se escriben los títulos?",
-                    why: "Es la decisión tipográfica que más se nota a primera vista.",
-                  },
-                  typeSecondary: {
-                    label: "¿Y el texto largo?",
-                    why: "Un texto largo mal elegido cansa y la gente abandona la página.",
-                  },
-                  typeSettings: {
-                    label: "¿Cómo se componen los textos?",
-                    why: "Es lo que hace que todas las páginas parezcan de la misma web.",
-                    rowLabels: ["Case", "Weight", "Hierarchy"],
-                  },
-                },
-              },
-              {
-                title: "Color",
-                defaults: [
-                  ["Secondary combinations", "Neutral on neutral, separated by a primary hairline"],
-                ],
-                fields: {
-                  colors: {
-                    label: "Los colores de la marca",
-                    hint: "Elige una combinación y ajústala si quieres.",
-                    why: "Son los colores exactos que usará quien monte la web.",
-                  },
-                  colorFunction: {
-                    label: "¿Cuánto se ve cada color?",
-                    why: "Es lo que hace que dos webs con los mismos colores se vean distintas.",
-                    rowLabels: ["Primary", "Neutral", "Accent 01", "Accent 02", "Accent 03"],
-                  },
-                  colorRules: {
-                    label: "¿Cómo se combinan entre sí?",
-                    why: "Evita que alguien improvise un color sobre otro que no se lee.",
-                    rowLabels: [
-                      "Dominant combinations",
-                      "Contrast rules",
-                      "Combinations to avoid",
-                    ],
-                  },
-                },
-              },
-              {
-                title: "Estructura de la página",
-                defaults: [
-                  ["Columns", "12 on desktop, 6 on tablet, 4 on mobile"],
-                  ["Column spans", "Body text 6–7 of 12, never fewer than 5. Headings up to 9. A three-piece row takes 4 each; a four-piece row, 3 each. Nothing sits on fewer than 3"],
-                  ["Measure", "60–75 characters per line. If a block would fall below 45, widen its span instead of letting it go narrow"],
-                  ["Margins", "24px mobile · 48px tablet · 80px desktop · content max-width 1280px"],
-                  ["Rhythm", "24px inside a group · 64px between sections · 128px between chapters"],
-                  ["Scale", "Spacing steps: 8 · 16 · 24 · 32 · 48 · 64 · 96 · 128"],
-                  ["Breakpoints", "390 mobile · 768 tablet · 1280 desktop · 1600 wide"],
-                  ["Responsive behaviour", "Below 768 every split becomes one column, image first and text after; grids of 3 or 4 become 2 columns, then 1 below 480. Type drops one step of the scale and vertical rhythm halves. No horizontal scroll at any width"],
-                  ["Layers", "Flat. No drop shadows; elevation is a change of surface colour"],
-                  ["Blocks", "Full-bleed image blocks against contained text blocks"],
-                  ["Dividers", "1px hairline in the border token, used sparingly"],
-                  ["Image/text relationship", "Asymmetric splits 7/5, 8/4 or 9/3. Never 6/6 by default"],
-                ],
-                fields: {
-                  compositionGrid: {
-                    label: "¿Cómo se ordena la página?",
-                    why: "Es la decisión que más se nota en la web, aunque nadie sepa nombrarla.",
-                    rowLabels: [
-                      "Grid",
-                      "Alignment",
-                      "Symmetry / asymmetry",
-                      "Density",
-                      "White space",
-                    ],
-                  },
-                },
-              },
-              {
-                title: "Arquitectura de página",
-                rules: [
-                  "Ningún arquetipo se repite en dos secciones consecutivas.",
-                  "Máximo UNA sección centrada en toda la página.",
-                  "Entre dos secciones consecutivas cambian al menos DOS de: color de fondo, alineación, número de columnas, densidad.",
-                  "Cada sección tiene exactamente un punto focal.",
-                  "Mínimo 3 cambios de superficie en una página de 6 secciones o más.",
-                  "El cuerpo de texto nunca va centrado: el centrado se reserva al Manifiesto y al Cierre a color pleno.",
-                  "Ningún bloque de texto ocupa menos de 5 columnas de 12: una columna estrecha junto a media fila vacía es el error más visible.",
-                ],
-                fields: {
-                  pageArchetypes: {
-                    label: "¿Qué tipos de sección va a tener la página?",
-                    hint: "Elige de 4 a 6. Son los moldes con los que se monta.",
-                    why: "Es lo que más decide si la página se ve rica o plana.",
-                  },
-                },
-              },
-              {
-                title: "Ilustración y materia",
-                derive: [
-                  "Shape language",
-                  "Illustration colour treatment",
-                  "Grain",
-                  "Surfaces",
-                  "Physical references",
-                ],
-                fields: {
-                  illustration: {
-                    label: "¿Hay ilustración?",
-                    hint: "Si no la usas, marca «Ninguna» y seguimos.",
-                    why: "Una ilustración propia distingue más que una foto comprada.",
-                    rowLabels: ["Style", "Line quality", "Level of detail"],
-                  },
-                  materiality: {
-                    label: "¿Las superficies se ven planas o con textura?",
-                    why: "Da profundidad sin recargar: afecta a fondos, tarjetas y botones.",
-                    rowLabels: ["Paper", "Texture"],
-                  },
-                },
-              },
-              {
-                title: "Elementos gráficos",
-                defaults: [
-                  ["Frames", "None. Content sits on the grid"],
-                  ["Borders", "1px in the border token, inset by the page margin"],
-                  ["Graphic devices", "A single hairline rule under section titles"],
-                  ["Repeated motifs", "Derived from the chosen shapes; one per page maximum"],
-                ],
-                fields: {
-                  graphicForms: {
-                    label: "¿Qué elementos se repiten por toda la web?",
-                    why: "Se repiten tanto que reconocen la marca más rápido que el propio logo.",
-                    rowLabels: ["Shapes", "Patterns", "Icons", "Separators"],
-                  },
-                },
-              },
-              {
-                title: "Lo que te hace reconocible",
-                derive: [
-                  "Elements that should recur — see Distinctive Codes",
-                  "Elements that make the brand recognizable — see Distinctive Codes",
-                ],
-                fields: {
-                  visualSignatures: {
-                    label: "¿Qué tres cosas te delatan?",
-                    hint: "Quita las que no te representen.",
-                    why: "Es el resumen que un diseñador o una IA lee primero.",
-                  },
-                },
-              },
-              {
-                title: "Lo que hay que evitar",
-                fields: {
-                  visualAvoid: {
-                    label: "¿Qué no quieres ver nunca?",
-                    hint: "Marca todo lo que te chirríe.",
-                    why: "Un «no» claro dirige mejor que diez «sí».",
-                    rowLabels: [
-                      "Styles to avoid",
-                      "Colors to avoid",
-                      "Typography to avoid",
-                      "Composition to avoid",
-                          "Generic / stock aesthetics to avoid",
-                    ],
-                  },
-                },
-              },
-              {
-                title: "Instrucciones para la IA",
-                fields: {
-                  aiBasePrompt: {
-                    label: "Instrucción base",
-                    why: "Es lo que pegas antes de pedir una imagen.",
-                  },
-                  aiNegativePrompt: {
-                    label: "Lo que la IA no debe hacer",
-                    why: "Sin esto, los modelos se van a lo genérico por defecto.",
-                  },
-                  aiParameters: {
-                    label: "Lo que cambia en cada imagen",
-                    why: "Marca qué puedes tocar sin romper el sistema.",
-                  },
-                  aiRules: {
-                    label: "Reglas que no se saltan",
-                    why: "Es el filtro que mantiene la coherencia entre piezas.",
-                  },
-                  aiChecklist: {
-                    label: "Antes de aprobar una imagen",
-                    why: "Convierte el criterio en algo que otra persona puede aplicar.",
-                  },
-                },
-              },
-            ],
-            docs: {
-              visual: {
-                title: "Visual Direction",
-                sub: "Cómo se ve y se comporta la marca",
-                meta: "10 bloques · Dirección visual",
-              },
-            },
-            mdTitles: [
-              "01. Visual Foundation",
-              "02. Name & Typography",
-              "03. Color System",
-              "04. Composition",
-              "05. Page Architecture",
-              "06. Illustration & Materiality",
-              "07. Graphic Language",
-              "08. Distinctive Visual Codes",
-              "09. Visual Restrictions",
-              "10. AI Visual Direction",
-            ],
-            mdLabels: {
-              visualTerritory: "Visual territory",
-              visualTension: "Visual tension",
-              visualKeywords: "Keywords",
-              visualAntiKeywords: "Anti-keywords",
-              brandName: "Brand name",
-              typePrimary: "Primary typeface",
-              typeSecondary: "Secondary typeface",
-              typeSettings: "Typographic settings",
-              colors: "Color palette",
-              colorFunction: "Function & proportion",
-              colorRules: "Color rules",
-              compositionGrid: "Composition",
-              pageArchetypes: "Section archetypes",
-              illustration: "Illustration",
-              materiality: "Materiality",
-              graphicForms: "Graphic language",
-              visualSignatures: "Signature moves",
-              visualAvoid: "What to avoid",
-              aiBasePrompt: "Base prompt",
-              aiNegativePrompt: "Negative prompt",
-              aiParameters: "Variable parameters",
-              aiRules: "Non-negotiable rules",
-              aiChecklist: "Evaluation checklist",
-
-            },
-            examples: {
-              visualTerritory: "A quiet interior at first light: warm neutrals, raw ceramic, one shaft of daylight.",
-              visualTension: "raw + precise",
-              visualKeywords: ["warm", "tactile", "unhurried"],
-              visualAntiKeywords: ["glossy", "corporate", "futuristic"],
-              brandName: "Taller Norte",
-              typePrimary: "A high-contrast serif for display, chosen for its editorial calm.",
-              typeSecondary: "A neutral grotesque for body and interface, chosen to stay out of the way.",
-              typeSettings: [
-                "Sentence case everywhere; no all-caps headlines",
-                "Regular and medium only; no bold",
-                "Three levels maximum per layout",
-              ],
-              colorFunction: [
-                "Carries the brand and anchors every layout — 25%",
-                "The default ground for long text — 60%",
-                "Marks a single moment per piece — 10%",
-                "Packaging and seasonal work only — 3%",
-                "Data, states and fine detail — 2%",
-              ],
-              colorRules: [
-                "Primary on neutral, with one accent",
-                "Body text at 7:1 against its ground, never below 4.5:1",
-                "Two accents in the same layout; accent on accent",
-              ],
-              compositionGrid: [
-                "12 columns on screen, 6 in print",
-                "Left-aligned by default; centring is a deliberate exception",
-                "Asymmetric, weighted to the left",
-                "Low: one idea per screen",
-                "At least 30% of any layout",
-              ],
-              illustration: [
-                "Sparse line drawing, only where a photograph cannot go",
-                "Single weight, slightly irregular",
-                "Suggestive; no rendering or shading",
-              ],
-              materiality: [
-                "Uncoated, warm white, 120–300 gsm",
-                "Matte throughout; no varnish or lamination",
-              ],
-              graphicForms: [
-                "Soft rectangles and full circles",
-                "None; texture does the work instead",
-                "Line icons at a single weight",
-                "A hairline rule with generous space around it",
-              ],
-              visualSignatures: [
-                "Subject low-left, empty space above",
-                "A warm neutral ground interrupted once by terracotta",
-                "Hands entering the frame from outside",
-              ],
-              visualAvoid: [
-                "Flat corporate vector, gradients, 3D renders",
-                "Cold blues, neon, pure black",
-                "Geometric sans, script faces, all-caps headlines",
-                "Centred symmetry, dense grids, card stacks",
-                "White-studio product shots, hard flash, posed smiles",
-                "Anything that reads as a stock library",
-              ],
-              aiBasePrompt: "A quiet interior at first light, warm neutral palette, hands and worn ceramic on raw wood, single soft window light from the left, long soft shadows, visible film grain, shallow but readable depth of field, subject placed low-left with empty space above, muted and slightly desaturated, editorial, unhurried.",
-              aiNegativePrompt: "White studio background, hard flash, posed smiles, glossy surfaces, neon or saturated colour, gradients, 3D render, lens flare, centred symmetry, stock photography, watermark, text, logo, oversharpening.",
-              aiParameters: [
-                "Aspect ratio (4:5, 9:16, 16:9)",
-                "Time of day within the first hour of light",
-                "Subject: hands, surface or object",
-              ],
-              aiRules: [
-                "One light source, always from the side",
-                "Empty space above the subject",
-                "No faces in full view",
-              ],
-              aiChecklist: [
-                "Is there a single soft light source?",
-                "Is the palette within the neutral and primary range?",
-                "Would this be mistaken for stock?",
-              ],
-
-            },
-            md: {
-              file: "Archivo",
-              folder: "referencias",
-              unavailable: "no incluido",
-              filesNote:
-                "Los archivos de referencia están en la carpeta `referencias/`, junto a este documento.",
-              mdSlots: ["Primary", "Neutral", "Accent 01", "Accent 02", "Accent 03"],
-              rulesTitle: "Alternation rules — non-negotiable",
-              defaultsShort: "System defaults:",
-              defaults:
-                "About the system defaults marked in each section: they apply exactly as written unless an answer above says otherwise. They are never improvised, and a structural field left unanswered takes its default rather than an invented value.",
-              derive:
-                "Expressive only. Deduce it from the decisions above and keep it constant across every piece:",
-              note: "Note:",
-              toneRef: "Approximate tone",
-              colorsNote:
-                "Los tonos son una aproximación de referencia, no códigos Pantone® oficiales.",
-              pendingTitle: "Pendiente de definir",
-              pendingIntro:
-                "Estos campos aún no tienen respuesta. Si son estructurales, usa el valor por defecto del sistema y déjalo dicho. Nunca los inventes.",
-              ruleTitle: "Instrucciones para la IA",
-              empty:
-                "_Todavía no hay respuestas. Completa los bloques para construir tu Brandbook OS._",
-            },
-            auto: {
-              noText: "no text, no logo, no watermark, no stock-library look",
-              params: [
-                "Proporción: 4:5, 9:16 o 16:9 según dónde se publique",
-                "Encuadre: cerrado en detalle, medio en objeto, abierto en espacio",
-                "Momento de luz dentro de la franja elegida",
-                "Presencia o ausencia del color de acento",
-              ],
-              rules: [
-                "Una sola fuente de luz, siempre lateral",
-                "Espacio libre alrededor del sujeto, nunca recorte ajustado",
-                "Ningún texto, logotipo ni marca de agua dentro de la imagen",
-              ],
-              checks: [
-                "¿Se reconoce el territorio visual sin leer el pie?",
-                "¿Los colores están dentro de la paleta y en su proporción?",
-                "¿Hay un único punto focal?",
-                "¿Aparece algo de la lista de lo que hay que evitar?",
-                "¿Podría confundirse con una imagen de banco?",
-              ],
-            },
-            rule: {
-              intro: [
-                "Usa esta información como el contexto creativo de la marca.",
-                "Preserva su carácter, su distintividad y su intención estratégica.",
-              ],
-              prioritize: "Prioriza:",
-              list: [
-                "Distintividad",
-                "Coherencia estratégica",
-                "Carácter de marca",
-                "Relevancia emocional",
-                "Contexto",
-              ],
-              rules: [
-                "No inventes atributos estratégicos que no estén respaldados por el Brandbook OS.",
-                "Traduce la marca al formato solicitado manteniendo su identidad.",
-                "Donde algo aparezca como derivable, dedúcelo de las decisiones de este documento y mantenlo constante; no abras una dirección nueva.",
-                "Cuando falte información que afecte de forma material al resultado, pregunta en lugar de suponer.",
-              ],
-              goal: [
-                "El objetivo no es reproducir las respuestas.",
-                "El objetivo es traducirlas en decisiones de marca coherentes.",
-              ],
-            },
-            ui: {
-              progress: "Tu progreso",
-              start: "Empezar por 01 →",
-              cont: (n) => `Continuar en ${n} →`,
-              seeResult: "Ver mi Brandbook OS",
-              roadmap: "Hoja de ruta",
-              blocks: "Bloques",
-              backMap: "← Hoja de ruta",
-              backMapLong: "← Volver a la hoja de ruta",
-              saved: "Se guarda automáticamente",
-              savedOk: "Guardado ✓",
-              completed: "Completado",
-              of: (a, r) => `${a} de ${r}`,
-              max: " · Máximo alcanzado",
-              enter: " · Escribe y pulsa Enter",
-              remove: "Quitar",
-              result: "Resultado",
-              resultTitle: "Tu Brandbook <em>OS</em>",
-              resultSub:
-                "Todo lo que has definido, listo para que la IA trabaje con tu marca",
-              copy: "Copiar Brandbook OS",
-              download: "Descargar .md",
-              missing: (n, pct) => `Te faltan ${n} campos · ${pct}% completado`,
-              complete:
-                "✓ Todo completo. Tu marca está <em>lista para trabajar con IA</em>.",
-              wipe: "Empezar de cero",
-              reset: "Borrar todas las respuestas",
-              confirmReset:
-                "¿Borrar todas las respuestas? Esta acción no se puede deshacer.",
-              cleared: "Respuestas borradas",
-              copied: "Brandbook OS copiado ✓",
-              copyFail: "No se pudo copiar",
-              copiedFiles: "Copiado ✓ Tus archivos van en la descarga .zip",
-              downloadZip: "Descargar todo .zip",
-              zipFail: "No se pudo crear el .zip; se descargó solo el .md",
-              storageFull:
-                "No queda espacio en este navegador para guardar más vistas previas",
-              refsDrop:
-                "<em>Adjunta imágenes o PDF</em>: arrastra aquí o haz clic",
-              refsLimits: "Hasta 6 archivos · máx. 10 MB cada uno",
-              refsOr: "o escríbelas",
-              refsNotePh: "¿Qué te inspira de esta referencia? (opcional)",
-              refsCount: (n) => `${n} de 3 referencias`,
-              paletteSlots: [
-                "Primario",
-                "Neutro",
-                "Acento 01",
-                "Acento 02",
-                "Acento 03",
-              ],
-              colorNamePh: "Nombre del color",
-              pickColor: "Elige un color",
-              toneApprox: "(aprox.)",
-              chooseFor: (label) => `Elige un tono para ${label}`,
-              lightenDarken: "Aclarar u oscurecer",
-              toneDisclaimer:
-                "Aproximación de referencia — no es un código Pantone® oficial. Confirma con tu guía física antes de producción",
-              exampleShow: "Ver ejemplo",
-              exampleHide: "Ocultar ejemplo",
-              exampleOf: "Ejemplo · Salitre, vermutería de barrio",
-              question: (k, n) => `Pregunta ${k} de ${n}`,
-              inBlock: "En este bloque",
-              blockOf: (k, n) => `Bloque ${k} de ${n}`,
-              finishBlock: "Completa este bloque para continuar",
-              locked: (n, t) => `Completa ${n} · ${t} para avanzar`,
-              lockedTitle: "Completa los bloques anteriores para desbloquear",
-              copyBtn: "Copiar",
-              copiedBtn: "Copiado ✓",
-              downloadedBtn: "Descargado ✓",
-              manualCopy:
-                "No se pudo copiar automáticamente: el texto ya está seleccionado, pulsa Cmd/Ctrl + C",
-              guideTitle: "Qué hacer con tu <em>Brandbook</em>",
-              guide: [
-                {
-                  t: "Guárdalo",
-                  p: "Descarga el documento o cópialo. Es tu dirección visual, escrita con las respuestas de todos los bloques.",
-                },
-                {
-                  t: "Dáselo a tu IA",
-                  p: "Súbelo como contexto para que lo tenga presente en todo lo que cree para tu marca:",
-                  list: [
-                    "<b>Claude:</b> crea un Proyecto y sube el .md en “Conocimiento del proyecto”.",
-                    "<b>ChatGPT:</b> crea un Proyecto o un GPT personalizado y súbelo como archivo.",
-                    "<b>Cualquier IA:</b> pega el documento al inicio de la conversación.",
-                  ],
-                  files:
-                    "Como adjuntaste referencias, sube también las imágenes de la carpeta <b>referencias</b>.",
-                },
-                {
-                  t: "Pide algo concreto",
-                  p: "Menciona tu Brandbook OS en cada petición. Toca un ejemplo para copiarlo:",
-                },
-              ],
-              prompts: [
-                "Con mi Visual Direction, escribe el prompt de imagen para este post.",
-                "Revisa esta pieza con mi Visual Direction y dime qué no encaja.",
-                "Con mi Visual Direction, propón 3 layouts para este formato.",
-              ],
-              emptyGen: "Esta pregunta se construye con tus respuestas. Completa estos bloques y aparecerá sola:",
-              emptyGenReady: "Listo: ya hay respuestas suficientes para construirla.",
-              whyTitle: "¿Por qué se pregunta esto?",
-              digestIs: "Tu marca es",
-              digestIsnt: "Tu marca no es",
-              digestPending: "Aún sin definir",
-              digestMore: (n) => `+${n} más`,
-              autoBlock: "Se escribe solo",
-              autoNote: "Generado con tus respuestas",
-              autoEdit: "Ajustar",
-              autoBack: "Volver a lo generado",
-              techDetails: "Detalles técnicos (HEX, RGB, CMYK)",
-              notePh: "¿Algo que matizar?",
-              optOther: "Otro",
-              optBack: "Volver",
-              optSuggest: "Sugiéreme",
-              optSuggested: "sugerida",
-              optSuggestedToast: "Sugerencia aplicada · puedes cambiarla",
-              refsMax: "Máximo 6 archivos",
-              refsType: "Solo imágenes o PDF",
-              refsSize: "Archivo demasiado grande (máx. 10 MB)",
-              refsKeep:
-                "Los archivos originales se incluyen en la descarga .zip mientras no cierres ni recargues la página.",
-              refsPreview:
-                "Tras recargar solo se conservan las vistas previas; vuelve a adjuntar los originales si los necesitas en la descarga.",
-              how: [
-                {
-                  k: "Recorre",
-                  p: "Los bloques en orden, empezando por la esencia.",
-                  s: "Puedes saltar entre bloques cuando quieras; nada se pierde.",
-                },
-                {
-                  k: "Escribe",
-                  p: "Corto y concreto.",
-                  s: "La IA trabaja mejor con precisión que con volumen.",
-                },
-                {
-                  k: "Conseguirás",
-                  p: "Tu Brandbook OS, listo para pegar en tu IA.",
-                  s: "Un bloque de texto para Claude, ChatGPT o Gemini.",
-                },
-              ],
-            },
-          },
-
           en: {
             pending: "[Pending]",
             sections: [
@@ -4590,23 +3943,6 @@
                 "Original files are included in the .zip download as long as you don't close or reload the page.",
               refsPreview:
                 "After reloading only previews are kept; re-attach the originals if you need them in the download.",
-              how: [
-                {
-                  k: "Go through",
-                  p: "The blocks in order, starting with the core.",
-                  s: "You can jump between blocks anytime; nothing gets lost.",
-                },
-                {
-                  k: "Write",
-                  p: "Short and specific.",
-                  s: "AI works better with precision than with volume.",
-                },
-                {
-                  k: "You'll get",
-                  p: "Your Brandbook OS, ready to paste into your AI.",
-                  s: "A block of text for Claude, ChatGPT or Gemini.",
-                },
-              ],
             },
           },
 
@@ -4614,9 +3950,8 @@
 
         /* Sello de versión: lo reescribe stamp.sh en cada despliegue, para
            saber de un vistazo qué build se está viendo. */
-        const BUILD = "23 Sep 2026 · 01:42";
+        const BUILD = "23 Sep 2026 · 01:50";
         const STORAGE_KEY = "ai-brand-os-v1";
-        const LANG_KEY = "brandbook-os-lang";
 
         /* ---------- Helpers ---------- */
         const pad = (n) => String(n).padStart(2, "0");
@@ -4669,15 +4004,6 @@
           return `${a.slice(0, -1).join(", ")} ${and} ${last}`;
         };
 
-        function initialLang() {
-          const q = new URLSearchParams(location.search).get("lang");
-          if (q === "es" || q === "en") return q;
-          try {
-            const s = localStorage.getItem(LANG_KEY);
-            if (s === "es" || s === "en") return s;
-          } catch (e) {}
-          return /^en\b/i.test(navigator.language || "") ? "en" : "es";
-        }
 
         function ruleText(r) {
           return [
@@ -4735,7 +4061,8 @@
         const toastEl = document.getElementById("bmk-toast");
         let state = load();
         let view = { name: "map" };
-        let lang = initialLang();
+        /* Un solo idioma: el documento y la interfaz van en inglés. */
+        const lang = "en";
         let T = TEXT[lang];
         let SECTIONS = buildSections();
         const findField = (id) => {
@@ -5081,7 +4408,6 @@
             (f) =>
               f.type !== "fixed" &&
               !f.optional &&
-              !(OPTIONS[f.id] && OPTIONS[f.id].gen && !optsOf(OPTIONS[f.id]).length) &&
               !(AUTO[f.id] && pickOf(f.id).id !== OTHER),
           );
         function secProg(s) {
@@ -5157,10 +4483,9 @@
 
         /* ---------- Views ---------- */
         function mount() {
-          root.innerHTML = `<div class="bmk-wrap"><div class="bmk-util">${wipeBtn()}${langSwitch()}</div><div class="bmk-stage"></div></div>`;
+          root.innerHTML = `<div class="bmk-wrap"><div class="bmk-util">${wipeBtn()}</div><div class="bmk-stage"></div></div>`;
           document.documentElement.lang = lang;
           render();
-          placeLangPill(false);
         }
 
         function render(keepTop) {
@@ -5231,30 +4556,6 @@
         }
 
         /* Selector de idioma: mismo "Tabs sliding" que el stepper */
-        function langSwitch() {
-          return `<div class="bmk-lang" role="tablist" aria-label="Idioma / Language"><span class="bmk-lang-pill" aria-hidden="true"></span>${[
-            "es",
-            "en",
-          ]
-            .map(
-              (l) =>
-                `<button class="bmk-pill" role="tab" data-act="lang" data-lang="${l}" aria-selected="${l === lang}">${l.toUpperCase()}</button>`,
-            )
-            .join("")}</div>`;
-        }
-        function placeLangPill(animate) {
-          const bar = root.querySelector(".bmk-lang");
-          if (!bar) return;
-          const pill = bar.querySelector(".bmk-lang-pill"),
-            tab = bar.querySelector('[aria-selected="true"]');
-          if (!animate) pill.style.transition = "none";
-          pill.style.transform = `translateX(${tab.offsetLeft}px)`;
-          pill.style.width = `${tab.offsetWidth}px`;
-          if (!animate) {
-            void pill.offsetWidth;
-            pill.style.transition = "";
-          }
-        }
 
         function mapView() {
           const o = overall(),
@@ -5291,17 +4592,7 @@
         </div>
       </header>
       <nav class="bmk-rail" aria-label="${esc(T.ui.roadmap)}">${rail}</nav>
-      <section class="bmk-how">${rows(T.ui.how, 13)}</section>
       <p class="bmk-build">${esc(BUILD)}</p>`;
-        }
-
-        function rows(items, from) {
-          return items
-            .map(
-              (r, j) =>
-                `<div class="bmk-row ${line(from + j)}"><em>${esc(r.k)}</em><p>${esc(noDot(r.p))}<small>${esc(noDot(r.s))}</small></p></div>`,
-            )
-            .join("");
         }
 
         function stepper(current) {
@@ -5522,19 +4813,6 @@
             .map((it) => it.md.en ?? it.md[lang]);
         }
         /* Vuelve a aplicar las elecciones tras cambiar de idioma */
-        function retranslatePicks() {
-          Object.keys(picks()).forEach((fid) => {
-            const O = OPTIONS[fid],
-              p = pickOf(fid),
-              f = findField(fid);
-            if (!O || !f || p.id === OTHER) return;
-            if (O.rows)
-              Object.keys(p.rows || {}).forEach((ri) => writeRow(f, O, +ri, p.rows[ri]));
-            else if (O.ui === "ChipPicker" || O.ui === "ToggleList")
-              p.ids && writeChips(f, O, p.ids);
-            else if (p.id) writeOption(f, O, p.id);
-          });
-        }
         /* Chips ya gastados por otra pregunta del mismo vocabulario */
         const takenBy = (O) =>
           O.excludeFrom ? pickOf(O.excludeFrom).ids || [] : [];
@@ -6283,26 +5561,6 @@
             view = v;
           }, keepTop);
         }
-        function setLang(l) {
-          if (busy || l === lang) return;
-          root
-            .querySelectorAll(".bmk-lang .bmk-pill")
-            .forEach((b) =>
-              b.setAttribute("aria-selected", String(b.dataset.lang === l)),
-            );
-          placeLangPill(true);
-          try {
-            localStorage.setItem(LANG_KEY, l);
-          } catch (e) {}
-          swap(() => {
-            lang = l;
-            T = TEXT[l];
-            SECTIONS = buildSections();
-            retranslatePicks();
-            save();
-            document.documentElement.lang = l;
-          }, false);
-        }
 
         /* Actualiza la vista previa y el nombre de tono de una tarjeta sin volver a renderizarla,
      para no perder el foco mientras se escribe el código a mano */
@@ -6596,9 +5854,6 @@
           if (!b) return;
           const id = b.dataset.f;
           switch (b.dataset.act) {
-            case "lang":
-              setLang(b.dataset.lang);
-              break;
             case "open":
               go({ name: "section", i: +b.dataset.i });
               break;
@@ -6800,7 +6055,6 @@
 
         window.addEventListener("resize", () => {
           placePill(false);
-          placeLangPill(false);
           paintHueCanvas();
         });
         root.addEventListener("pointerdown", (e) => {
@@ -6818,8 +6072,7 @@
         if (document.fonts && document.fonts.ready)
           document.fonts.ready.then(() => {
             placePill(false);
-            placeLangPill(false);
-          });
+            });
 
         mount();
       })();
