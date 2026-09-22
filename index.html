@@ -2353,9 +2353,7 @@
               { id: "visualAntiKeywords", type: "tags", min: 3, max: 3 },
           ] },
           { doc: "visual", fields: [
-              { id: "logoPrimary", type: "textarea", rows: 2 },
-              { id: "logoSystem", type: "list", n: 3, min: 3 },
-              { id: "logoMisuse", type: "list", n: 3, min: 3, bullet: true },
+              { id: "brandName", type: "text" },
               { id: "typePrimary", type: "textarea", rows: 2 },
               { id: "typeSecondary", type: "textarea", rows: 2 },
               { id: "typeSettings", type: "list", n: 3, min: 3 },
@@ -2578,168 +2576,6 @@
             items: VOCAB,
           },
 
-          logoPrimary: {
-            ui: "CardPicker",
-            def: "symbol-name",
-            items: [
-              {
-                id: "name-only",
-                label: { es: "Solo el nombre", en: "Name only" },
-                hint: { es: "El nombre escrito con carácter, sin símbolo.", en: "The name set with character, no symbol." },
-                visual: `<svg class="bmk-card-vis" viewBox="0 0 120 56" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="120" height="56" fill="${CO.bg}"/><text x="60" y="35" text-anchor="middle" font-family="Georgia, serif" font-size="19" fill="${CO.ink}">Nombre</text></svg>`,
-                md: { es: "Logotipo de solo texto: el nombre escrito con carácter propio, sin símbolo que lo acompañe.", en: "A wordmark: the name set with its own character, with no accompanying symbol." },
-              },
-              {
-                id: "symbol-name",
-                label: { es: "Símbolo + nombre", en: "Symbol + name" },
-                hint: { es: "Una marca gráfica junto al nombre.", en: "A graphic mark next to the name." },
-                visual: `<svg class="bmk-card-vis" viewBox="0 0 120 56" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="120" height="56" fill="${CO.bg}"/><circle cx="30" cy="28" r="11" fill="${CO.red}"/><text x="50" y="34" font-family="Georgia, serif" font-size="16" fill="${CO.ink}">Nombre</text></svg>`,
-                md: { es: "Lockup de símbolo y nombre: la marca gráfica acompaña siempre al nombre en la versión principal.", en: "A symbol-and-name lockup: the graphic mark always sits beside the name in the primary version." },
-              },
-              {
-                id: "symbol-only",
-                label: { es: "Solo el símbolo", en: "Symbol only" },
-                hint: { es: "Una marca gráfica que funciona sola.", en: "A graphic mark that stands alone." },
-                visual: `<svg class="bmk-card-vis" viewBox="0 0 120 56" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="120" height="56" fill="${CO.bg}"/><circle cx="60" cy="28" r="15" fill="none" stroke="${CO.red}" stroke-width="3"/><circle cx="60" cy="28" r="5" fill="${CO.ink}"/></svg>`,
-                md: { es: "Isotipo: una marca gráfica que funciona sola, sin necesidad del nombre.", en: "An isotype: a graphic mark that works on its own, without the name." },
-              },
-            ],
-          },
-          logoSystem: {
-            ui: "SegmentedSlider",
-            rows: [
-              {
-                label: { es: "Versiones secundarias", en: "Secondary versions" },
-                def: "stacked",
-                items: [
-                  {
-                    id: "stacked",
-                    label: { es: "Apilada", en: "Stacked" },
-                    hint: { es: "El nombre debajo del símbolo.", en: "The name below the symbol." },
-                    md: { es: "Versión apilada con el nombre bajo el símbolo, para formatos cuadrados.", en: "A stacked version with the name below the symbol, for square formats." },
-                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><circle cx="30" cy="8" r="4" fill="currentColor"/><rect x="20" y="15" width="20" height="3" fill="currentColor"/></svg>`,
-                  },
-                  {
-                    id: "inline",
-                    label: { es: "En línea", en: "Inline" },
-                    hint: { es: "Todo en una sola línea.", en: "Everything on one line." },
-                    md: { es: "Versión en una sola línea para pies de página y espacios estrechos.", en: "A single-line version for footers and narrow spaces." },
-                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><circle cx="13" cy="13" r="4" fill="currentColor"/><rect x="22" y="11" width="26" height="4" fill="currentColor"/></svg>`,
-                  },
-                  {
-                    id: "both",
-                    label: { es: "Las dos", en: "Both" },
-                    hint: { es: "Apilada y en línea, según el espacio.", en: "Stacked and inline, depending on space." },
-                    md: { es: "Dos versiones secundarias, apilada y en línea, según el espacio disponible.", en: "Two secondary versions, stacked and inline, depending on the space available." },
-                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><circle cx="14" cy="7" r="3" fill="currentColor"/><rect x="9" y="12" width="10" height="2.5" fill="currentColor"/><circle cx="42" cy="13" r="4" fill="currentColor"/><rect x="49" y="11" width="8" height="4" fill="currentColor"/></svg>`,
-                  },
-                ],
-              },
-              {
-                label: { es: "Símbolo suelto", en: "Isotype" },
-                def: "after-wordmark",
-                items: [
-                  {
-                    id: "after-wordmark",
-                    label: { es: "Solo si ya se vio el nombre", en: "Only after the name" },
-                    hint: { es: "Nunca abre una pieza.", en: "It never opens a piece." },
-                    md: { es: "El símbolo aparece solo una vez que el nombre completo ya se ha visto en la pieza.", en: "The symbol appears alone only once the full name has already been seen in the piece." },
-                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="4" y="11" width="16" height="4" fill="currentColor" opacity=0.35/><path d="M24 13h5" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/><circle cx="40" cy="13" r="5" fill="currentColor"/></svg>`,
-                  },
-                  {
-                    id: "free",
-                    label: { es: "Libre", en: "Free" },
-                    hint: { es: "Puede ir solo en cualquier sitio.", en: "It can stand alone anywhere." },
-                    md: { es: "El símbolo puede aparecer solo en cualquier soporte, sin el nombre.", en: "The symbol may appear on its own in any medium, without the name." },
-                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><circle cx="13" cy="13" r="5" fill="currentColor"/><circle cx="30" cy="13" r="5" fill="currentColor"/><circle cx="47" cy="13" r="5" fill="currentColor"/></svg>`,
-                  },
-                  {
-                    id: "never",
-                    label: { es: "Nunca suelto", en: "Never alone" },
-                    hint: { es: "Siempre acompañado del nombre.", en: "Always with the name." },
-                    md: { es: "El símbolo nunca aparece solo: siempre acompañado del nombre.", en: "The symbol never appears alone: it always comes with the name." },
-                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><circle cx="16" cy="13" r="5" fill="currentColor"/><rect x="25" y="11" width="20" height="4" fill="currentColor"/><path d="M46 6l8 14" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>`,
-                  },
-                ],
-              },
-              {
-                label: { es: "Fondos", en: "Backgrounds" },
-                def: "brand",
-                items: [
-                  {
-                    id: "brand",
-                    label: { es: "Solo colores de marca", en: "Brand colours only" },
-                    hint: { es: "Nunca sobre fotografía.", en: "Never over photography." },
-                    md: { es: "Solo sobre los colores de la marca; nunca sobre fotografía ni fondos con textura.", en: "Only over brand colours; never over photography or textured backgrounds." },
-                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="2" y="3" width="26" height="20" fill="currentColor" opacity=0.9/><circle cx="15" cy="13" r="5" fill="#fff"/><rect x="32" y="3" width="26" height="20" fill="currentColor" opacity=0.25/><circle cx="45" cy="13" r="5" fill="currentColor"/></svg>`,
-                  },
-                  {
-                    id: "plain",
-                    label: { es: "Cualquier fondo plano", en: "Any plain background" },
-                    hint: { es: "Plano y con contraste suficiente.", en: "Flat, with enough contrast." },
-                    md: { es: "Sobre cualquier fondo plano que mantenga contraste suficiente.", en: "Over any flat background that keeps enough contrast." },
-                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="2" y="3" width="26" height="20" fill="currentColor" opacity=0.18/><circle cx="15" cy="13" r="5" fill="currentColor"/><rect x="32" y="3" width="26" height="20" fill="currentColor" opacity=0.45/><circle cx="45" cy="13" r="5" fill="#fff"/></svg>`,
-                  },
-                  {
-                    id: "any",
-                    label: { es: "También sobre foto", en: "Photography too" },
-                    hint: { es: "Con zona tranquila debajo.", en: "With a calm area beneath." },
-                    md: { es: "También sobre fotografía, siempre que haya una zona tranquila bajo el logotipo.", en: "Over photography too, as long as there is a calm area beneath the logo." },
-                    visual: `<svg viewBox="0 0 60 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="32" y="3" width="6" height="6" fill="currentColor" opacity=0.2/><rect x="39" y="3" width="6" height="6" fill="currentColor" opacity=0.5/><rect x="46" y="3" width="6" height="6" fill="currentColor" opacity=0.2/><rect x="53" y="3" width="6" height="6" fill="currentColor" opacity=0.5/><rect x="32" y="10" width="6" height="6" fill="currentColor" opacity=0.2/><rect x="39" y="10" width="6" height="6" fill="currentColor" opacity=0.5/><rect x="46" y="10" width="6" height="6" fill="currentColor" opacity=0.2/><rect x="53" y="10" width="6" height="6" fill="currentColor" opacity=0.5/><rect x="32" y="17" width="6" height="6" fill="currentColor" opacity=0.2/><rect x="39" y="17" width="6" height="6" fill="currentColor" opacity=0.5/><rect x="46" y="17" width="6" height="6" fill="currentColor" opacity=0.2/><rect x="53" y="17" width="6" height="6" fill="currentColor" opacity=0.5/><rect x="2" y="3" width="26" height="20" fill="currentColor" opacity=0.18/><circle cx="15" cy="13" r="5" fill="currentColor"/><circle cx="45" cy="13" r="5" fill="#fff"/></svg>`,
-                  },
-                ],
-              },
-            ],
-          },
-          logoMisuse: {
-            ui: "ToggleList",
-            pick: 3,
-            def: ["stretch", "recolour", "busy-bg"],
-            items: [
-              {
-                id: "stretch",
-                label: { es: "Deformarlo", en: "Stretch it" },
-                hint: { es: "Cambiar su proporción al escalar.", en: "Changing its proportion when scaling." },
-                md: { es: "Nunca deformarlo ni cambiar su proporción al escalar.", en: "Never stretch it or change its proportion when scaling." },
-                visual: `<svg viewBox="0 0 46 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><text x="23" y="20" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="currentColor" transform="translate(0,0) scale(1.9,1)" transform-origin="23 16">Aa</text></svg>`,
-              },
-              {
-                id: "recolour",
-                label: { es: "Cambiarle los colores", en: "Recolour it" },
-                hint: { es: "Usar tonos fuera de la paleta.", en: "Using tones outside the palette." },
-                md: { es: "Nunca recolorearlo fuera de la paleta definida.", en: "Never recolour it outside the defined palette." },
-                visual: `<svg viewBox="0 0 46 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="4" y="5" width="38" height="17" fill="currentColor" opacity=".3"/><text x="23" y="20" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="currentColor">Aa</text></svg>`,
-              },
-              {
-                id: "busy-bg",
-                label: { es: "Ponerlo sobre fondos recargados", en: "Place it on busy backgrounds" },
-                hint: { es: "Encima de imágenes con ruido.", en: "Over noisy images." },
-                md: { es: "Nunca colocarlo sobre fondos recargados o con mucho detalle.", en: "Never place it over busy or highly detailed backgrounds." },
-                visual: `<svg viewBox="0 0 46 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect x="2.0" y="3" width="6" height="6" fill="currentColor" opacity=0.18/><rect x="9.5" y="3" width="6" height="6" fill="currentColor" opacity=0.45/><rect x="17.0" y="3" width="6" height="6" fill="currentColor" opacity=0.18/><rect x="24.5" y="3" width="6" height="6" fill="currentColor" opacity=0.45/><rect x="32.0" y="3" width="6" height="6" fill="currentColor" opacity=0.18/><rect x="39.5" y="3" width="6" height="6" fill="currentColor" opacity=0.45/><rect x="2.0" y="11" width="6" height="6" fill="currentColor" opacity=0.18/><rect x="9.5" y="11" width="6" height="6" fill="currentColor" opacity=0.45/><rect x="17.0" y="11" width="6" height="6" fill="currentColor" opacity=0.18/><rect x="24.5" y="11" width="6" height="6" fill="currentColor" opacity=0.45/><rect x="32.0" y="11" width="6" height="6" fill="currentColor" opacity=0.18/><rect x="39.5" y="11" width="6" height="6" fill="currentColor" opacity=0.45/><text x="23" y="20" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="currentColor">Aa</text></svg>`,
-              },
-              {
-                id: "shadow",
-                label: { es: "Añadirle sombras o efectos", en: "Add shadows or effects" },
-                hint: { es: "Relieve, brillo o degradado.", en: "Emboss, glow or gradient." },
-                md: { es: "Nunca añadirle sombras, relieves ni degradados.", en: "Never add shadows, embossing or gradients." },
-                visual: `<svg viewBox="0 0 46 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><text x="25" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="currentColor" opacity=".35">Aa</text><text x="23" y="20" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="currentColor">Aa</text></svg>`,
-              },
-              {
-                id: "rotate",
-                label: { es: "Rotarlo", en: "Rotate it" },
-                hint: { es: "Inclinarlo en cualquier ángulo.", en: "Tilting it at any angle." },
-                md: { es: "Nunca rotarlo ni inclinarlo.", en: "Never rotate or tilt it." },
-                visual: `<svg viewBox="0 0 46 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><g transform="rotate(-22 23 16)"><text x="23" y="20" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="currentColor">Aa</text></g></svg>`,
-              },
-              {
-                id: "tiny",
-                label: { es: "Hacerlo muy pequeño", en: "Shrink it too far" },
-                hint: { es: "Por debajo del tamaño mínimo.", en: "Below the minimum size." },
-                md: { es: "Nunca reducirlo por debajo del tamaño mínimo legible.", en: "Never shrink it below the minimum legible size." },
-                visual: `<svg viewBox="0 0 46 26" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><text x="14" y="20" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="currentColor">Aa</text><text x="36" y="18" text-anchor="middle" font-family="Georgia, serif" font-size="6" fill="currentColor">Aa</text></svg>`,
-              },
-            ],
-          },
           typePrimary: {
             ui: "CardPicker",
             def: "serif",
@@ -3629,11 +3465,8 @@
                 },
               },
               {
-                title: "Logo y tipografía",
+                title: "Nombre y tipografía",
                 derive: [
-                  "Minimum size",
-                  "Clear space",
-                  "Placement",
                   "Display usage",
                   "Body usage",
                   "Tracking",
@@ -3641,21 +3474,12 @@
                   "Italics",
                   "Typography to avoid — see Visual Restrictions",
                 ],
-                tip: "Un sistema se define tanto por sus *reglas* como por sus piezas.",
+                tip: "El nombre y la letra con que se escribe ya son media identidad.",
                 fields: {
-                  logoPrimary: {
-                    label: "¿Qué forma tiene tu logo?",
-                    why: "Determina cuánto espacio ocupa la marca en la cabecera y si sirve de favicon.",
-                  },
-                  logoSystem: {
-                    label: "¿Cómo puede usarse el logo?",
-                    why: "Sin estas reglas, quien toque la web improvisará.",
-                    rowLabels: ["Secondary versions", "Isotype", "Backgrounds"],
-                  },
-                  logoMisuse: {
-                    label: "Lo que nadie debe hacerle a tu logo",
-                    hint: "Si dudas, deja marcadas las que vienen.",
-                    why: "Va tal cual al documento como lista de «no». Es lo que más frena a una IA.",
+                  brandName: {
+                    label: "¿Cómo se llama tu emprendimiento?",
+                    hint: "El nombre tal como quieres verlo escrito.",
+                    why: "Es lo único que la IA no puede deducir, y encabeza todo lo que genere.",
                   },
                   typePrimary: {
                     label: "¿Con qué letra se escriben los títulos?",
@@ -3838,7 +3662,7 @@
             },
             mdTitles: [
               "01. Visual Foundation",
-              "02. Identity System",
+              "02. Name & Typography",
               "03. Color System",
               "04. Composition",
               "05. Illustration & Materiality",
@@ -3852,9 +3676,7 @@
               visualTension: "Visual tension",
               visualKeywords: "Keywords",
               visualAntiKeywords: "Anti-keywords",
-              logoPrimary: "Primary logo",
-              logoSystem: "Logo system",
-              logoMisuse: "Incorrect uses",
+              brandName: "Brand name",
               typePrimary: "Primary typeface",
               typeSecondary: "Secondary typeface",
               typeSettings: "Typographic settings",
@@ -3879,13 +3701,7 @@
               visualTension: "raw + precise",
               visualKeywords: ["warm", "tactile", "unhurried"],
               visualAntiKeywords: ["glossy", "corporate", "futuristic"],
-              logoPrimary: "Horizontal wordmark in the display cut, used at the top-left of every piece.",
-              logoSystem: [
-                "Stacked lockup for square formats",
-                "The cup mark alone, once the wordmark has appeared",
-                "Beige or deep brown only, never on photography",
-              ],
-              logoMisuse: ["Never outline it", "Never place it over a busy image"],
+              brandName: "Taller Norte",
               typePrimary: "A high-contrast serif for display, chosen for its editorial calm.",
               typeSecondary: "A neutral grotesque for body and interface, chosen to stay out of the way.",
               typeSettings: [
@@ -4191,11 +4007,8 @@
                 },
               },
               {
-                title: "Logo and type",
+                title: "Name and type",
                 derive: [
-                  "Minimum size",
-                  "Clear space",
-                  "Placement",
                   "Display usage",
                   "Body usage",
                   "Tracking",
@@ -4203,21 +4016,12 @@
                   "Italics",
                   "Typography to avoid — see Visual Restrictions",
                 ],
-                tip: "A system is defined as much by its *rules* as by its pieces.",
+                tip: "The name and the letters it is set in are already half the identity.",
                 fields: {
-                  logoPrimary: {
-                    label: "What shape is your logo?",
-                    why: "It decides how much room the brand takes in the header, and whether it works as a favicon.",
-                  },
-                  logoSystem: {
-                    label: "How may the logo be used?",
-                    why: "Without these rules, whoever touches the site will improvise.",
-                    rowLabels: ["Secondary versions", "Isotype", "Backgrounds"],
-                  },
-                  logoMisuse: {
-                    label: "What nobody should do to your logo",
-                    hint: "If unsure, keep the ones already ticked.",
-                    why: "It goes straight into the document as a «no» list. It is what reins an AI in most.",
+                  brandName: {
+                    label: "What is your venture called?",
+                    hint: "The name exactly as you want it written.",
+                    why: "It is the one thing an AI cannot infer, and it heads everything it makes.",
                   },
                   typePrimary: {
                     label: "Which type sets the headings?",
@@ -4400,7 +4204,7 @@
             },
             mdTitles: [
               "01. Visual Foundation",
-              "02. Identity System",
+              "02. Name & Typography",
               "03. Color System",
               "04. Composition",
               "05. Illustration & Materiality",
@@ -4414,9 +4218,7 @@
               visualTension: "Visual tension",
               visualKeywords: "Keywords",
               visualAntiKeywords: "Anti-keywords",
-              logoPrimary: "Primary logo",
-              logoSystem: "Logo system",
-              logoMisuse: "Incorrect uses",
+              brandName: "Brand name",
               typePrimary: "Primary typeface",
               typeSecondary: "Secondary typeface",
               typeSettings: "Typographic settings",
@@ -4441,13 +4243,7 @@
               visualTension: "raw + precise",
               visualKeywords: ["warm", "tactile", "unhurried"],
               visualAntiKeywords: ["glossy", "corporate", "futuristic"],
-              logoPrimary: "Horizontal wordmark in the display cut, used at the top-left of every piece.",
-              logoSystem: [
-                "Stacked lockup for square formats",
-                "The cup mark alone, once the wordmark has appeared",
-                "Beige or deep brown only, never on photography",
-              ],
-              logoMisuse: ["Never outline it", "Never place it over a busy image"],
+              brandName: "Taller Norte",
               typePrimary: "A high-contrast serif for display, chosen for its editorial calm.",
               typeSecondary: "A neutral grotesque for body and interface, chosen to stay out of the way.",
               typeSettings: [
@@ -5443,7 +5239,6 @@
             labelsOf("visualTerritory"),
             labelsOf("visualKeywords"),
             labelsOf("visualTension"),
-            labelsOf("logoPrimary"),
             labelsOf("typePrimary"),
             labelsOf("colorFunction"),
             labelsOf("compositionGrid", 2),
@@ -5453,8 +5248,7 @@
           );
           const isnt = [].concat(
             labelsOf("visualAntiKeywords"),
-            labelsOf("visualAvoid", 4),
-            labelsOf("logoMisuse", 2),
+            labelsOf("visualAvoid", 6),
           );
           const note = Object.values(notes())
             .map((x) => (x || "").trim())
