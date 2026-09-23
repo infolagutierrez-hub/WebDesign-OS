@@ -2343,9 +2343,6 @@
               { id: "graphicForms", type: "list", n: 4, min: 3 },
           ] },
           { doc: "visual", fields: [
-              { id: "visualSignatures", type: "list", n: 3, min: 3 },
-          ] },
-          { doc: "visual", fields: [
               { id: "visualAvoid", type: "list", n: 5, min: 4 },
           ] },
           { doc: "visual", fields: [
@@ -3345,39 +3342,6 @@
               },
             ],
           },
-          visualSignatures: {
-            ui: "ToggleList",
-            pick: 3,
-            needs: [3, 5, 6],
-            /* No se pregunta en blanco: se proponen a partir de los bloques
-               04 a 06 y la persona confirma o descarta. */
-            gen: () => {
-              const row = (id, i) => (Array.isArray(state[id]) ? state[id][i] : "") || "";
-              const c = (i) => row("compositionGrid", i),
-                mt = (i) => row("materiality", i),
-                gf = (i) => row("graphicForms", i);
-              const mk = (id, es, en) => ({
-                id,
-                label: { es, en },
-                hint: { es: "Sale de lo que ya has elegido; puedes quitarlo.", en: "It comes from what you already chose; you can drop it." },
-                md: { es, en },
-              });
-              /* Se toma lo primero que haya respondido de cada bloque, no unas
-                 filas fijas: si no, bastaba con saltarse una para que este
-                 bloque quedara imposible de completar. */
-              /* Destila con las etiquetas cortas: un sello que copia la frase
-                 entera de otro bloque no añade nada al documento. */
-              const out = [];
-              const add = (id, es, en, fid) => {
-                const l = enLabels(fid, 2);
-                if (l.length) out.push(mk(id, `${es}: ${l.join(", ")}`, `${en}: ${l.join(", ")}`));
-              };
-              add("sig-comp", "Composición", "Composition", "compositionGrid");
-              add("sig-material", "Superficies", "Surfaces", "materiality");
-              add("sig-graphic", "Detalles", "Details", "graphicForms");
-              return out;
-            },
-          },
           pageArchetypes: {
             ui: "CardPicker",
             def: "editorial",
@@ -3607,20 +3571,6 @@
                 },
               },
               {
-                title: "What makes you recognisable",
-                derive: [
-                  "Elements that should recur — see Distinctive Codes",
-                  "Elements that make the brand recognizable — see Distinctive Codes",
-                ],
-                fields: {
-                  visualSignatures: {
-                    label: "Which three things give you away?",
-                    hint: "Drop the ones that are not you.",
-                    why: "It is the summary a designer or an AI reads first.",
-                  },
-                },
-              },
-              {
                 title: "What to avoid",
                 fields: {
                   visualAvoid: {
@@ -3667,7 +3617,7 @@
               visual: {
                 title: "Visual Direction",
                 sub: "How the brand looks and behaves",
-                meta: "10 blocks · Visual direction",
+                meta: "9 blocks · Visual direction",
               },
             },
             mdTitles: [
@@ -3678,9 +3628,8 @@
               "05. Page Architecture",
               "06. Illustration & Materiality",
               "07. Graphic Language",
-              "08. Distinctive Visual Codes",
-              "09. Visual Restrictions",
-              "10. AI Visual Direction",
+              "08. Visual Restrictions",
+              "09. AI Visual Direction",
             ],
             mdLabels: {
               visualTerritory: "Visual territory",
@@ -3699,7 +3648,6 @@
               illustration: "Illustration",
               materiality: "Materiality",
               graphicForms: "Graphic language",
-              visualSignatures: "Signature moves",
               visualAvoid: "What to avoid",
               aiBasePrompt: "Base prompt",
               aiNegativePrompt: "Negative prompt",
@@ -3754,11 +3702,6 @@
                 "None; texture does the work instead",
                 "Line icons at a single weight",
                 "A hairline rule with generous space around it",
-              ],
-              visualSignatures: [
-                "Subject low-left, empty space above",
-                "A warm neutral ground interrupted once by terracotta",
-                "Hands entering the frame from outside",
               ],
               visualAvoid: [
                 "Flat corporate vector, gradients, 3D renders",
@@ -4001,7 +3944,7 @@
 
         /* Sello de versión: lo reescribe stamp.sh en cada despliegue, para
            saber de un vistazo qué build se está viendo. */
-        const BUILD = "23 Sep 2026 · 08:11";
+        const BUILD = "23 Sep 2026 · 08:22";
         const STORAGE_KEY = "ai-brand-os-v1";
 
         /* ---------- Helpers ---------- */
@@ -5265,7 +5208,7 @@
             const edited = pickOf(f.id).id === OTHER,
               val = state[f.id],
               empty = !(Array.isArray(val) ? val.filter(Boolean).length : (val || "").trim());
-            if (!edited && empty) c = emptyFrom([0, 3, 5, 6, 8]);
+            if (!edited && empty) c = emptyFrom([0, 3, 5, 6, 7]);
             else
             c = edited
               ? `<div class="bmk-opts">${c}<div class="bmk-opt-actions"><button type="button" class="bmk-optbtn" data-act="unother" data-f="${f.id}">${IC_BACK}<span>${esc(T.ui.autoBack)}</span></button></div></div>`
