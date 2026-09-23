@@ -437,9 +437,6 @@
         padding-top: 6px;
         border-top: 0;
       }
-      .t-acc > .bmk-field-head {
-        grid-template-columns: auto 1fr auto;
-      }
       .bmk-field-head {
         display: flex;
         align-items: flex-start;
@@ -940,90 +937,6 @@
       }
 
       /* Brand color palette selector and tone customization controls */
-      /* ---------- Transitions.dev · Accordion expand ----------
-         grid-template-rows 0fr ↔ 1fr anima la altura sin medirla en JS; el
-         interior recorta el desbordamiento. El galón gira con scaleY, que
-         pasa por una línea plana a mitad de camino y funciona en todos los
-         navegadores, a diferencia del morphing de `d:`. */
-      .bmk {
-        --acc-expand: 250ms;
-        --acc-collapse: 250ms;
-        --acc-chevron: 250ms;
-        --acc-ease: cubic-bezier(0.22, 1, 0.36, 1);
-      }
-      .t-acc-panel {
-        display: grid;
-        grid-template-rows: 0fr;
-        transition: grid-template-rows var(--acc-collapse) var(--acc-ease);
-      }
-      .t-acc[data-open="true"] .t-acc-panel {
-        grid-template-rows: 1fr;
-        transition: grid-template-rows var(--acc-expand) var(--acc-ease);
-      }
-      .t-acc-panel-inner {
-        overflow: hidden;
-        opacity: 0;
-        filter: blur(2px);
-        transition:
-          opacity var(--acc-collapse) var(--acc-ease),
-          filter var(--acc-collapse) var(--acc-ease);
-      }
-      .t-acc[data-open="true"] .t-acc-panel-inner {
-        opacity: 1;
-        filter: blur(0);
-        transition:
-          opacity var(--acc-expand) var(--acc-ease),
-          filter var(--acc-expand) var(--acc-ease);
-      }
-      .t-acc-chevron {
-        display: inline-flex;
-        transform: scaleY(1);
-        transform-origin: center;
-        transition: transform var(--acc-chevron) var(--acc-ease);
-        color: var(--rojo);
-      }
-      .t-acc-chevron svg {
-        width: 16px;
-        height: 16px;
-      }
-      .t-acc-chevron path {
-        vector-effect: non-scaling-stroke;
-      }
-      .t-acc[data-open="true"] .t-acc-chevron {
-        transform: scaleY(-1);
-      }
-      /* La cabecera pasa a ser botón: se adapta al estilo del bloque */
-      .t-acc > .bmk-field-head {
-        width: 100%;
-        background: none;
-        border: 0;
-        font: inherit;
-        color: inherit;
-        text-align: left;
-        cursor: pointer;
-        padding: 14px 0;
-        align-items: center;
-      }
-      .t-acc > .bmk-field-head:focus-visible {
-        outline: 2px solid var(--rojo);
-        outline-offset: 3px;
-      }
-      .t-acc {
-        border-top: 1px solid var(--line);
-      }
-      .t-acc:last-of-type {
-        border-bottom: 1px solid var(--line);
-      }
-      .t-acc[data-open="true"] .bmk-field-body {
-        padding-bottom: 22px;
-      }
-      @media (prefers-reduced-motion: reduce) {
-        .t-acc-panel,
-        .t-acc-panel-inner,
-        .t-acc-chevron {
-          transition: none !important;
-        }
-      }
       /* ---------- Selectores visuales ---------- */
       .bmk-opts {
         display: grid;
@@ -1375,6 +1288,41 @@
         color: var(--rojo);
         cursor: pointer;
         margin-bottom: 10px;
+      }
+      /* ---------- Copy de origen ---------- */
+      .bmk-source {
+        margin-top: 64px;
+        padding-top: 28px;
+        border-top: 1px solid var(--line);
+      }
+      .bmk-source-head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 4px;
+      }
+      .bmk-source-head h2 {
+        margin: 0;
+        font-weight: 400;
+        font-size: clamp(22px, 2.4vw, 28px);
+        color: var(--sombra);
+      }
+      .bmk-source-n {
+        font-size: 12px;
+        font-style: italic;
+        color: var(--muted);
+        white-space: nowrap;
+      }
+      .bmk-source .bmk-hint {
+        margin: 0 0 12px;
+        max-width: 62ch;
+      }
+      .bmk-source-ta {
+        width: 100%;
+        box-sizing: border-box;
+        line-height: 1.6;
+        resize: vertical;
       }
       /* ---------- Retrato en vivo ---------- */
       .bmk-digest {
@@ -3859,6 +3807,14 @@
               unavailable: "not included",
               filesNote:
                 "Reference files are in the `references/` folder, next to this document.",
+              accTitle: "Expandable lists — use this exact pattern",
+              accWhen:
+                "Wherever the copy offers choices the reader picks between — questions and answers, plans, options, steps that can be folded away — stack them and let each one expand. Use the markup and CSS below as they are; style the head, the rule and the chevron with the tokens above so it matches the rest of the page.",
+              accRules:
+                "The height animates with grid-template-rows from 0fr to 1fr: no JavaScript measuring heights, which is what makes accordions jump. The chevron flips with scaleY, passing through a flat line at the midpoint; do not animate the `d:` path, which only works in Chromium. Toggle `data-open` on the item and keep `aria-expanded` in sync on the button. One item open at a time is optional; what is not optional is that the head is a real button, reachable by keyboard, with a visible focus ring.",
+              sourceTitle: "00. Brand copy and voice",
+              sourceIntro:
+                "Written by the brand, pasted as-is. It outranks every example in this document: use these exact words, this tone and these names. The sections below say how it should look, never what it should say.",
               tokensTitle: "Interface surfaces — computed from the palette",
               buttonsTitle: "Buttons and calls to action — computed from the palette",
               mdSlots: ["Primary", "Neutral", "Accent 01", "Accent 02", "Accent 03"],
@@ -4023,6 +3979,12 @@
               emptyGen: "This question is built from your answers. Complete these blocks and it will appear on its own:",
               emptyGenReady: "Ready: there are enough answers to build it.",
               whyTitle: "Why is this asked?",
+              sourceTitle: "Your copy and branding",
+              sourceHint:
+                "Paste what the brand already says: headlines, about text, product names, tone notes. Everything you build afterwards feeds on this.",
+              sourcePh:
+                "# LuKat\n\nMake someone's morning — on your way.\n\nCoffee and a small hand-wrapped posy, ready to pick up. No ordering ahead.\n\nTone: warm, plain, never salesy.",
+              sourceWords: (n) => `${n} words`,
               digestIs: "Your brand is",
               digestIsnt: "Your brand is not",
               digestPending: "Not defined yet",
@@ -4052,7 +4014,7 @@
 
         /* Sello de versión: lo reescribe stamp.sh en cada despliegue, para
            saber de un vistazo qué build se está viendo. */
-        const BUILD = "23 Sep 2026 · 07:51";
+        const BUILD = "23 Sep 2026 · 08:00";
         const STORAGE_KEY = "ai-brand-os-v1";
 
         /* ---------- Helpers ---------- */
@@ -4173,15 +4135,6 @@
         };
         const FILES = new Map(); // archivos originales, solo durante la sesión (id → File)
         const openEx = new Set(); // ejemplos desplegados
-        const openQ = new Set(); // preguntas desplegadas en los bloques apilados
-        /* Al abrir un bloque apilado se despliega la primera sin responder */
-        function seedOpenQ(sec) {
-          const fs = countable(sec);
-          if (fs.length < 3) return;
-          if (fs.some((f) => openQ.has(f.id))) return;
-          const next = fs.find((f) => !isFilled(f)) || fs[0];
-          if (next) openQ.add(next.id);
-        }
         const PALETTE_KEYS = [
           "primary",
           "neutral",
@@ -4668,6 +4621,13 @@
 
         /* Selector de idioma: mismo "Tabs sliding" que el stepper */
 
+        /* Copy y marca que la persona pega tal cual. Encabeza el documento
+           para que la IA lea la voz real antes que ninguna decisión visual. */
+        const sourceWords = () => {
+          const n = (state.sourceCopy || "").trim().split(/\s+/).filter(Boolean).length;
+          return n ? T.ui.sourceWords(n) : "";
+        };
+
         function mapView() {
           const o = overall(),
             nx = nextIndex();
@@ -4703,6 +4663,14 @@
         </div>
       </header>
       <nav class="bmk-rail" aria-label="${esc(T.ui.roadmap)}">${rail}</nav>
+      <section class="bmk-source ${line(3 + SECTIONS.length + 1)}">
+        <div class="bmk-source-head">
+          <h2>${esc(T.ui.sourceTitle)}</h2>
+          <span class="bmk-source-n">${sourceWords()}</span>
+        </div>
+        <p class="bmk-hint">${esc(noDot(T.ui.sourceHint))}</p>
+        <textarea class="bmk-input bmk-source-ta" rows="8" data-t="source" placeholder="${esc(T.ui.sourcePh)}" aria-label="${esc(T.ui.sourceTitle)}">${esc(state.sourceCopy || "")}</textarea>
+      </section>
       <p class="bmk-build">${esc(BUILD)}</p>`;
         }
 
@@ -4820,9 +4788,8 @@
         }
 
         function sectionView(i, keepTop) {
-          const s = SECTIONS[i];
-          seedOpenQ(s);
-          const p = secProg(s),
+          const s = SECTIONS[i],
+            p = secProg(s),
             last = i === SECTIONS.length - 1;
           return `${topBar(i, keepTop)}
       <div class="bmk-layout">
@@ -5291,13 +5258,9 @@
             ? `<button class="bmk-ex-btn" data-act="example" data-f="${f.id}" aria-expanded="${exOpen}">${esc(exOpen ? T.ui.exampleHide : T.ui.exampleShow)}</button>
         <div class="bmk-ex" data-ex="${f.id}" ${exOpen ? "" : "hidden"}><span>${esc(T.ui.exampleOf)}</span>${esc(noDot(exText))}${f.why ? `<span class="bmk-ex-h">${esc(T.ui.whyTitle)}</span>${esc(noDot(f.why))}` : ""}</div>`
             : "";
-          /* Con tres preguntas o más el bloque se apila y cada una se
-             despliega, para que no haya que recorrer una pared de scroll. */
-          const stack = sec ? countable(sec).length >= 3 : false;
-          const open = stack ? openQ.has(f.id) : true;
-          return `<div class="bmk-field ${stack ? "t-acc" : ""} ${fixed ? "bmk-field--fixed" : ""} ${!fixed && isFilled(f) ? "is-done" : ""} ${k === undefined ? "" : line(Math.min(k + 2, 10))}" data-field="${f.id}" data-open="${open}">
-      <${stack ? "button" : "div"} class="bmk-field-head"${stack ? ` type="button" data-act="q" data-f="${f.id}" aria-expanded="${open}"` : ""}><span class="bmk-check">${fixed ? "•" : "✓"}</span><div><span class="bmk-label">${esc(f.label)}</span></div>${stack ? `<span class="t-acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.5L8 10.5L12 6.5"/></svg></span>` : ""}</${stack ? "button" : "div"}>
-      <div class="${stack ? "t-acc-panel" : ""}"><div class="${stack ? "t-acc-panel-inner" : ""}"><div class="bmk-field-body">${f.hint ? `<p class="bmk-hint">${rich(noDot(f.hint))}</p>` : ""}${example}<div class="bmk-control">${c}</div></div></div></div></div>`;
+          return `<div class="bmk-field ${fixed ? "bmk-field--fixed" : ""} ${!fixed && isFilled(f) ? "is-done" : ""} ${k === undefined ? "" : line(Math.min(k + 2, 10))}" data-field="${f.id}">
+      <div class="bmk-field-head"><span class="bmk-check">${fixed ? "•" : "✓"}</span><div><span class="bmk-label">${esc(f.label)}</span></div></div>
+      <div class="bmk-field-body">${f.hint ? `<p class="bmk-hint">${rich(noDot(f.hint))}</p>` : ""}${example}<div class="bmk-control">${c}</div></div></div>`;
         }
 
         function docCard(doc, k) {
@@ -5522,9 +5485,72 @@
         const docSections = (doc) => SECTIONS.filter((s) => s.doc === doc);
 
         /* Documento Markdown construido solo con lo respondido */
+        /* Patrón de despliegue que se entrega listo para pegar: se emite
+           siempre, porque cualquier página con preguntas, planes u opciones
+           lo necesita y una IA sin referencia lo resuelve con JS midiendo
+           alturas, que da saltos. */
+        function accordionSpec() {
+          return [
+            `**${T.md.accTitle}**`,
+            "",
+            T.md.accWhen,
+            "",
+            "```html",
+            '<div class="t-acc" data-open="false">',
+            '  <button class="t-acc-head" aria-expanded="false">',
+            "    Title",
+            '    <span class="t-acc-chevron">',
+            '      <svg viewBox="0 0 16 16"><path d="M4 6.5L8 10.5L12 6.5"/></svg>',
+            "    </span>",
+            "  </button>",
+            '  <div class="t-acc-panel"><div class="t-acc-panel-inner"> … </div></div>',
+            "</div>",
+            "```",
+            "",
+            "```css",
+            ":root {",
+            "  --acc-expand: 250ms; --acc-collapse: 250ms;",
+            "  --acc-chevron: 250ms; --acc-ease: cubic-bezier(0.22, 1, 0.36, 1);",
+            "}",
+            ".t-acc-panel {",
+            "  display: grid; grid-template-rows: 0fr;",
+            "  transition: grid-template-rows var(--acc-collapse) var(--acc-ease);",
+            "}",
+            '.t-acc[data-open="true"] .t-acc-panel {',
+            "  grid-template-rows: 1fr;",
+            "  transition: grid-template-rows var(--acc-expand) var(--acc-ease);",
+            "}",
+            ".t-acc-panel-inner {",
+            "  overflow: hidden; opacity: 0; filter: blur(2px);",
+            "  transition: opacity var(--acc-collapse) var(--acc-ease),",
+            "    filter var(--acc-collapse) var(--acc-ease);",
+            "}",
+            '.t-acc[data-open="true"] .t-acc-panel-inner {',
+            "  opacity: 1; filter: blur(0);",
+            "  transition: opacity var(--acc-expand) var(--acc-ease),",
+            "    filter var(--acc-expand) var(--acc-ease);",
+            "}",
+            ".t-acc-chevron {",
+            "  display: inline-flex; transform: scaleY(1); transform-origin: center;",
+            "  transition: transform var(--acc-chevron) var(--acc-ease);",
+            "}",
+            ".t-acc-chevron path { vector-effect: non-scaling-stroke; }",
+            '.t-acc[data-open="true"] .t-acc-chevron { transform: scaleY(-1); }',
+            "@media (prefers-reduced-motion: reduce) {",
+            "  .t-acc-panel, .t-acc-panel-inner, .t-acc-chevron { transition: none !important; }",
+            "}",
+            "```",
+            "",
+            T.md.accRules,
+          ].join("\n");
+        }
+
         function buildText(doc) {
           const D = T.docs[doc];
           const out = [`# ${D.title}`, "", `_${D.sub}_`];
+          const src = (state.sourceCopy || "").trim();
+          if (src)
+            out.push("", "---", "", `## ${T.md.sourceTitle}`, "", `_${T.md.sourceIntro}_`, "", src);
           const pending = [];
           let any = false,
             anyDefault = false;
@@ -5554,6 +5580,8 @@
                   `**${T.md.rulesTitle}**`,
                   "",
                   s.rules.map((r) => `- ${r}`).join("\n"),
+                  "",
+                  accordionSpec(),
                 );
               if (s.defaults && s.defaults.length) {
                 anyDefault = true;
@@ -5953,6 +5981,13 @@
           const t = e.target,
             id = t.dataset.f,
             ty = t.dataset.t;
+          if (ty === "source") {
+            state.sourceCopy = t.value;
+            const n = root.querySelector(".bmk-source-n");
+            if (n) n.textContent = sourceWords();
+            save();
+            return;
+          }
           if (!id) return;
           if (ty === "text") state[id] = t.value;
           else if (ty === "note") {
@@ -6086,22 +6121,9 @@
               if (open) replay([box]);
               break;
             }
-            case "q": {
-              const fid = b.dataset.f;
-              openQ.has(fid) ? openQ.delete(fid) : openQ.add(fid);
-              const el = root.querySelector(`[data-field="${fid}"]`);
-              if (el) {
-                el.dataset.open = String(openQ.has(fid));
-                const h = el.querySelector(".bmk-field-head");
-                if (h) h.setAttribute("aria-expanded", String(openQ.has(fid)));
-              }
-              break;
-            }
             case "jump": {
-              openQ.add(id);
               const el = root.querySelector(`[data-field="${id}"]`);
               if (!el) break;
-              el.dataset.open = "true";
               el.scrollIntoView({
                 behavior: reduceMotion() ? "auto" : "smooth",
                 block: "center",
