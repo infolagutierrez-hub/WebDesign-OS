@@ -1306,7 +1306,7 @@
         margin: 0;
         font-weight: 400;
         font-size: clamp(22px, 2.4vw, 28px);
-        color: var(--sombra);
+        color: var(--blanco);
       }
       .bmk-source-n {
         font-size: 12px;
@@ -1318,11 +1318,50 @@
         margin: 0 0 12px;
         max-width: 62ch;
       }
-      .bmk-source-ta {
-        width: 100%;
-        box-sizing: border-box;
-        line-height: 1.6;
-        resize: vertical;
+      /* El mapa tiene fondo rojo: la zona y su lista van en claro */
+      .bmk-source {
+        color: var(--blanco);
+      }
+      .bmk-source .bmk-hint,
+      .bmk-source-n {
+        color: rgba(255, 255, 255, 0.72);
+      }
+      .bmk-source-drop {
+        border-color: rgba(255, 255, 255, 0.4);
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--blanco);
+      }
+      .bmk-source-drop:hover,
+      .bmk-source-drop.is-over {
+        border-color: var(--blanco);
+        background: rgba(255, 255, 255, 0.14);
+      }
+      .bmk-source-drop small {
+        color: rgba(255, 255, 255, 0.6);
+      }
+      .bmk-src-list {
+        list-style: none;
+        margin: 12px 0 0;
+        padding: 0;
+        display: grid;
+        gap: 6px;
+      }
+      .bmk-src-list li {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 9px 12px;
+        border: 1px solid rgba(255, 255, 255, 0.28);
+        border-radius: var(--radius);
+        font-size: 13px;
+        color: var(--blanco);
+      }
+      .bmk-src-list .bmk-x {
+        color: rgba(255, 255, 255, 0.7);
+      }
+      .bmk-src-list .bmk-x:hover {
+        color: var(--blanco);
       }
       /* ---------- Retrato en vivo ---------- */
       .bmk-digest {
@@ -3981,9 +4020,10 @@
               whyTitle: "Why is this asked?",
               sourceTitle: "Your copy and branding",
               sourceHint:
-                "Paste what the brand already says: headlines, about text, product names, tone notes. Everything you build afterwards feeds on this.",
-              sourcePh:
-                "# LuKat\n\nMake someone's morning — on your way.\n\nCoffee and a small hand-wrapped posy, ready to pick up. No ordering ahead.\n\nTone: warm, plain, never salesy.",
+                "Drop the files where the brand already speaks: headlines, about text, product names, tone notes. Everything below feeds on this.",
+              sourceDrop: "Drop your copy here <em>or browse</em>",
+              sourceTypes: ".md, .markdown or .txt",
+              sourceType: "Text files only (.md, .markdown, .txt)",
               sourceWords: (n) => `${n} words`,
               digestIs: "Your brand is",
               digestIsnt: "Your brand is not",
@@ -4014,7 +4054,7 @@
 
         /* Sello de versión: lo reescribe stamp.sh en cada despliegue, para
            saber de un vistazo qué build se está viendo. */
-        const BUILD = "23 Sep 2026 · 08:00";
+        const BUILD = "23 Sep 2026 · 08:06";
         const STORAGE_KEY = "ai-brand-os-v1";
 
         /* ---------- Helpers ---------- */
@@ -4623,10 +4663,55 @@
 
         /* Copy y marca que la persona pega tal cual. Encabeza el documento
            para que la IA lea la voz real antes que ninguna decisión visual. */
+        const srcFiles = () =>
+          Array.isArray(state.sourceFiles) ? state.sourceFiles : [];
+        /* El documento recibe los archivos concatenados, cada uno con su nombre */
+        const sourceText = () =>
+          srcFiles()
+            .map((f) => `### ${f.name}\n\n${(f.text || "").trim()}`)
+            .join("\n\n");
         const sourceWords = () => {
-          const n = (state.sourceCopy || "").trim().split(/\s+/).filter(Boolean).length;
+          const n = sourceText().trim().split(/\s+/).filter(Boolean).length;
           return n ? T.ui.sourceWords(n) : "";
         };
+        function sourceList() {
+          const fs = srcFiles();
+          if (!fs.length) return "";
+          return `<ul class="bmk-src-list">${fs
+            .map(
+              (f, i) =>
+                `<li><span>${esc(f.name)}</span><button type="button" class="bmk-x" data-act="rmsrc" data-i="${i}" aria-label="${esc(T.ui.remove)} ${esc(f.name)}">×</button></li>`,
+            )
+            .join("")}</ul>`;
+        }
+        /* Solo texto plano: es lo único que se puede leer sin depender de nada */
+        function addSource(list) {
+          const files = Array.from(list || []).filter(
+            (f) => /\.(md|markdown|txt)$/i.test(f.name) || /^text\//.test(f.type),
+          );
+          if (!files.length) return toast(T.ui.sourceType);
+          let left = files.length;
+          files.forEach((file) => {
+            const rd = new FileReader();
+            rd.onload = () => {
+              state.sourceFiles = srcFiles().concat({
+                name: file.name,
+                text: String(rd.result || ""),
+              });
+              if (!--left) {
+                save();
+                render();
+              }
+            };
+            rd.onerror = () => {
+              if (!--left) {
+                save();
+                render();
+              }
+            };
+            rd.readAsText(file);
+          });
+        }
 
         function mapView() {
           const o = overall(),
@@ -4669,7 +4754,11 @@
           <span class="bmk-source-n">${sourceWords()}</span>
         </div>
         <p class="bmk-hint">${esc(noDot(T.ui.sourceHint))}</p>
-        <textarea class="bmk-input bmk-source-ta" rows="8" data-t="source" placeholder="${esc(T.ui.sourcePh)}" aria-label="${esc(T.ui.sourceTitle)}">${esc(state.sourceCopy || "")}</textarea>
+        <label class="bmk-drop bmk-source-drop">
+          <input type="file" multiple accept=".md,.markdown,.txt,text/plain,text/markdown" data-t="srcfile" hidden>
+          <span class="bmk-drop-t">${T.ui.sourceDrop}</span><small>${esc(T.ui.sourceTypes)}</small>
+        </label>
+        ${sourceList()}
       </section>
       <p class="bmk-build">${esc(BUILD)}</p>`;
         }
@@ -5548,7 +5637,7 @@
         function buildText(doc) {
           const D = T.docs[doc];
           const out = [`# ${D.title}`, "", `_${D.sub}_`];
-          const src = (state.sourceCopy || "").trim();
+          const src = sourceText().trim();
           if (src)
             out.push("", "---", "", `## ${T.md.sourceTitle}`, "", `_${T.md.sourceIntro}_`, "", src);
           const pending = [];
@@ -5976,18 +6065,30 @@
           refresh();
         }
 
+        /* Arrastrar y soltar sobre la zona de la portada */
+        ["dragenter", "dragover"].forEach((ev) =>
+          root.addEventListener(ev, (e) => {
+            const z = e.target.closest && e.target.closest(".bmk-source-drop");
+            if (!z) return;
+            e.preventDefault();
+            z.classList.add("is-over");
+          }),
+        );
+        ["dragleave", "drop"].forEach((ev) =>
+          root.addEventListener(ev, (e) => {
+            const z = e.target.closest && e.target.closest(".bmk-source-drop");
+            if (!z) return;
+            e.preventDefault();
+            z.classList.remove("is-over");
+            if (ev === "drop" && e.dataTransfer) addSource(e.dataTransfer.files);
+          }),
+        );
+
         /* ---------- Events ---------- */
         root.addEventListener("input", (e) => {
           const t = e.target,
             id = t.dataset.f,
             ty = t.dataset.t;
-          if (ty === "source") {
-            state.sourceCopy = t.value;
-            const n = root.querySelector(".bmk-source-n");
-            if (n) n.textContent = sourceWords();
-            save();
-            return;
-          }
           if (!id) return;
           if (ty === "text") state[id] = t.value;
           else if (ty === "note") {
@@ -6007,6 +6108,10 @@
               fl = r.files.find((x) => x.id === t.dataset.id);
             if (fl) fl.note = t.value;
             state.references = r;
+          } else if (ty === "srcfile") {
+            addSource(t.files);
+            t.value = "";
+            return;
           } else if (ty === "colorname") {
             const o = state.colors || {},
               k = t.dataset.slot;
@@ -6277,6 +6382,14 @@
               downloadDoc(b.dataset.doc || DOCS[0].key);
               flash(b, T.ui.downloadedBtn);
               break;
+            case "rmsrc": {
+              const fs = srcFiles().slice();
+              fs.splice(+b.dataset.i, 1);
+              state.sourceFiles = fs;
+              save();
+              render();
+              break;
+            }
             case "reset":
               if (confirm(T.ui.confirmReset)) {
                 state = {};
