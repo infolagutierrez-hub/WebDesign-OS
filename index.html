@@ -796,39 +796,6 @@
         text-transform: uppercase;
         color: var(--muted);
       }
-      .bmk-checklist {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        display: grid;
-        gap: 1px;
-      }
-      .bmk-checklist button {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        width: 100%;
-        background: none;
-        border: 0;
-        padding: 5px 0;
-        font-size: 14px;
-        color: var(--muted);
-        text-align: left;
-      }
-      .bmk-checklist button:hover {
-        color: var(--rojo);
-      }
-      .bmk-checklist .bmk-check {
-        margin-top: 0;
-      }
-      .bmk-checklist button.is-done {
-        color: var(--ink);
-      }
-      .bmk-checklist button.is-done .bmk-check {
-        background: var(--rojo);
-        border-color: var(--rojo);
-        color: var(--blanco);
-      }
       .bmk .bmk-intro {
         margin: 0 0 30px;
         padding: 18px 22px;
@@ -1369,7 +1336,7 @@
         padding-top: 20px;
         border-top: 1px solid var(--line);
         display: grid;
-        gap: 14px;
+        gap: 12px;
       }
       .bmk-dg-h {
         display: block;
@@ -1385,35 +1352,24 @@
       .bmk-dg-h.is-no {
         color: var(--muted);
       }
-      .bmk-dg-list {
-        list-style: none;
+      .bmk-dg-line {
         margin: 0;
-        padding: 0;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 5px;
+        font-size: 13px;
+        line-height: 1.4;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
-      .bmk-dg-list li {
-        padding: 4px 9px;
-        border-radius: 999px;
-        font-size: 12px;
-        line-height: 1.35;
-        background: var(--blanco);
-        border: 1px solid var(--line);
+      .bmk-dg-line.is-yes {
         color: var(--ink);
       }
-      .bmk-dg-list.is-yes li {
-        border-color: var(--accent-soft);
-        background: var(--accent-soft);
-      }
-      .bmk-dg-list.is-no li {
+      .bmk-dg-line.is-no {
         color: var(--muted);
         text-decoration: line-through;
         text-decoration-color: var(--line-strong);
       }
-      .bmk-dg-list li.bmk-dg-more {
-        background: none;
-        border-style: dashed;
+      .bmk-dg-more {
+        font-style: italic;
         color: var(--muted);
         text-decoration: none;
       }
@@ -1901,12 +1857,6 @@
         .bmk-digest {
           order: 5;
         }
-        .bmk-checklist {
-          order: 4;
-          margin-top: 28px;
-          padding-top: 20px;
-          border-top: 1px solid var(--line);
-        }
       }
       @media (max-width: 860px) {
         .bmk-guide {
@@ -2116,9 +2066,6 @@
         /* Cabecera del bloque más corta: la lista ya está justo debajo */
         .bmk-aside h2 {
           margin-top: 14px;
-        }
-        .bmk-checklist {
-          display: none;
         }
         .bmk-inblock .bmk-bar {
           margin-bottom: 0;
@@ -4054,7 +4001,7 @@
 
         /* Sello de versión: lo reescribe stamp.sh en cada despliegue, para
            saber de un vistazo qué build se está viendo. */
-        const BUILD = "23 Sep 2026 · 08:06";
+        const BUILD = "23 Sep 2026 · 08:11";
         const STORAGE_KEY = "ai-brand-os-v1";
 
         /* ---------- Helpers ---------- */
@@ -4849,30 +4796,25 @@
             labelsOf("visualAntiKeywords"),
             labelsOf("visualAvoid", 6),
           );
-          const note = Object.values(notes())
-            .map((x) => (x || "").trim())
-            .filter(Boolean);
-          return { is, isnt, note: note[note.length - 1] || "" };
+          return { is, isnt };
         }
 
         function digestHTML() {
           const d = digest();
           if (!d.is.length && !d.isnt.length) return "";
-          /* Con tope: el retrato es un vistazo, no un inventario */
-          const CAP = 8;
+          /* Una sola línea por lista, truncada: así el retrato entero ocupa
+             exactamente cuatro líneas, dos de rótulo y dos de contenido. */
+          const CAP = 3;
           const list = (arr, cls) => {
             if (!arr.length)
               return `<p class="bmk-dg-empty">${esc(T.ui.digestPending)}</p>`;
             const head = arr.slice(0, CAP),
               rest = arr.length - head.length;
-            return `<ul class="bmk-dg-list ${cls}">${head
-              .map((x) => `<li>${esc(x)}</li>`)
-              .join("")}${rest > 0 ? `<li class="bmk-dg-more">${esc(T.ui.digestMore(rest))}</li>` : ""}</ul>`;
+            return `<p class="bmk-dg-line ${cls}" title="${esc(arr.join(" · "))}">${esc(head.join(" · "))}${rest > 0 ? ` <span class="bmk-dg-more">${esc(T.ui.digestMore(rest))}</span>` : ""}</p>`;
           };
           return `<div class="bmk-digest">
         <div class="bmk-dg-block"><b class="bmk-dg-h is-yes">${esc(T.ui.digestIs)}</b>${list(d.is, "is-yes")}</div>
         <div class="bmk-dg-block"><b class="bmk-dg-h is-no">${esc(T.ui.digestIsnt)}</b>${list(d.isnt, "is-no")}</div>
-        ${d.note ? `<p class="bmk-dg-note">${esc(d.note)}</p>` : ""}
       </div>`;
         }
 
@@ -4891,12 +4833,6 @@
               <div class="bmk-inblock-top"><b>${esc(p.auto ? T.ui.autoBlock : T.ui.inBlock)}</b><span data-sec-count style="display:inline-block">${p.auto ? "✦" : `${p.done}/${p.total}`}</span></div>
               <div class="bmk-bar ${p.done === p.total ? "is-done" : ""}" data-sec-bar><i style="width:${p.pct}%"></i></div>
             </div>
-            <ol class="bmk-checklist">${countable(s)
-              .map(
-                (f) =>
-                  `<li><button class="${isFilled(f) ? "is-done" : ""}" data-act="jump" data-f="${f.id}" data-check="${f.id}"><span class="bmk-check">✓</span>${esc(f.label)}</button></li>`,
-              )
-              .join("")}</ol>
           </div>
           ${digestHTML()}
         </aside>
@@ -5939,13 +5875,6 @@
             rc.textContent = rtxt;
             replay([rc]);
           }
-          root.querySelectorAll("[data-check]").forEach((b) => {
-            const d = isFilled(findField(b.dataset.check));
-            if (b.classList.contains("is-done") !== d) {
-              b.classList.toggle("is-done", d);
-              replay([b.querySelector(".bmk-check")]);
-            }
-          });
           const bar = root.querySelector("[data-sec-bar]");
           if (bar) {
             bar.firstElementChild.style.width = p.pct + "%";
@@ -6224,24 +6153,6 @@
               b.textContent = open ? T.ui.exampleHide : T.ui.exampleShow;
               b.setAttribute("aria-expanded", String(open));
               if (open) replay([box]);
-              break;
-            }
-            case "jump": {
-              const el = root.querySelector(`[data-field="${id}"]`);
-              if (!el) break;
-              el.scrollIntoView({
-                behavior: reduceMotion() ? "auto" : "smooth",
-                block: "center",
-              });
-              const input = el.querySelector(
-                "input:not([type=file]), textarea",
-              );
-              if (input)
-                setTimeout(
-                  () => input.focus({ preventScroll: true }),
-                  reduceMotion() ? 0 : 350,
-                );
-              replay(headOf(el));
               break;
             }
             case "rmfile": {
