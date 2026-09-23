@@ -3944,7 +3944,7 @@
 
         /* Sello de versión: lo reescribe stamp.sh en cada despliegue, para
            saber de un vistazo qué build se está viendo. */
-        const BUILD = "23 Sep 2026 · 08:22";
+        const BUILD = "23 Sep 2026 · 09:43";
         const STORAGE_KEY = "ai-brand-os-v1";
 
         /* ---------- Helpers ---------- */
@@ -4977,7 +4977,7 @@
             .join("")}</div>`;
         }
         function SegmentedSlider(f, O) {
-          if (!O.rows) return segRow(f, O.items, pickOf(f.id).id || O.def);
+          if (!O.rows) return segRow(f, O.items, pickOf(f.id).id);
           const rw = pickOf(f.id).rows || {},
             caps = rowLabelsOf(f) || [];
           const done = clean(state[f.id]).length,
@@ -4988,7 +4988,7 @@
               : `<div class="bmk-count">${T.ui.of(done, need)}</div>`;
           return `${tally}<div class="bmk-rows">${rowsOf(O)
             .map(
-              (r, ri) => `<div><span class="bmk-row-h">${esc(tx(r.label) || caps[ri] || "")}</span>${segRow(f, r.items, rw[ri] ?? r.def, ri)}</div>`,
+              (r, ri) => `<div><span class="bmk-row-h">${esc(tx(r.label) || caps[ri] || "")}</span>${segRow(f, r.items, rw[ri], ri)}</div>`,
             )
             .join("")}</div>`;
         }
