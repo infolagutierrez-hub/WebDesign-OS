@@ -3741,6 +3741,8 @@
                 "Wherever the copy offers choices the reader picks between — questions and answers, plans, options, steps that can be folded away — stack them and let each one expand. Use the markup and CSS below as they are; style the head, the rule and the chevron with the tokens above so it matches the rest of the page.",
               accRules:
                 "The height animates with grid-template-rows from 0fr to 1fr: no JavaScript measuring heights, which is what makes accordions jump. The chevron flips with scaleY, passing through a flat line at the midpoint; do not animate the `d:` path, which only works in Chromium. Toggle `data-open` on the item and keep `aria-expanded` in sync on the button. One item open at a time is optional; what is not optional is that the head is a real button, reachable by keyboard, with a visible focus ring.",
+              unanswered:
+                "This block was left unanswered. Everything below is the system default and applies in full; do not invent an alternative.",
               sourceTitle: "00. Brand copy and voice",
               sourceIntro:
                 "Written by the brand, pasted as-is. It outranks every example in this document: use these exact words, this tone and these names. The sections below say how it should look, never what it should say.",
@@ -3944,7 +3946,7 @@
 
         /* Sello de versión: lo reescribe stamp.sh en cada despliegue, para
            saber de un vistazo qué build se está viendo. */
-        const BUILD = "23 Sep 2026 · 09:43";
+        const BUILD = "24 Sep 2026 · 12:35";
         const STORAGE_KEY = "ai-brand-os-v1";
 
         /* ---------- Helpers ---------- */
@@ -5530,15 +5532,17 @@
               if (m) parts.push(m);
               else pending.push(`${plain(f.label)} (${plain(s.title)})`);
             });
-            if (parts.length) {
-              any = true;
+            const spine =
+              (s.rules && s.rules.length) || (s.defaults && s.defaults.length);
+            if (parts.length || spine) {
+              if (parts.length) any = true;
               out.push(
                 "",
                 "---",
                 "",
                 `## ${s.mdTitle}`,
                 "",
-                parts.join("\n\n"),
+                parts.length ? parts.join("\n\n") : `_${T.md.unanswered}_`,
               );
               /* Las hojas que ya no se preguntan siguen en el documento, marcadas
                  como derivables: la IA conserva la estructura sin inventar rumbo. */
