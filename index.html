@@ -1293,6 +1293,22 @@
       .bmk-source-n {
         color: rgba(255, 255, 255, 0.72);
       }
+      .bmk-vh {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        clip-path: inset(50%);
+        white-space: nowrap;
+        border: 0;
+      }
+      .bmk-source-drop:focus-visible {
+        outline: 2px solid var(--blanco);
+        outline-offset: 3px;
+      }
       .bmk-source-drop {
         border-color: rgba(255, 255, 255, 0.4);
         background: rgba(255, 255, 255, 0.06);
@@ -3946,7 +3962,7 @@
 
         /* Sello de versión: lo reescribe stamp.sh en cada despliegue, para
            saber de un vistazo qué build se está viendo. */
-        const BUILD = "24 Sep 2026 · 12:35";
+        const BUILD = "25 Sep 2026 · 10:36";
         const STORAGE_KEY = "ai-brand-os-v1";
 
         /* ---------- Helpers ---------- */
@@ -4646,10 +4662,10 @@
           <span class="bmk-source-n">${sourceWords()}</span>
         </div>
         <p class="bmk-hint">${esc(noDot(T.ui.sourceHint))}</p>
-        <label class="bmk-drop bmk-source-drop">
-          <input type="file" multiple accept=".md,.markdown,.txt,text/plain,text/markdown" data-t="srcfile" hidden>
+        <div class="bmk-drop bmk-source-drop" role="button" tabindex="0" data-act="browse">
+          <input type="file" multiple accept=".md,.markdown,.txt,text/plain,text/markdown" data-t="srcfile" class="bmk-vh">
           <span class="bmk-drop-t">${T.ui.sourceDrop}</span><small>${esc(T.ui.sourceTypes)}</small>
-        </label>
+        </div>
         ${sourceList()}
       </section>
       <p class="bmk-build">${esc(BUILD)}</p>`;
@@ -5941,6 +5957,15 @@
           refresh();
         }
 
+        /* Un div con role=button necesita el teclado a mano */
+        root.addEventListener("keydown", (e) => {
+          const b = e.target.closest && e.target.closest('[data-act="browse"]');
+          if (!b || (e.key !== "Enter" && e.key !== " ")) return;
+          e.preventDefault();
+          const inp = b.querySelector('input[type="file"]');
+          if (inp) inp.click();
+        });
+
         /* Arrastrar y soltar sobre la zona de la portada */
         ["dragenter", "dragover"].forEach((ev) =>
           root.addEventListener(ev, (e) => {
@@ -6240,6 +6265,13 @@
               downloadDoc(b.dataset.doc || DOCS[0].key);
               flash(b, T.ui.downloadedBtn);
               break;
+            case "browse": {
+              /* El clic en el propio campo no debe rebotar contra sí mismo */
+              if (e.target.matches('input[type="file"]')) break;
+              const inp = b.querySelector('input[type="file"]');
+              if (inp) inp.click();
+              break;
+            }
             case "rmsrc": {
               const fs = srcFiles().slice();
               fs.splice(+b.dataset.i, 1);
